@@ -1,2 +1,2 @@
 # Demos collection
-A collection of demos of kjslibs' application
+A collection of small demos of kjslibs' application
