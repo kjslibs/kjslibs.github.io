@@ -2,4 +2,4 @@
 
 The official page of kjslibs: https://kjslibs.github.io
 
-Also contains kjslibs files
+Also contains kjslibs files.
