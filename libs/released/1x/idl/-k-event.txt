@@ -1,0 +1,61 @@
+
+DOCUMENTARY
+
+CLASS: EventRepublic, EventCivilian
+
+	DESCRIPTION:
+		An event republic (with core is republic), appended with a handler, create event civilian needed event target
+		An event civilian is an object created from a private class
+		A valid event target must have two method: addEventListener and removeEventListener
+	END DESCRIPTION
+	
+	public class EventRepublic {
+		public constructor EventRepublic(Handler handler);
+		public EventCivilian create(EventTarget event_target, EventCivilianCreationDescriptor descriptor);
+		public method enable(EventCivilian event_civilian);
+		public method disable(EventCivilian event_civilian);
+	}
+	
+	private class EventCivilian {
+		public method enable();
+		public method disable();
+		public Boolean enabled;
+	}
+	
+	struct EventCivilianCreationDescriptor {
+		Boolean requestonly;
+		optional Handler preventor;
+		String request_event_type;
+		optional Boolean request_use_capture;
+		if (!requestonly) {
+			String unrequest_event_type;
+			optional Boolean unrequest_use_capture;
+		}
+	}
+	
+	pattern EventTarget {
+		void addEventListener(String type, function<void, void, Event> callback, bool use_capture);
+		void removeEventListener(String type, function<void, void, Event> callback, bool use_capture);
+	}
+	
+	typedef any Event;
+
+END CLASS
+
+CLASS: XHRCount
+
+	DESCRIPTION:
+		How many loaded XHR
+	END DESCRIPTION
+	
+	public class XHRCount {
+		public constructor XHRCount(Handler handler);
+		public method add(XMLHttpRequest xhr);
+		public method remove(XMLHttpRequest xhr);
+		public XMLHttpRequest create(String method, String url, Boolean send);
+		public method enable();
+		public method disable();
+		public Boolean enabled;
+	}
+
+END CLASS

@@ -1,0 +1,129 @@
+
+DOCUMENTARY
+
+SHARED:
+	
+	shared Map _constructor_object_map {
+		key: constructor key;
+		value: Map value {
+			element: Object element;
+		}
+	}
+	
+	shared Map _object_info_map {
+		key: Object object;
+		value: Object info;
+	}
+	
+	pattern Key {
+		String,
+		Symbol
+	}
+
+END SHARED
+
+METHOD: _kJs_setConst, _kJs_addSetConsts
+
+	public void Object::setConst(Key name, any value, [[out]] optional DataPropertyDescriptor descriptor = _default_property_descriptor);
+	
+	public void Object::addSetConsts(directory<any> clone_target, [[out]] optional DataPropertyDescriptor descriptor = _default_property_descriptor, optional PropertyMapper position);
+	
+	struct PropertyDescriptor {
+		optional Boolean enumerable = false;
+		optional Boolean configurable = false;
+	}
+	
+	struct DataPropertyDescriptor : PropertyDescriptor {
+		any value;
+		optional Boolean writable = false;
+	}
+	
+	DataPropertyDescriptor _default_property_descriptor = {
+		enumerable: false,
+		configurable: false,
+		writable: false,
+		[[out]] value: undefined
+	}
+
+END METHOD
+
+METHOD: property mappers
+
+	shared class prvPropertyMapperParam {
+		[[in]] [[out]] any args;
+		[[in]] Object self;
+		[[in]] Key property;
+		[[out]] uint jump;
+	}
+	
+	typedef function<Object, prvPropertyMapperParam> PropertyMapper;
+	
+	public void Object::insertPropertyMapperBefore(PropertyMapper handler, PropertyMapper position);
+	
+	public void Object::removePropertyMapper(PropertyMapper handler);
+	
+	public void Object::clearAllPropertyMappers();
+	
+	public void Object::executePropertyMappers(any args);
+
+END METHOD
+
+CLASS: Republic, Civilian
+
+	DESCRIPTION:
+		A Republic execute only if all Civilian which included in it have sent request
+		A Civilian can join many Republic
+	END DESCRIPTION
+	
+	shared class prvRepublic {
+		private Handler handler(Number unrequested);
+		public constructor prvRepublic(Republic object, Handler handler);
+		public Set unreqested;
+		public method _add(prvCivilian civilian);
+		public method _remove(prvCivilian civilian);
+		public method add(Civilian civilian);
+		public method remove(Civilian civilian);
+		public method execute();
+	}
+	
+	public class Republic {
+		shared prvRepublic info;
+		public constuctor Republic(Handler handler);
+		public method add(Civilian civilian);
+		public method remove(Civilian civilian);
+		public method execute();
+	}
+	
+	shared class prvCivilian {
+		public constuctor prvCivilian(Civilian object);
+		public Set entered;
+		public method _enter(prvRepublic republiccore);
+		public method _leave(prvRepublic republiccore);
+		public method request();
+		public method unrequest();
+		public method enter(Republic republic);
+		public method leave(Republic republic);
+	}
+	
+	public class Civilian {
+		shared prvCivilian info;
+		public constructor Civilian();
+		public method request();
+		public method unrequest();
+		public method enter(Republic republic);
+		public method leave(Republic republic);
+	}
+
+END CLASS
+
+EXPLAIN:
+
+	[[in]]
+	
+		 - The field was an input to the handler: used by reading.
+	
+	[[out]]
+	
+		 - The field was used as an output of handler: used by writing.
+
+END EXPLAIN

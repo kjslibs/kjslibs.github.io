@@ -1,0 +1,272 @@
+
+DOCUMENTARY
+
+CLASS: GLUtil
+
+	DESCRIPTION:
+		Some utilities for WebGLRenderingContext
+		Improves ease of use for WebGL API
+		Provides WebGL quick-initialization (i.e quick-creation, quick-relation, quick-compiling, quick-handling) by using descriptor
+		Improves ease of debugging and provides error-handling method: If the system generated a GL_EXCEPTION, throws an exception (of type "GLError") if there was no error-handler (called "onerror") or execute error-handler if there was
+	END DESCRIPTION
+	
+	public class GLUtil {
+		public constructor GLUtil(WebGLRenderingContext gl);
+		public readonly WebGLRenderingContext gl;
+		public WebGLProgram createProgram(ProgramCreationDescriptor descriptor);
+		public ProgramUtil createProgramUtil(ProgramUtilCreationDescriptor descriptor);
+		public WebGLShader createShader(ShaderCreationDescriptor descriptor);
+		public ShaderUtil createShaderUtil(ShaderUtilCreationDescriptor descriptor);
+		public WebGLBuffer createBuffer(BufferCreationDescriptor descriptor);
+		public BufferUtil createBufferUtil(BufferCreationDescriptor descriptor);
+		public any getParameter(GLenum pname);
+		public any getProgramParameter(WebGLProgram program, GLenum pname);
+		public String? getProgramInfoLog(WebGLProgram program);
+		public any getShaderParameter(WebGLShader shader, GLenum pname);
+		public String? getShaderInfoLog(WebGLShader shader);
+	}
+	
+	private abstract class UtilBase {
+		public readonly WebGLRenderingContext gl;
+		public readonly GLUtil glUtil;
+	}
+	
+	private class ProgramUtil : public UtilBase {
+		public constructor ProgramUtil(WebGLProgram program);
+		public readonly WebGLProgram program;
+		public readonly String infoLog;
+		public WebGLShader createShader(ShaderCreationDescriptor descriptor);
+		public ShaderUtil createShaderUtil(ShaderUtilCreationDescriptor descriptor);
+		public void attachShader(WebGLShader? shader);
+		public void attachShaderUtil(optional ShaderUtil shader_util);
+		public void detachShader(WebGLShader? shader);
+		public void detachShaderUtil(optional ShaderUtil shader_util);
+		public GLint getAttribLocation(String name);
+		public AttribUtil createAttribUtil(String name);
+		public WebGLUniformLocation? getUniformLocation(String name);
+		public UniformUtil createUniformUtil(String name);
+		public any getParameter(GLenum pname);
+		public String? getInfoLog();
+		public void destroy();
+	}
+	
+	private abstract class ShaderUtil : public UtilBase {
+		public constructor ShaderUtil(WebGLShader? shader);
+		public readonly WebGLShader shader;
+		public String source;
+		public readonly String infoLog;
+		public void getSource();
+		public void setSource(String source);
+		public void setSource(Object descriptor);
+		public void compile(optional function<void, GLUtil, ShaderCompilingError> onerror);
+		public void attachProgram(WebGLProgram? program);
+		public void attachProgramUtil(optional ProgramUtil program_util);
+		public void detachProgram(WebGLProgram? program);
+		public void detachProgramUtil(optional ProgramUtil program_util);
+		public any getParamter(GLenum pname);
+		public String? getInfoLog();
+		public void destroy();
+	}
+	
+	private class FragmentShaderUtil : public ShaderUtil {
+		public constructor FragmentShaderUtil(WebGLShader shader);
+	}
+	
+	private class VertexShaderUtil : public ShaderUtil {
+		public constructor VertexShaderUtil(WebGLShader shader);
+	}
+	
+	private class BufferUtil : public UtilBase {
+		public constructor BufferUtil(WebGLBuffer buffer, GLenum target);
+		public readonly GLenum buffer;
+		public readonly GLenum target;
+		public readonly GLlong size;
+		public readonly GLenum usage;
+		public readonly Boolean valid;
+		public void bind();
+		public void passData(GLlong size, GLenum usage);
+		public void passData(Object data, GLenum usage);
+		public void passSubData(GLlong offset, Object data);
+		public any getParameter(GLenum pname);
+		public void destroy();
+	}
+	
+	private abstract class VariableUtil : public UtilBase {
+		public readonly WebGLProgram program;
+		public readonly ProgramUtil programUtil;
+	}
+	
+	private class AttribUtil : public VariableUtil {
+		public constructor AttribUtil(GLuint attrib_location, GLint size, GLenum type, Boolean normalized, GLsizei stride, GLintptr offset);
+		public readonly GLuint attribLocation;
+		public readonly GLint size;
+		public readonly GLenum type;
+		public readonly Boolean normalized;
+		public readonly GLsizei stride;
+		public readonly GLintptr offset;
+		public any set(any value);
+		public void active();
+	}
+	
+	private class UniformUtil : public VariableUtil {
+		public constructor UniformUtil(WebGLUniformLocation uniform_location, String type, GLuint count);
+		public readonly WebGLUniformLocation uniformLocation;
+		public readonly String type;
+		public readonly GLuint count;
+		public any value;
+		public any get();
+		public void set(any value);
+	}
+	
+	private abstract class GLError : UtilBase {
+		public constructor GLError(String name);
+		public readonly String name;
+		public abstract readonly String message;
+		public abstract readonly GLErrorDetails details;
+		public abstract readonly String stack;
+		public operator String();
+	}
+	
+	private abstract class GLErrorDetails : UtilBase {
+		public constructor GLErrorDetails(String type);
+		public readonly String type;
+		public abstract readonly String infoLog;
+	}
+	
+	private class ProgramLinkingError : GLError {
+		public constructor ProgramLinkingError(WebGLProgram program, String info_log) : GLError("ProgramLinkingError");
+		public readonly String message;
+		public readonly ProgramLinkingErrorDetails details;
+		public readonly String stack;
+	}
+	
+	private class ProgramLinkingErrorDetails : GLErrorDetails {
+		public constructor ProgramLinkingErrorDetails(WebGLProgram program, String info_log) : GLErrorDetails("ProgramLinkingError");
+		public readonly WebGLProgram program;
+		public readonly String infoLog;
+	}
+	
+	private class ShaderCompilingError : GLError {
+		public constructor ShaderCompilingError(WebGLShader shader, String info_log, String source) : GLError("ShaderCompilingError");
+		public readonly WebGLShader shader;
+		public readonly String message;
+		public readonly ShaderCompilingErrorDetails details;
+		public readonly String stack;
+	}
+	
+	private class ShaderCompilingErrorDetails : GLErrorDetails {
+		public constructor ShaderCompilingErrorDetails(WebGLShader shader, String info_log, String source) : GLErrorDetails("ShaderCompilingError");
+		public readonly WebGLShader shader;
+		public readonly String infoLog;
+		public readonly String source;
+	}
+	
+	template <typename GLObject, typename GLError>
+	struct GLObjectCreationDescriptor {
+		[[*]] optional function<void, GLUtil, GLObject> oncreated;
+		[[*]] optional function<void, GLUtil, GLError> onerror;
+	}
+	
+	pattern ProgramCreationDescriptor {
+		decltype(null),
+		decltype(undefined),
+		struct : GLObjectCreationDescriptor<WebGLProgram, ProgramLinkingError> {
+			optional Boolean use;
+			optional Boolean link;
+			[[SHADER_TYPE => VERTEX_SHADER]] optional ShaderAttachmentDescriptor vertexShader;
+			[[SHADER_TYPE => FRAGMENT_SHADER]] optional ShaderAttachmentDescriptor fragmentShader;
+		}
+	}
+	
+	struct NonclassifiedShaderCreationDescriptor : GLObjectCreationDescriptor<WebGLShader, ShaderCompilingError> {
+		optional ProgramAttachmentDescriptor program;
+		[[GLSL]] optional String source;
+		if (source) {
+			optional Boolean compile;
+			[[*]] optional function<void, GLUtil, ShaderCompilingError> onerror;
+		}
+	}
+	
+	struct ShaderCreationDescriptor : NonclassifiedShaderCreationDescriptor {
+		GLenum type;
+	}
+	
+	struct BufferCreationDescriptor {
+		optional Boolean bind;
+		optional GLenum target;
+		optional GLenum usage;
+		optional Object data;
+		if (!data) {
+			optional GLlong size;
+		}
+	}
+	
+	template <typename CreatedBase, typename BaseCreationDescriptor>
+	pattern UtilDescriptor {
+		CreatedBase based_object,
+		BaseCreationDescriptor descriptor
+	}
+	
+	typedef UtilDescriptor<WebGLProgram, ProgramCreationDescriptor> ProgramUtilCreationDescriptor;
+	
+	typedef UtilDescriptor<WebGLShader, ShaderCreationDescriptor> ShaderUtilCreationDescriptor;
+	
+	pattern ProgramAttachmentDescriptor {
+		decltype(null),
+		decltype(undefined),
+		ProgramUtilCreationDescriptor descriptor,
+		ProgramUtil program_util,
+		sequence<ProgramAttachmentDescriptor> descriptor_sequence
+	}
+	
+	pattern ShaderAttachmentDescriptor {
+		[[GLSL]] String source,
+		WebGLShader shader,
+		ShaderUtil shader_util,
+		struct : GLObjectCreationDescriptor<WebGLShader, ShaderCompilingError> {
+			optional ProgramAttachmentDescriptor program;
+			[[GLSL]] String source;
+			[[*]] optional function<void, GLUtil, ShaderCompilingError> onerror;
+		}
+	}
+
+END CLASS
+
+EXPLAIN:
+
+	[[*]]
+	
+		template <class returned_type, class context_type, class ...parameter_type>
+		using function = returned_type (context_type::*)(parameter_type...);
+		
+		 - The function would be called with parameters of 'parameter_type...' 
+		 - Its 'this' keyword refers to an object of 'context_type'
+		 - The function should returns a value of 'returned_type'
+		
+		function<void, GLUtil, GLObject> oncreated;
+		
+		 - The property named 'oncreated' of a descriptor must be a function, but in the case by 'optional', 'oncreated' could also be undefined or null
+		 - Receive an object of 'GLUtil' as 'this'
+		 - Receive an object of 'GLObject' as the first parameter: arguments[0]
+		 - Returned value of this function would be ignored (returning void)
+		
+		function<void, GLUtil, GLError> onerror;
+		
+		 - The property named 'onerror' of a descriptor must be a function, but in the case by 'optional', 'onerror' could also be undefined or null
+		 - Receive an object of 'GLUtil' as 'this'
+		 - Receive an object of 'GLError' as the first parameter: arguments[0]
+		 - Returned value of this function would be ignored (returning void)
+	
+	[[GLSL]]
+	
+		String source;
+		
+		 - Property named 'source' of 'descriptor' is a string which a GLSL (GL Shading Language) source code
+		 - If 'source' can't be compiled (A compiling-error was generated), then an object of type 'ShaderCompilingError' will be handled by 'descriptor.onerror' or will be thrown
+	 
+	[[SHADER_TYPE]]
+	
+		 - If 'descriptor.vertexShader' (or 'descriptor.fragmentShader') is a WebGLShader object, its type must be VERTEX_SHADER (or FRAGMENT_SHADER)
+		 - Otherwise, the function 'createProgram' will creates and attachs a corresponding WebGLShader object
+
+END EXPLAIN
