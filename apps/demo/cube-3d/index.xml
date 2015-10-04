@@ -5,6 +5,7 @@
 		<title>3D Cube demo.</title>
 	</head>
 	<body>
-		Nothing yet.
+		<script type="text/javascript" src="../../libs/released/1x/uncompressed/-k-js-abstract.js"></script>
+		<script type="text/javascript" src="./script.js"></script>
 	</body>
 </html>
