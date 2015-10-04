@@ -9,10 +9,15 @@ function Resources(window, document, universe, undefined) {
 	
 	var resources = this;
 	
-	main(kjsclasses);/////////
+	main(kjsclasses);
 	
 	function main(kjsclasses) {
-		Object.setPrototypeOf(kjsclasses._primitive_prototype, resources);//////
+		implementation();
+	}
+	
+	function implementation() {
+		Object.setPrototypeOf(Resources.prototype, universe);
+		Object.setPrototypeOf(Object.prototype, resources);
 	}
 	
 }

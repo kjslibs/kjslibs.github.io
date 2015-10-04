@@ -32,8 +32,8 @@ function Universe(window, document, undefined) {
 	
 	function theBigBang() {
 		initLibs();
-		Object.setPrototypeOf(Universe.prototype, universe.kjsclasses._primitive_prototype); /////
-		Object.setPrototypeOf(Object.prototype, universe); // [0] ////
+		Object.setPrototypeOf(Universe.prototype, universe.kjsclasses._primitive_prototype);
+		Object.setPrototypeOf(Object.prototype, universe); // [0]
 	}
 }
 
