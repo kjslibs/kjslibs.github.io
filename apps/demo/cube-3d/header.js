@@ -23,7 +23,7 @@ function Universe(window, document, undefined) {
 	}
 	
 	function initClasses(lib, name) {
-		universe[name] = new lib.ClassesCollection();
+		universe[name] = new lib.ClassCollection();
 		return initClasses; // some thing like: initClasses(a, b)(d, e)(g, h) instead of do them sepparately.
 	}
 	
