@@ -32,7 +32,7 @@ function Resources(window, document, universe, undefined) {
 	// int glContextCreation(ClassCollection, ClassCollection)
 	function glContextCreation(kxmlclasses, kgraphclasses) {
 		var document_util = resources.document_util = new kxmlclasses.DocumentUtil(document);
-		document_util.namespaceURI = document.namespaceURI;
+		document_util.namespaceURI = document.documentElement.namespaceURI;
 		var canvas = resources.canvas = document_util.create({
 			type: document_util.ELEMENT,
 			tag: "canvas",
