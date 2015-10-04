@@ -20,7 +20,7 @@ function Resources(window, document, universe, undefined) {
 	// int main(void);
 	function main() {
 		implementation();
-		if(glContextCreation(kxmlclasses, kgraphclasses))
+		if(glContextCreation(kxmlclasses, kgraphclasses) || xhrCreatorCreation(keventclasses))
 			return 1;
 		return 0;
 	}
@@ -31,7 +31,7 @@ function Resources(window, document, universe, undefined) {
 		Object.setPrototypeOf(Object.prototype, resources);
 	}
 	
-	// int glContextCreation(ClassCollection, ClassCollection)
+	// int glContextCreation(ClassCollection, ClassCollection);
 	function glContextCreation(kxmlclasses, kgraphclasses) {
 		
 		// Set up 'document_util'
@@ -65,6 +65,15 @@ function Resources(window, document, universe, undefined) {
 		resources.gl_util = new kgraphclasses.GLUtil(gl);
 		
 		return 0;
+	}
+	
+	// int xhrCreatorCreation(ClassCollection);
+	function xhrCreatorCreation(keventclasses) {
+		resources.XHRUtil = XHRUtil;
+		function XHRUtil(callback) {
+			// continue from here...
+			// It so tired, I'll sleep.
+		}
 	}
 	
 }
