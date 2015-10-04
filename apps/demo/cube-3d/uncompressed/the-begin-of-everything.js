@@ -1,4 +1,5 @@
 
+Universe.prototype = Object.create(null); // Why is this necessary? Let's see ./resources-preparation.js --> [0] to find the answer.
 window.universe = new Universe(window, document);
 
 function Universe(window, document, undefined) {
@@ -29,6 +30,7 @@ function Universe(window, document, undefined) {
 	
 	function theBigBang() {
 		initLibs();
+		Object.setPrototypeOf(Universe.prototype, universe.kjsclasses._primitive_prototype);
 	}
 	
 	theBigBang();
