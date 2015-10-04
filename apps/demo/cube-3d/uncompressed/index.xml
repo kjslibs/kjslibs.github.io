@@ -10,11 +10,11 @@
 		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-animate.js"></script>
 		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-event.js"></script>
 		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-graph.js"></script> -->
-		<script type="text/javascript" src="../../../../libs/released/1x/compressed/-k-js-abstract.js" />
-		<script type="text/javascript" src="../../../../libs/released/1x/compressed/-k-js-xml.js" />
-		<script type="text/javascript" src="../../../../libs/released/1x/compressed/-k-js-animate.js" />
-		<script type="text/javascript" src="../../../../libs/released/1x/compressed/-k-js-event.js" />
-		<script type="text/javascript" src="../../../../libs/released/1x/compressed/-k-js-graph.js" />
+		<script type="text/javascript" src="../../../../libs/released/1x/compressed/-k-js-abstract.min.js" />
+		<script type="text/javascript" src="../../../../libs/released/1x/compressed/-k-js-xml.min.js" />
+		<script type="text/javascript" src="../../../../libs/released/1x/compressed/-k-js-animate.min.js" />
+		<script type="text/javascript" src="../../../../libs/released/1x/compressed/-k-js-event.min.js" />
+		<script type="text/javascript" src="../../../../libs/released/1x/compressed/-k-js-graph.min.js" />
 		<script type="text/javascript" src="./the-begin-of-everything.js"></script>
 		<script type="text/javascript" src="./resources-preparation.js"></script>
 	</body>
