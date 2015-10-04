@@ -32,9 +32,10 @@ function Resources(window, document, universe, undefined) {
 	// int glContextCreation(ClassCollection, ClassCollection)
 	function glContextCreation(kxmlclasses, kgraphclasses) {
 		var document_util = new kxmlclasses.DocumentUtil(document);
-		document_util.namespaceURI = document.namespaceURI;
+		//document_util.namespaceURI = document.namespaceURI;
 		var canvas = resources.canvas = document_util.create({
 			type: document_util.ELEMENT,
+			tag: "canvas",
 			parent: document.body,
 			before: null,
 			children: ["Opps, your browser didn't supported HTMLCanvasElement."]
@@ -44,6 +45,7 @@ function Resources(window, document, universe, undefined) {
 			document.body.removeChild(canvas);
 			document_util.create({
 				type: document_util.ELEMENT,
+				tag: "div",
 				parent: document.body,
 				before: null,
 				children: ["Your browser don't support WebGL or WebGL are disabled."]
