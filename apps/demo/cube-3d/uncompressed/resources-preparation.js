@@ -10,6 +10,8 @@ function Resources(window, document, universe, undefined) {
 	
 	var resources = this;
 	
+	// CONVENTION:	If a function return 0 or 1, 0 means no error and 1 means opposite.
+	
 	if (main()) {
 		resources._error = 1;
 		throw "Bad support browser.";
@@ -31,8 +33,12 @@ function Resources(window, document, universe, undefined) {
 	
 	// int glContextCreation(ClassCollection, ClassCollection)
 	function glContextCreation(kxmlclasses, kgraphclasses) {
+		
+		// Set up 'document_util'
 		var document_util = resources.document_util = new kxmlclasses.DocumentUtil(document);
 		document_util.namespaceURI = document.documentElement.namespaceURI;
+		
+		// Set up 'canvas'
 		var canvas = resources.canvas = document_util.create({
 			type: document_util.ELEMENT,
 			tag: "canvas",
@@ -40,6 +46,8 @@ function Resources(window, document, universe, undefined) {
 			before: null,
 			children: ["Opps, your browser didn't supported HTMLCanvasElement."]
 		});
+		
+		// Set up a 'WebGLRenderingContext' named 'gl'
 		var gl = resources.gl = canvas.getContext("webgl");
 		if (!gl) {
 			document.body.removeChild(canvas);
@@ -52,6 +60,10 @@ function Resources(window, document, universe, undefined) {
 			});
 			return 1;
 		}
+		
+		// Set up a 'GLUtil' named 'gl_util' from 'gl'
+		resources.gl_util = new kgraphclasses.GLUtil(gl);
+		
 		return 0;
 	}
 	
