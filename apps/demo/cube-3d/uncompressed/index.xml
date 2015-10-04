@@ -3,8 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>3D Cube demo.</title>
+		<link rel="stylesheets" href="style.css" />
 	</head>
 	<body>
+		<noscript>Javascript, please!</noscript>
 		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-js-abstract.js"></script>
 		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-xml.js"></script>
 		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-animate.js"></script>
