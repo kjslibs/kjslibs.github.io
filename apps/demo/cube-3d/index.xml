@@ -6,6 +6,10 @@
 	</head>
 	<body>
 		<script type="text/javascript" src="../../../libs/released/1x/uncompressed/-k-js-abstract.js"></script>
+		<script type="text/javascript" src="../../../libs/released/1x/uncompressed/-k-xml.js"></script>
+		<script type="text/javascript" src="../../../libs/released/1x/uncompressed/-k-animate.js"></script>
+		<script type="text/javascript" src="../../../libs/released/1x/uncompressed/-k-event.js"></script>
+		<script type="text/javascript" src="../../../libs/released/1x/uncompressed/-k-graph.js"></script>
 		<script type="text/javascript" src="./script.js"></script>
 	</body>
 </html>
