@@ -1,13 +1,15 @@
 
-Universe.prototype = Object.create(null); // Why is this necessary? Let's see ./resources-preparation.js --> [0] to find the answer.
+Universe.prototype = Object.create(null); // Why is this necessary? Let's see [0] to find the answer.
 window.universe = new Universe(window, document);
 
 function Universe(window, document, undefined) {
 	'use strict';
 	
-	if (window.universe) return window.universe;
+	if (window.universe) return;
 	
 	var universe = this;
+	
+	theBigBang();
 	
 	function initLibs() {
 		var kjslib = universe.kjslib = _kJs_Initor();
@@ -31,8 +33,7 @@ function Universe(window, document, undefined) {
 	function theBigBang() {
 		initLibs();
 		Object.setPrototypeOf(Universe.prototype, universe.kjsclasses._primitive_prototype);
+		Object.setPrototypeOf(Object.prototype, universe); // [0]
 	}
-	
-	theBigBang();
 }
 

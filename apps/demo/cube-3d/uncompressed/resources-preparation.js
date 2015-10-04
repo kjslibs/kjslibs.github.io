@@ -1,13 +1,19 @@
 
+Resources.prototype = Object.create(null);
 window.resources = new Resources(window, document, universe);
 
 function Resources(window, document, universe, undefined) {
 	'use strict';
 	
-	/* IMPLEMENTATIONS */
+	if (window.resources) return;
 	
-	// [0]: To implement all classes and methods to window and any object for using directly.
-	Object.setPrototypeOf(Object.prototype, universe);
+	var resources = this;
+	
+	main(kjsclasses);
+	
+	function main(kjsclasses) {
+		Object.setPrototypeOf(kjsclasses._primitive_prototype, resources);
+	}
 	
 }
 
