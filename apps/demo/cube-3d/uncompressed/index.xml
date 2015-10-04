@@ -5,11 +5,11 @@
 		<title>3D Cube demo.</title>
 	</head>
 	<body>
-		<script type="text/javascript" src="../../../libs/released/1x/uncompressed/-k-js-abstract.js"></script>
-		<script type="text/javascript" src="../../../libs/released/1x/uncompressed/-k-xml.js"></script>
-		<script type="text/javascript" src="../../../libs/released/1x/uncompressed/-k-animate.js"></script>
-		<script type="text/javascript" src="../../../libs/released/1x/uncompressed/-k-event.js"></script>
-		<script type="text/javascript" src="../../../libs/released/1x/uncompressed/-k-graph.js"></script>
+		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-js-abstract.js"></script>
+		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-xml.js"></script>
+		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-animate.js"></script>
+		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-event.js"></script>
+		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-graph.js"></script>
 		<script type="text/javascript" src="./the-begin-of-everything.js"></script>
 		<script type="text/javascript" src="./resources-preparation.js"></script>
 	</body>
