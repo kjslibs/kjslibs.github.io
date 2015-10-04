@@ -9,11 +9,11 @@ function Universe(window, document, undefined) {
 	var universe = this;
 	
 	function initLibs() {
-		var kjslib = universe.kjslib = _kJs_Init();
-		var kxmllib = universe.kxmllib = _kXml_Init();
-		var kanilib = universe.kanilib = _kXml_Init();
-		var keventlib = universe.keventlib = _kEvent_Init();
-		var kgraphlib = universe.kgraphlib = _kGraph_Init();
+		var kjslib = universe.kjslib = _kJs_Initor();
+		var kxmllib = universe.kxmllib = _kXml_Initor();
+		var kanilib = universe.kanilib = _kXml_Initor();
+		var keventlib = universe.keventlib = _kEvent_Initor();
+		var kgraphlib = universe.kgraphlib = _kGraph_Initor();
 		initClasses
 			(kjslib, "kjsclasses")
 			(kxmllib, "kxmlclasses")
