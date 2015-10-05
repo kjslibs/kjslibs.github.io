@@ -376,6 +376,20 @@
 		_def_pro(xhr_count, "enabled", enabled_descriptor);
 		_def_pro(xhr_count, _key_enabled, enabled_descriptor);
 	}
+	prvRegisterConstructor(XHRCount, (function (proto) {
+		var setconst = _setConst_bind(proto);
+		setconst("add", null);
+		setconst("remove", null);
+		setconst("create", null);
+		setconst("enable", null);
+		setconst("disable", null);
+		setconst(_key_addMember, null);
+		setconst(_key_removeMember, null);
+		setconst(_key_create, null);
+		setconst(_key_enable, null);
+		setconst(_key_disable, null);
+		return proto;
+	})(_create_new(_public_proto)));
 	_g._kEvent_XHRCount = _r.XHRCount = XHRCount;
 	XHRCount.toString = shared_toString;
 	XHRCount.user_manuals = [
