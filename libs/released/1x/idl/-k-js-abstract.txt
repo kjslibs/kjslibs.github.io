@@ -127,7 +127,7 @@ CLASS: Republic, Civilian
 	
 	typedef function<any, Republic, uint> RepublicHandler;
 	
-	typedef function<any, void, Republic> SubRepublicHandler;
+	typedef function<any, void, any> SubRepublicHandler;
 
 END CLASS
 
