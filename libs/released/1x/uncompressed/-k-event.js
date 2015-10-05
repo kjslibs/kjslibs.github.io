@@ -379,7 +379,7 @@
 	_g._kEvent_XHRCount = _r.XHRCount = XHRCount;
 	XHRCount.toString = shared_toString;
 	XHRCount.user_manuals = [
-		"constructor XHRCount();"
+		"constructor XHRCount(function<void, XHRCount, uint> handler);"
 	];
 	
 	/* RELEASE */
