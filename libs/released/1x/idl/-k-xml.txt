@@ -12,7 +12,7 @@ CLASS: DocumentUtil
 		public Document document;
 		public String? xmlns;
 		public Node create(NodeCreationDescriptor content);
-		public Element createElement(String tag_name, optional directory<String> attributes, optional sequence<NodeCreationDescriptor> children);
+		public Element createElement(String tag_name, optional dictionary<String> attributes, optional sequence<NodeCreationDescriptor> children);
 		public Attribute createAttribute(String name, String value);
 		public TextNode createTextNode(String content);
 	}
@@ -26,10 +26,10 @@ CLASS: DocumentUtil
 			optional String namespaceURI;
 			optional NodeCreationDescriptor parent;
 			optional NodeCreationDescriptor before;
-			optional directory<EventListenerAttachmentDescriptor> event;
+			optional dictionary<EventListenerAttachmentDescriptor> event;
 			if (type == ELEMENT) {
 				String tag,
-				directory<String> attributes,
+				dictionary<String> attributes,
 				sequence<NodeCreationDescriptor> children;
 			}
 			if (type == ATTRIBUTE) {
