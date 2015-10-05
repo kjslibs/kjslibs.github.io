@@ -77,42 +77,49 @@ CLASS: Republic, Civilian
 	
 	shared class prvRepublic {
 		private Handler handler(Number unrequested);
-		public constructor prvRepublic(Republic object, Handler handler);
+		public constructor prvRepublic(RepublicRepublic object, RepublicHandler::binded handler);
 		public Set unreqested;
-		public method _add(prvCivilian civilian);
-		public method _remove(prvCivilian civilian);
-		public method add(Civilian civilian);
-		public method remove(Civilian civilian);
-		public method execute();
+		public void _add(prvCivilian civilian);
+		public void _remove(prvCivilian civilian);
+		public void add(Civilian civilian);
+		public void remove(Civilian civilian);
+		public any execute();
 	}
 	
 	public class Republic {
 		shared prvRepublic info;
-		public constuctor Republic(Handler handler);
-		public method add(Civilian civilian);
-		public method remove(Civilian civilian);
-		public method execute();
+		public constuctor Republic(RepublicHandler handler);
+		public void add(Civilian civilian);
+		public void remove(Civilian civilian);
+		public any execute();
+		public static RepublicHandler EXECUTE_CASE_ALL_OR_NO(SubRepublicHandler allrequestedhandler, SubRepublicHandler norequestedhandler);
+		public static RepublicHandler EXECUTE_ONLY_WHEN_ALL_REQUESTED(SubRepublicHandler handler);
+		public static RepublicHandler EXECUTE_WHEN_NO_REQUESTED(SubRepublicHandler handler);
 	}
 	
 	shared class prvCivilian {
 		public constuctor prvCivilian(Civilian object);
 		public Set entered;
-		public method _enter(prvRepublic republiccore);
-		public method _leave(prvRepublic republiccore);
-		public method request();
-		public method unrequest();
-		public method enter(Republic republic);
-		public method leave(Republic republic);
+		public void _enter(prvRepublic republiccore);
+		public void _leave(prvRepublic republiccore);
+		public void request();
+		public void unrequest();
+		public void enter(Republic republic);
+		public void leave(Republic republic);
 	}
 	
 	public class Civilian {
 		shared prvCivilian info;
 		public constructor Civilian();
-		public method request();
-		public method unrequest();
-		public method enter(Republic republic);
-		public method leave(Republic republic);
+		public void request();
+		public void unrequest();
+		public void enter(Republic republic);
+		public void leave(Republic republic);
 	}
+	
+	typedef function<any, Republic, uint> RepublicHandler;
+	
+	typedef function<any, void, Republic> SubRepublicHandler;
 
 END CLASS
 

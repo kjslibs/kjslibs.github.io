@@ -401,15 +401,6 @@
 		"Handler may skip the rest of executing handler list by assigning arguments[0].jump to 1",
 		"Handler may stop the executing process by assigning arguments[0].jump to 2"
 	];
-	/* function _insertPropertyMapperBefore_mapper(handler, position) {
-		//this function is used for _kJs_insertPropertyMapperBefore, don't release it
-		return function mapper(element, index, object) {
-			if (position === handler) {
-				object.splice(index, 0, handler);
-				return true;
-			} else return false;
-		};
-	} */
 	//remover
 	function _removePropertyMapper(handler) {
 		var handler_list = property_mapper_module_map.get(this);
@@ -440,20 +431,6 @@
 		var info = new prvPropertyMapperParam(args, this);
 		shared_mapper_reply = info;
 		if (handler_list) {
-			// var i;
-			// var mapper = _executePropertyMappers_mapper(handler_list, info, args || this);
-			/* if (!args) args = this;
-			function mapper() {
-				function handler_list_mapper(handler, index) {
-					handler.call(this, info);
-					return info[_key_jump] > 0 && (--info[_key_jump], true);
-				}
-				return function(property) {
-					info[_key_key] = property;
-					handler_list.some(handler_list_mapper, args);
-					return info[_key_jump] > 0 && (--info[_key_jump], true);
-				}
-			} */
 			if (!args) args = this;
 			if (own_prop_sym(this).some(mapper) || own_prop_str(this).some(mapper))
 				return this;
@@ -477,26 +454,6 @@
 		"Handler may skip the rest of executing handler list by assigning arguments[0].continue to true",
 		"Handler may stop the executing process by assigning arguments[0].break to true"
 	];
-	/* function _executePropertyMappers_mapper(handler_list, info, args) {
-		//this function is used for _kJs_executePropertyMappers, don't release it
-		// var handler_list_mapper = _executePropertyMappers_handlerlistmapper(info);
-		function handler_list_mapper(handler, index) {
-			handler.call(this, info);
-			return info[_key_jump] > 0 && (--info[_key_jump], true);
-		}
-		return function mapper(property) {
-			info[_key_key] = property;
-			handler_list.some(handler_list_mapper, args);
-			return info[_key_jump] > 0 && (--info[_key_jump], true);
-		};
-	} */
-	/* function _executePropertyMappers_handlerlistmapper(info) {
-		//this function is used for _kJs_executePropertyMappers, don't release it
-		return function mapper(handler, index) {
-			handler.call(this, info);
-			return info[_key_jump] > 0 && (--info[_key_jump], true);
-		};
-	} */
 	//private class
 	function prvPropertyMapperParam(args, self) {
 		this[_key_args] = args;
@@ -585,30 +542,30 @@
 	_g._kJs_Republic = _r.Republic = Republic;
 	Republic.toString = shared_toString;
 	Republic.user_manuals = [
-		"constructor Republic(Handler handler);",
-		"method add(Civilian civilian);",
-		"method remove(Civilian civilian);",
-		"method execute();"
+		"constructor Republic(function<void, Republic, uint> handler);",
+		"void add(Civilian civilian);",
+		"void remove(Civilian civilian);",
+		"any execute();"
 	];
-	(function (directory) {
+	(function __main__(directory) {
 		var setconst = _setConst_bind(directory);
 		setconst("EXECUTE_CASE_ALL_OR_NO", function (allrequestedhandler, norequestedhandler) {
 			if(!is_valid_handler(allrequestedhandler))
 				throw new TypeError("arguments[0] is not a valid handler.");
 			if(!is_valid_handler(norequestedhandler))
 				throw new TypeError("arguments[1] is not a valid handler.");
-			allrequestedhandler = allrequestedhandler.bind(this);
-			norequestedhandler = norequestedhandler.bind(this);
-			return function $(unrequested) {
+			allrequestedhandler = allrequestedhandler.bind(undefined);
+			norequestedhandler = norequestedhandler.bind(undefined);
+			return function (unrequested) {
 				return (unrequested ? norequestedhandler : allrequestedhandler)(this);
 			};
 		});
 		setconst("EXECUTE_ONLY_WHEN_ALL_REQUESTED", function (handler) {
 			if(!is_valid_handler(handler))
 				throw new TypeError("arguments[0] is not a valid handler.");
-			handler = handler.bind(this);
-			return function $(unrequested) {
-				return unrequested ? null : handler(this);
+			handler = handler.bind(undefined);
+			return function (unrequested) {
+				return unrequested ? undefined : handler(this);
 			};
 		});
 		setconst("EXECUTE_ONLY_WHEN_NO_REQUESTED", function (handler) {
@@ -619,7 +576,8 @@
 				return unrequested ? handler(this) : null;
 			};
 		});
-	})(Republic);
+		return __main__;
+	})(Republic)(Republic.prototype);
 	function prvCivilian(object) {
 		this.object = object;
 		this.__forEach = _set_forEach.bind(this.entered = new Set());
@@ -706,11 +664,11 @@
 	Civilian.toString = shared_toString;
 	Civilian.user_manuals = [
 		"constructor Civilian();",
-		"method enter(Republic set);",
-		"method leave(Republic set);",
-		"method request();",
-		"method unrequest();",
-		"method update();"
+		"void enter(Republic set);",
+		"void leave(Republic set);",
+		"void request();",
+		"void unrequest();",
+		"void update();"
 	];
 	
 	/* RELEASE */

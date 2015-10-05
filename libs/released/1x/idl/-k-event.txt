@@ -10,7 +10,7 @@ CLASS: EventRepublic, EventCivilian
 	END DESCRIPTION
 	
 	public class EventRepublic {
-		public constructor EventRepublic(Handler handler);
+		public constructor EventRepublic(function<void, EventRepublic, uint> handler);
 		public EventCivilian create(EventTarget event_target, EventCivilianCreationDescriptor descriptor);
 		public method enable(EventCivilian event_civilian);
 		public method disable(EventCivilian event_civilian);
@@ -24,13 +24,18 @@ CLASS: EventRepublic, EventCivilian
 	
 	struct EventCivilianCreationDescriptor {
 		Boolean requestonly;
-		optional Handler preventor;
+		optional function<void, EventCivilian, EventPreventorParam> preventor;
 		String request_event_type;
 		optional Boolean request_use_capture;
 		if (!requestonly) {
 			String unrequest_event_type;
 			optional Boolean unrequest_use_capture;
 		}
+	}
+	
+	private class EventPreventorParam {
+		public readonly String type;
+		public readonly Event event;
 	}
 	
 	pattern EventTarget {
@@ -49,7 +54,7 @@ CLASS: XHRCount
 	END DESCRIPTION
 	
 	public class XHRCount {
-		public constructor XHRCount(Handler handler);
+		public constructor XHRCount(function<void, XHRCount, uint> handler);
 		public method add(XMLHttpRequest xhr);
 		public method remove(XMLHttpRequest xhr);
 		public XMLHttpRequest create(String method, String url, Boolean send);

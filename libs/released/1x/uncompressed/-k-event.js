@@ -307,7 +307,7 @@
 	_g._kEvent_EventRepublic = _r.EventRepublic = EventRepublic;
 	EventRepublic.toString = shared_toString;
 	EventRepublic.user_manuals = [
-		"constructor EventRepublic(Handler handler);"
+		"constructor EventRepublic(function<void, EventRepublic, uint> handler);"
 	];
 	
 	//xhr group
