@@ -24,9 +24,9 @@ END SHARED
 
 METHOD: _kJs_setConst, _kJs_addSetConsts
 
-	public void Object::setConst(Key name, any value, [[out]] optional DataPropertyDescriptor descriptor = _default_property_descriptor);
+	public void Dictionary::setConst(Key name, any value, [[out]] optional DataPropertyDescriptor descriptor = _default_property_descriptor);
 	
-	public void Object::addSetConsts(directory<any> clone_target, [[out]] optional DataPropertyDescriptor descriptor = _default_property_descriptor, optional PropertyMapper position);
+	public void Dictionary::addSetConsts(Dictionary clone_target, [[out]] optional DataPropertyDescriptor descriptor = _default_property_descriptor, optional PropertyMapper position);
 	
 	struct PropertyDescriptor {
 		optional Boolean enumerable = false;
@@ -47,24 +47,32 @@ METHOD: _kJs_setConst, _kJs_addSetConsts
 
 END METHOD
 
+METHOD: _kJs_addDefPro
+
+	public void Dictionary::addDefPro(Dictionary clone_target, optional PropertyMapper position);
+
+END METHOD
+
 METHOD: property mappers
 
-	shared class prvPropertyMapperParam {
+	shared class PropertyMapperParam {
 		[[in]] [[out]] any args;
-		[[in]] Object self;
+		[[in]] Dictionary self;
 		[[in]] Key property;
 		[[out]] uint jump;
 	}
 	
-	typedef function<Object, prvPropertyMapperParam> PropertyMapper;
+	typedef function<Object, PropertyMapperParam> PropertyMapper;
 	
-	public void Object::insertPropertyMapperBefore(PropertyMapper handler, PropertyMapper position);
+	public void Dictionary::insertPropertyMapperBefore(PropertyMapper handler, PropertyMapper position);
 	
-	public void Object::removePropertyMapper(PropertyMapper handler);
+	public void Dictionary::removePropertyMapper(PropertyMapper handler);
 	
-	public void Object::clearAllPropertyMappers();
+	public void Dictionary::clearAllPropertyMappers();
 	
-	public void Object::executePropertyMappers(any args);
+	public void Dictionary::executePropertyMappers(any args);
+	
+	[[dictionary]] typedef dictionary<any> Dictionary;
 
 END METHOD
 
@@ -132,5 +140,13 @@ EXPLAIN:
 	[[out]]
 	
 		 - The field was used as an output of handler: used by writing.
+	
+	[[dictionary]]
+	
+		 - Any Javascript extensiable object (or function) which is used to read or written its properties
+	
+		dictionary<value_t>
+		
+		 - Object contains properties of type 'value_t'
 
 END EXPLAIN

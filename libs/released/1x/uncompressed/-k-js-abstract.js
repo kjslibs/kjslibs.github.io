@@ -239,6 +239,7 @@
 	var _key_create = Symbol("create");
 	var _key_setConst = Symbol("setConst");
 	var _key_addSetConsts = Symbol("addSetConsts");
+	var _key_addDefPro = Symbol("addDefPro");
 	var _key_addMember = Symbol("add member"); //'add' and 'enter' in republic-civilian module
 	var _key_removeMember = Symbol("remove member"); //'remove' and 'leave' in republic-civilian module
 	var _key_clear = Symbol("clear all members");
@@ -271,6 +272,7 @@
 		create: _key_create,
 		setConst: _key_setConst,
 		addSetConsts: _key_addSetConsts,
+		addDefPro: _key_addDefPro,
 		addMember: _key_addMember,
 		removeMember: _key_removeMember,
 		clear: _key_clear,
@@ -337,17 +339,17 @@
 	}
 	_p[_key_setConst] = _p._kJs_setConst = _setConst;
 	_setConst.toString = shared_toString;
-	_setConst.user_manuals = ["void Object::setConst(String name, String value, optional Object descriptor);"];
+	_setConst.user_manuals = [
+		"void Dictionary::setConst(String name, String value, optional DataPropertyDescriptor descriptor);"
+	];
 	
 	//set multiple constant method
 	//In fact: insert setting-constant for executing when call _kJs_executePropertyMappers
 	function _addSetConsts(clone_target, descriptor, position) {
-		//this method is called "_kJs_addSetConsts" and need '_kJs_executePropertyMappers(...)' to see effect
-		//this method require _setConsts_mapper available
-		if(!is_extensible_object(this) && typeof this !== "function")
+		//this method is called "_kJs_addSetConsts" and need '_kJs_executePropertyMappers(...)' to apply
+		if (!is_extensible_object(this) && typeof this !== "function")
 			throw new TypeError("Object must be extensible.");
 		var self = this;
-		// return __insertPropertyMapperBefore(clone_target, _setConsts_mapper(this, descriptor), position);
 		return __insertPropertyMapperBefore(clone_target, function (info) {
 			var property = info[_key_key];
 			__setConst(self, property, this[property], descriptor);
@@ -356,18 +358,32 @@
 	_p[_key_addSetConsts] = _p._kJs_addSetConsts = _addSetConsts;
 	_addSetConsts.toString = shared_toString;
 	_addSetConsts.user_manuals = [
-		"void Object::addSetConsts(Object clone_target, optional Object descriptor, optional Handler position)",
+		"void Dictionary::addSetConsts(Dictionary clone_target, optional Object descriptor, optional PropertyMapper position)",
+		"typedef function<Dictionary, PropertyMapperParam> PropertyMapper;",
 		"What this method does is adding a setting-constant handler before position",
-		"Call _kJs_insertPropertyMapperBefore to see effect"
+		"Call _kJs_insertPropertyMapperBefore.call(clone_target) to apply"
 	];
-	/* function _setConsts_mapper(self, descriptor) {
-		//this is a method is used for _kJs_addSetConsts (aka _addSetConsts in this closure), don't release
-		return function mapper(info) {
-			//this function is a handler used for _kJs_addSetConsts, suitable for param "handler" of _kJs_insertPropertyMapperBefore
+	
+	//define multiple properties from a target object by getting their property descriptor
+	//similar to _addSetConsts
+	function _addDefPro(clone_target, position) {
+		//need '_kJs_executePropertyMappers(...)' to apply
+		if (!is_extensible_object(this) && typeof this !== "function")
+			throw new TypeError("Object must be extensible.");
+		var self = this;
+		return __insertPropertyMapperBefore(clone_target, function (info) {
 			var property = info[_key_key];
-			__setConst(self, property, this[property], descriptor);
-		};
-	} */
+			_def_pro(self, property, own_prop_des(clone_target, property));
+		}, position);
+	}
+	_p[_key_addDefPro] = _p._kJs_addDefPro = _addDefPro;
+	_addDefPro.toString = shared_toString;
+	_addDefPro.user_manuals = [
+		"void Dictionary::addDefPro(Dictionary clone_target, optional PropertyMapper position);",
+		"typedef function<Dictionary, PropertyMapperParam> PropertyMapper;",
+		"copy all own properties from clone_target to the object by getting their property-descriptor",
+		"Call _kJs_insertPropertyMapperBefore.call(clone_target) to apply"
+	];
 	
 	//properties mapper module
 	//include _kJs_insertPropertyMapperBefore and _kJs_executePropertyMappers
@@ -380,9 +396,6 @@
 		 *  if handler_list exist, find position and insert before
 		 *  otherwise, create a new handler_list which contains handler and insert created handler_list into property_mapper_module_map
 		**/
-		/* handler_list ?
-			(handler_list.some(_insertPropertyMapperBefore_mapper(handler, position)) || handler_list.push(handler)) :
-			property_mapper_module_map.set(this, [handler]); */
 		handler_list ?
 			(handler_list.some(function (element, index, object) {
 				if (position === handler) {
@@ -396,7 +409,8 @@
 	_p._kJs_insertPropertyMapperBefore = _insertPropertyMapperBefore;
 	_insertPropertyMapperBefore.toString = shared_toString;
 	_insertPropertyMapperBefore.user_manuals = [
-		"void Object::insertPropertyMapperBefore(Handler handler, optional Handler position);",
+		"void Dictionary::insertPropertyMapperBefore(PropertyMapper handler, optional PropertyMapper position);",
+		"typedef function<Dictionary, PropertyMapperParam> PropertyMapper;",
 		"When call _kJs_executePropertyMappers, 'handler' will be called before 'position' is called",
 		"Handler may skip the rest of executing handler list by assigning arguments[0].jump to 1",
 		"Handler may stop the executing process by assigning arguments[0].jump to 2"
@@ -410,7 +424,7 @@
 	_p._kJs_removePropertyMapper = _removePropertyMapper;
 	_removePropertyMapper.toString = shared_toString;
 	_removePropertyMapper.user_manuals = [
-		"void Object::removePropertyMapper(Handler handler)",
+		"void Dictionary::removePropertyMapper(Handler handler)",
 		"removed handler would not execute when call _kJs_executePropertyMappers"
 	];
 	//clearer
@@ -422,7 +436,7 @@
 	_p._kJs_clearAllPropertyMappers = _clearAllPropertyMappers;
 	_clearAllPropertyMappers.toString = shared_toString;
 	_clearAllPropertyMappers.user_manuals = [
-		"void Object::clearAllPropertyMappers();",
+		"void Dictionary::clearAllPropertyMappers();",
 		"clear all inserted property mappers"
 	];
 	//executer
@@ -449,7 +463,7 @@
 	_p._kJs_executePropertyMappers = _executePropertyMappers;
 	_executePropertyMappers.toString = shared_toString;
 	_executePropertyMappers.user_manuals = [
-		"void Object::executePropertyMappers(optional Object args);",
+		"void Dictionary::executePropertyMappers(optional Object args);",
 		"execute all handlers which have been inserted before",
 		"Handler may skip the rest of executing handler list by assigning arguments[0].continue to true",
 		"Handler may stop the executing process by assigning arguments[0].break to true"
