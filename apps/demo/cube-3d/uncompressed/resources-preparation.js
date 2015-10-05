@@ -11,6 +11,7 @@ function Resources(window, document, universe, undefined) {
 	var resources = this;
 	
 	// CONVENTION:	If a function return 0 or 1, 0 means no error and 1 means opposite.
+	// CONVENTION:	Some commands use 0 or 1 as a boolean, 0 means false, 1 means true.
 	
 	if (main()) {
 		resources._error = 1;
@@ -20,7 +21,7 @@ function Resources(window, document, universe, undefined) {
 	// int main(void);
 	function main() {
 		implementation();
-		if(glContextCreation(kxmlclasses, kgraphclasses) || xhrCreatorCreation(keventclasses))
+		if(glContextCreation(kxmlclasses, kgraphclasses) || xhrCreatorCreation(kjsclasses, keventclasses))
 			return 1;
 		return 0;
 	}
@@ -67,13 +68,31 @@ function Resources(window, document, universe, undefined) {
 		return 0;
 	}
 	
-	// int xhrCreatorCreation(ClassCollection);
-	function xhrCreatorCreation(keventclasses) {
-		resources.XHRUtil = XHRUtil;
-		function XHRUtil(callback) {
-			// continue from here...
-			// It so tired, I'll sleep.
+	// int xhrCreatorCreation(ClassCollection, ClassCollection);
+	function xhrCreatorCreation(kjsclasses, keventclasses) {
+		
+		resources.AllXHRs = AllXHRs;
+		
+		function AllXHRs(callback, onerror) {
+			
+			var allxhrs = this;
+			var xhrcount = allxhrs.xhrcount = new keventclasses.XHRCount(
+				kjsclasses.Republic.EXECUTE_ONLY_WHEN_ALL_REQUESTED(
+					callback.bind(allxhrs)
+				)
+			);
+			
+			var createxhr = allxhrs.create = resources.createxhr = xhrcount.create;
+			
+			var vertxhr = allxhrs.vert = createxhr("GET", "./shader.vert", 1);
+			var fragxhr = allxhrs.frag = createxhr("GET", "./shader.frag", 1);
+			
+			onerror = ONCE_EXECUTER(onerror);
+			vertxhr.addEventListener("error", onerror, 0);
+			fragxhr.addEventListener("error", onerror, 0);
+			
 		}
+		
 	}
 	
 }
