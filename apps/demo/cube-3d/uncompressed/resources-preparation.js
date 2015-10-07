@@ -116,12 +116,10 @@ function Resources(window, document, universe, undefined) {
 					use: 1,
 					link: 1,
 					vertexShader: {
-						compile: true,
 						source: allxhrs.vert.response,
 						onerror: errorhandler
 					},
 					fragmentShader: {
-						compile: true,
 						source: allxhrs.frag.response,
 						onerror: errorhandler
 					},
