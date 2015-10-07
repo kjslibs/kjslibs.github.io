@@ -21,8 +21,9 @@ function Resources(window, document, universe, undefined) {
 	// int main(void);
 	function main() {
 		implementation();
-		if(glContextCreation(kxmlclasses, kgraphclasses) || xhrCreatorCreation(kjsclasses, keventclasses))
+		if (glContextCreation(kxmlclasses, kgraphclasses))
 			return 1;
+		glObjectsCreation(xhrCreatorCreation(kjsclasses, keventclasses), gl_util);
 		return 0;
 	}
 	
@@ -68,11 +69,14 @@ function Resources(window, document, universe, undefined) {
 		return 0;
 	}
 	
-	// int xhrCreatorCreation(ClassCollection, ClassCollection);
+	// void xhrCreatorCreation(ClassCollection, ClassCollection);
 	function xhrCreatorCreation(kjsclasses, keventclasses) {
 		
-		resources.AllXHRs = AllXHRs;
+		resources.AllXHRs = AllXHRs; // considering necessarility
 		
+		return AllXHRs;
+		
+		// constructor AllXHRs(function<void, AllXHRs, XHRCount>, function<void, XMLHttpRequest, XMLHttpRequestProgressEvent>);
 		function AllXHRs(callback, onerror) {
 			
 			var allxhrs = this;
@@ -90,6 +94,43 @@ function Resources(window, document, universe, undefined) {
 			onerror = ONCE_EXECUTER(onerror);
 			vertxhr.addEventListener("error", onerror, 0);
 			fragxhr.addEventListener("error", onerror, 0);
+			
+		}
+		
+	}
+	
+	// void glObjectsCreation(Constructor, GLUtil);
+	function glObjectsCreation(AllXHRs, gl_util) {
+		
+		resources.AllGLObjs = AllGLObjs; // considering necessarility
+		
+		return AllGLObjs; // considering necessarility
+		
+		// constructor AllGLObjs(function<void, void, AllGLObjs, AllXHRs>, function<void, XMLHttpRequest, XMLHttpRequestProgressEvent>
+		function AllGLObjs(callback, onerror) {
+			
+			var allglobjs = this;
+			
+			var allxhrs = new AllXHRs(function (xhrcount) {
+				var program_util = allglobjs.program_util = gl_util.createProgramUtil({
+					use: 1,
+					link: 1,
+					vertexShader: {
+						onerror: errorhandler
+					},
+					fragmentShader: {
+						onerror: errorhandler
+					},
+					onerror: errorhandler
+				});
+				function errorhandler(error) {
+					console.debug(String(error));
+					console.log(error);
+					throw error;
+				}
+			}, onerror);
+			
+			callback(allglobjs, allxhrs);
 			
 		}
 		
