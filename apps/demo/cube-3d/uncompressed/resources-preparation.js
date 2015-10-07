@@ -42,7 +42,7 @@ function Resources(window, document, universe, undefined) {
 		
 		// Set up 'canvas'
 		var canvas = resources.canvas = document_util.create({
-			type: document_util.ELEMENT, // test powershell
+			type: document_util.ELEMENT,
 			tag: "canvas",
 			parent: document.body,
 			before: null,
