@@ -183,7 +183,8 @@ CLASS: GLUtil
 		[[GLSL]] optional String source;
 		if (source) {
 			optional Boolean compile;
-			[[*]] optional function<void, GLUtil, ShaderCompilingError> onerror;
+		} else {
+			[[not-required]] notrequired onerror;
 		}
 	}
 	
@@ -226,7 +227,6 @@ CLASS: GLUtil
 		struct : GLObjectCreationDescriptor<WebGLShader, ShaderCompilingError> {
 			optional ProgramAttachmentDescriptor program;
 			[[GLSL]] String source;
-			[[*]] optional function<void, GLUtil, ShaderCompilingError> onerror;
 		}
 	}
 
@@ -268,5 +268,13 @@ EXPLAIN:
 	
 		 - If 'descriptor.vertexShader' (or 'descriptor.fragmentShader') is a WebGLShader object, its type must be VERTEX_SHADER (or FRAGMENT_SHADER)
 		 - Otherwise, the function 'createProgram' will creates and attachs a corresponding WebGLShader object
+	
+	
+	[[not-require]]
+	
+		notrequired name;
+		
+		 - 'name' become unnecessary in the object though it was delivered from the parent class
+		 - 'name' will make no effect
 
 END EXPLAIN
