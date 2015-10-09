@@ -8,7 +8,13 @@ function main(window) {
 	
 	function __main__(allglobjs) {
 		
+		var vertices = new Float32Array([
+			
+		]);
 		
+		var color = new Float32Array([
+			
+		]);
 		
 	}
 	
