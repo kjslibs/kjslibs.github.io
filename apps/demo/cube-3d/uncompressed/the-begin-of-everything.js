@@ -46,14 +46,11 @@ function Universe(window, document, undefined) {
 		
 		universe.ONCE_EXECUTER = ONCE_EXECUTER;
 		function ONCE_EXECUTER(func) {
-			var executed = 0;
 			func = func.bind(undefined);
 			return function (param) {
-				if (executed) {
-					return;
-				}
-				executed = 1;
-				return func(param);
+				var result = func(param);
+				func = donothing;
+				return result;
 			}
 		}
 		
@@ -64,6 +61,9 @@ function Universe(window, document, undefined) {
 				node.removeChild(child);
 			});
 		}
+		
+		universe.donothing = donothing;
+		function donothing () {}
 		
 	}
 	
