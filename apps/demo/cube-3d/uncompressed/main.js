@@ -1,10 +1,10 @@
 
-main();
+main(window);
 
-function main() {
+function main(window) {
 	'use strict';
 	
-	var allglobjs = new AllGLObjs(__main__, onerror);
+	window.allglobjs = new AllGLObjs(__main__, onerror);
 	
 	function __main__(allglobjs) {
 		
