@@ -14,7 +14,7 @@ function main() {
 	
 	function onerror() {
 		var body = document.body;
-		emptyNode(body);
+		clearChildren(body);
 		body.insertBefore(createErrMsgNode("ERROR 404: Resources Not Found."), null);
 	}
 	
