@@ -6,11 +6,8 @@ function main() {
 	
 	var allglobjs = new AllGLObjs(__main__, onerror);
 	
-	function __main__(param) {
+	function __main__(allglobjs) {
 		console.log("__main__ was called.");
-		console.log("param:", param);
-		console.log("this:", this);
-		console.log("__main__:", __main__);
 	}
 	
 	function onerror(param) {
