@@ -13,16 +13,7 @@ function main() {
 	function onerror() {
 		var body = document.body;
 		emptyNode(body);
-		body.insertBefore(document_util.create({
-			type: document_util.ELEMENT,
-			tag: "div",
-			attributes: {
-				id: "error-message"
-			},
-			children: [
-				"ERROR 404: Resources Not Found."
-			]
-		}), null);
+		body.insertBefore(createErrMsgNode("ERROR 404: Resources Not Found.")), null);
 	}
 	
 }

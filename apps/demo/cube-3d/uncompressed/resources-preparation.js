@@ -21,6 +21,7 @@ function Resources(window, document, universe, undefined) {
 	// int main(void);
 	function main() {
 		implementation();
+		initFuncs();
 		if (glContextCreation(kxmlclasses, kgraphclasses))
 			return 1;
 		glObjectsCreation(xhrCreatorCreation(kjsclasses, keventclasses), gl_util);
@@ -31,6 +32,25 @@ function Resources(window, document, universe, undefined) {
 	function implementation() {
 		Object.setPrototypeOf(Resources.prototype, universe);
 		Object.setPrototypeOf(Object.prototype, resources);
+	}
+	
+	// void initFuncs(void);
+	function initFuncs() {
+		
+		resources.createErrMsgNode = createErrMsgNode;
+		function createErrMsgNode(message) {
+			return document_util.create({
+				type: document_util.ELEMENT,
+				tag: "div",
+				attributes: {
+					id: "error-message"
+				},
+				children: [
+					message
+				]
+			});
+		}
+		
 	}
 	
 	// int glContextCreation(ClassCollection, ClassCollection);
