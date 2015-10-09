@@ -7,14 +7,22 @@ function main() {
 	var allglobjs = new AllGLObjs(__main__, onerror);
 	
 	function __main__(allglobjs) {
-		console.log("__main__ was called.");
+		
 	}
 	
-	function onerror(param) {
-		console.warn("onerror was called.");
-		console.log("param:", param);
-		console.log("this:", this);
-		console.log("__main__:", __main__);
+	function onerror() {
+		var body = document.body;
+		emptyNode(body);
+		body.insertBefore(document_util.create({
+			type: document_util.ELEMENT,
+			tag: "div",
+			attributes: {
+				id: "error-message"
+			},
+			children: [
+				"ERROR 404: Resources Not Found."
+			]
+		}), null);
 	}
 	
 }

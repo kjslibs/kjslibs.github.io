@@ -43,6 +43,8 @@ function Universe(window, document, undefined) {
 	
 	// Will be called from theBigBang
 	function initFuncs() {
+		
+		universe.ONCE_EXECUTER = ONCE_EXECUTER;
 		function ONCE_EXECUTER(func) {
 			var executed = 0;
 			func = func.bind(undefined);
@@ -54,7 +56,15 @@ function Universe(window, document, undefined) {
 				return func(param);
 			}
 		}
-		universe.ONCE_EXECUTER = ONCE_EXECUTER;
+		
+		universe.emptyNode = emptyNode;
+		var _call_forEach = Function.call.bind(([]).forEach);
+		function emptyNode(node) {
+			_call_forEach(node, function (child) {
+				node.removeChild(child);
+			});
+		}
+		
 	}
 	
 }
