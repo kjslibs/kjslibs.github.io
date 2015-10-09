@@ -57,7 +57,7 @@ function Universe(window, document, undefined) {
 		universe.emptyNode = emptyNode;
 		var _call_forEach = Function.call.bind(([]).forEach);
 		function emptyNode(node) {
-			_call_forEach(node, function (child) {
+			_call_forEach(node.childNodes, function (child) {
 				node.removeChild(child);
 			});
 		}

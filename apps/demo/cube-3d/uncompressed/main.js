@@ -8,6 +8,8 @@ function main() {
 	
 	function __main__(allglobjs) {
 		
+		
+		
 	}
 	
 	function onerror() {
