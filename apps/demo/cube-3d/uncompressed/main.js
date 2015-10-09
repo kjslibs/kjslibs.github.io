@@ -8,11 +8,14 @@ function main(window) {
 	
 	function __main__(allglobjs) {
 		
+		// front = clockwise, cull counter-clockwise
 		var vertices = new Float32Array([
 			
-		]);
-		
-		var color = new Float32Array([
+			// Back face
+			
+			// Triangle 1
+			-1.0, -1.0, -1.0
+			
 			
 		]);
 		
