@@ -21,9 +21,9 @@ CLASS: GLUtil
 		public BufferUtil createBufferUtil(BufferCreationDescriptor descriptor);
 		public any getParameter(GLenum pname);
 		public any getProgramParameter(WebGLProgram program, GLenum pname);
-		public String? getProgramInfoLog(WebGLProgram program);
+		public string? getProgramInfoLog(WebGLProgram program);
 		public any getShaderParameter(WebGLShader shader, GLenum pname);
-		public String? getShaderInfoLog(WebGLShader shader);
+		public string? getShaderInfoLog(WebGLShader shader);
 	}
 	
 	private abstract class UtilBase {
@@ -34,29 +34,29 @@ CLASS: GLUtil
 	private class ProgramUtil : public UtilBase {
 		public constructor ProgramUtil(WebGLProgram program);
 		public readonly WebGLProgram program;
-		public readonly String infoLog;
+		public readonly string infoLog;
 		public WebGLShader createShader(ShaderCreationDescriptor descriptor);
 		public ShaderUtil createShaderUtil(ShaderUtilCreationDescriptor descriptor);
 		public void attachShader(WebGLShader? shader);
 		public void attachShaderUtil(optional ShaderUtil shader_util);
 		public void detachShader(WebGLShader? shader);
 		public void detachShaderUtil(optional ShaderUtil shader_util);
-		public GLint getAttribLocation(String name);
-		public AttribUtil createAttribUtil(String name);
-		public WebGLUniformLocation? getUniformLocation(String name);
-		public UniformUtil createUniformUtil(String name);
+		public GLint getAttribLocation(string name);
+		public AttribUtil createAttribUtil(string name, GLsizei size, GLenum type, GLbool normalized, GLlong stride, GLintptr offset);
+		public WebGLUniformLocation? getUniformLocation(string name);
+		public UniformUtil createUniformUtil(string name, UniformUtilCreationEnum type, uint length);
 		public any getParameter(GLenum pname);
-		public String? getInfoLog();
+		public string? getInfoLog();
 		public void destroy();
 	}
 	
 	private abstract class ShaderUtil : public UtilBase {
 		public constructor ShaderUtil(WebGLShader? shader);
 		public readonly WebGLShader shader;
-		public String source;
-		public readonly String infoLog;
+		public string source;
+		public readonly string infoLog;
 		public void getSource();
-		public void setSource(String source);
+		public void setSource(string source);
 		public void setSource(Object descriptor);
 		public void compile(optional function<void, GLUtil, ShaderCompilingError> onerror);
 		public void attachProgram(WebGLProgram? program);
@@ -64,7 +64,7 @@ CLASS: GLUtil
 		public void detachProgram(WebGLProgram? program);
 		public void detachProgramUtil(optional ProgramUtil program_util);
 		public any getParamter(GLenum pname);
-		public String? getInfoLog();
+		public string? getInfoLog();
 		public void destroy();
 	}
 	
@@ -82,7 +82,7 @@ CLASS: GLUtil
 		public readonly GLenum target;
 		public readonly GLlong size;
 		public readonly GLenum usage;
-		public readonly Boolean valid;
+		public readonly bool valid;
 		public void bind();
 		public void passData(GLlong size, GLenum usage);
 		public void passData(Object data, GLenum usage);
@@ -97,11 +97,11 @@ CLASS: GLUtil
 	}
 	
 	private class AttribUtil : public VariableUtil {
-		public constructor AttribUtil(GLuint attrib_location, GLint size, GLenum type, Boolean normalized, GLsizei stride, GLintptr offset);
+		public constructor AttribUtil(GLuint attrib_location, GLint size, GLenum type, GLbool normalized, GLsizei stride, GLintptr offset);
 		public readonly GLuint attribLocation;
 		public readonly GLint size;
 		public readonly GLenum type;
-		public readonly Boolean normalized;
+		public readonly GLbool normalized;
 		public readonly GLsizei stride;
 		public readonly GLintptr offset;
 		public any set(any value);
@@ -109,56 +109,60 @@ CLASS: GLUtil
 	}
 	
 	private class UniformUtil : public VariableUtil {
-		public constructor UniformUtil(WebGLUniformLocation uniform_location, String type, GLuint count);
+		public constructor UniformUtil(WebGLUniformLocation uniform_location, UniformUtilCreationEnum type, uint count);
 		public readonly WebGLUniformLocation uniformLocation;
-		public readonly String type;
+		public readonly string type;
 		public readonly GLuint count;
 		public any value;
 		public any get();
 		public void set(any value);
 	}
 	
+	enum UniformUtilCreationEnum : string {
+		"float", "int", "fvec", "ivec", "fmat"
+	}
+	
 	private abstract class GLError : UtilBase {
-		public constructor GLError(String name);
-		public readonly String name;
-		public abstract readonly String message;
+		public constructor GLError(string name);
+		public readonly string name;
+		public abstract readonly string message;
 		public abstract readonly GLErrorDetails details;
-		public abstract readonly String stack;
-		public operator String();
+		public abstract readonly string stack;
+		public operator string();
 	}
 	
 	private abstract class GLErrorDetails : UtilBase {
-		public constructor GLErrorDetails(String type);
-		public readonly String type;
-		public abstract readonly String infoLog;
+		public constructor GLErrorDetails(string type);
+		public readonly string type;
+		public abstract readonly string infoLog;
 	}
 	
 	private class ProgramLinkingError : GLError {
-		public constructor ProgramLinkingError(WebGLProgram program, String info_log) : GLError("ProgramLinkingError");
-		public readonly String message;
+		public constructor ProgramLinkingError(WebGLProgram program, string info_log) : GLError("ProgramLinkingError");
+		public readonly string message;
 		public readonly ProgramLinkingErrorDetails details;
-		public readonly String stack;
+		public readonly string stack;
 	}
 	
 	private class ProgramLinkingErrorDetails : GLErrorDetails {
-		public constructor ProgramLinkingErrorDetails(WebGLProgram program, String info_log) : GLErrorDetails("ProgramLinkingError");
+		public constructor ProgramLinkingErrorDetails(WebGLProgram program, string info_log) : GLErrorDetails("ProgramLinkingError");
 		public readonly WebGLProgram program;
-		public readonly String infoLog;
+		public readonly string infoLog;
 	}
 	
 	private class ShaderCompilingError : GLError {
-		public constructor ShaderCompilingError(WebGLShader shader, String info_log, String source) : GLError("ShaderCompilingError");
+		public constructor ShaderCompilingError(WebGLShader shader, string info_log, string source) : GLError("ShaderCompilingError");
 		public readonly WebGLShader shader;
-		public readonly String message;
+		public readonly string message;
 		public readonly ShaderCompilingErrorDetails details;
-		public readonly String stack;
+		public readonly string stack;
 	}
 	
 	private class ShaderCompilingErrorDetails : GLErrorDetails {
-		public constructor ShaderCompilingErrorDetails(WebGLShader shader, String info_log, String source) : GLErrorDetails("ShaderCompilingError");
+		public constructor ShaderCompilingErrorDetails(WebGLShader shader, string info_log, string source) : GLErrorDetails("ShaderCompilingError");
 		public readonly WebGLShader shader;
-		public readonly String infoLog;
-		public readonly String source;
+		public readonly string infoLog;
+		public readonly string source;
 	}
 	
 	template <typename GLObject, typename GLError>
@@ -171,8 +175,8 @@ CLASS: GLUtil
 		decltype(null),
 		decltype(undefined),
 		struct : GLObjectCreationDescriptor<WebGLProgram, ProgramLinkingError> {
-			optional Boolean use;
-			optional Boolean link;
+			optional bool use;
+			optional bool link;
 			[[SHADER_TYPE => VERTEX_SHADER]] optional ShaderAttachmentDescriptor vertexShader;
 			[[SHADER_TYPE => FRAGMENT_SHADER]] optional ShaderAttachmentDescriptor fragmentShader;
 		}
@@ -180,9 +184,9 @@ CLASS: GLUtil
 	
 	struct NonclassifiedShaderCreationDescriptor : GLObjectCreationDescriptor<WebGLShader, ShaderCompilingError> {
 		optional ProgramAttachmentDescriptor program;
-		[[GLSL]] optional String source;
+		[[GLSL]] optional string source;
 		if (source) {
-			optional Boolean compile;
+			optional bool compile;
 		} else {
 			[[not-required]] notrequired onerror;
 		}
@@ -193,7 +197,7 @@ CLASS: GLUtil
 	}
 	
 	struct BufferCreationDescriptor {
-		optional Boolean bind;
+		optional bool bind;
 		optional GLenum target;
 		optional GLenum usage;
 		optional Object data;
@@ -221,12 +225,12 @@ CLASS: GLUtil
 	}
 	
 	pattern ShaderAttachmentDescriptor {
-		[[GLSL]] String source,
+		[[GLSL]] string source,
 		WebGLShader shader,
 		ShaderUtil shader_util,
 		struct : GLObjectCreationDescriptor<WebGLShader, ShaderCompilingError> {
 			optional ProgramAttachmentDescriptor program;
-			[[GLSL]] String source;
+			[[GLSL]] string source;
 		}
 	}
 
@@ -259,7 +263,7 @@ EXPLAIN:
 	
 	[[GLSL]]
 	
-		String source;
+		string source;
 		
 		 - Property named 'source' of 'descriptor' is a string which a GLSL (GL Shading Language) source code
 		 - If 'source' can't be compiled (A compiling-error was generated), then an object of type 'ShaderCompilingError' will be handled by 'descriptor.onerror' or will be thrown
