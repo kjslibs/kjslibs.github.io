@@ -9,7 +9,7 @@ function main(window, Float32Array, undefined) {
 	function __main__(allglobjs) {
 		
 		// front = clockwise, cull counter-clockwise
-		// float vertices[3 * 2 * 6];
+		// float vertices[3 * 3 * 2 * 6];
 		var vertices = new Float32Array([
 			
 			// LEFT FACE
@@ -99,7 +99,7 @@ function main(window, Float32Array, undefined) {
 					return a + b;
 				}),
 				mixAvg: createColorMixer(function (a, b) {
-					return .5 * (a + b);
+					return 0.5 * (a + b);
 				}),
 				mixDark: createColorMixer(function (a, b) {
 					return 1.0 - a - b;

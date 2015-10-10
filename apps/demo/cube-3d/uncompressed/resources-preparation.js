@@ -147,6 +147,7 @@ function Resources(window, document, universe, undefined) {
 				});
 				allglobjs.a_position = program_util.createAttribUtil("a_position", 3, gl.FLOAT, 0, 0, 0);
 				allglobjs.u_rotation = program_util.createUniformUtil("u_rotation", "fvec", 4);
+				allglobjs.a_color = program_util.createAttribUtil("a_color", 3, gl.FLOAT, 0, 0, 0);
 				function errorhandler(error) {
 					console.debug(String(error));
 					console.log(error);
