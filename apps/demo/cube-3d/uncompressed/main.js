@@ -88,7 +88,7 @@ function main(window, Float32Array, undefined) {
 		
 		// define color per vertex (see vertices[] above)
 		// float color[vertices.length];
-		var color = new Float32Array(vertices.length);
+		var color = window.color = new Float32Array(vertices.length);
 		var define_color = window.define_color = (function () {
 			DefineColor.prototype = {
 				RED: createColor(1.0, 0.0, 0.0),
