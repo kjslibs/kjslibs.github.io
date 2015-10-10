@@ -109,11 +109,11 @@ function main(window, Float32Array, undefined) {
 			function DefineColor() {
 				var define_color = this;
 				var position = 0;
-				Object.setPrototypeOf(addColor3f, define_color);
-				Object.setPrototypeOf(addColor3fv, define_color);
-				Object.setPrototypeOf(pointer, define_color);
-				define_color.addColor3f = addColor3f;
-				define_color.pointer = pointer;
+				createMethodAdder(define_color)
+					("addColor3f", addColor3f)
+					("addColor3fv", addColor3fv)
+					("pointer", pointer)
+				;
 				function addColor3f(red, green, blue) {
 					addElement(red)(green)(blue);
 					return addColor3f;
@@ -174,6 +174,14 @@ function main(window, Float32Array, undefined) {
 		var body = document.body;
 		clearChildren(body);
 		body.insertBefore(createErrMsgNode("ERROR 404: Resources Not Found."), null);
+	}
+	
+	function createMethodAdder(object) {
+		return function addMethod(name, method) {
+			object[name] = method;
+			Object.setPrototypeOf(method, object);
+			return addMethod;
+		}
 	}
 	
 }
