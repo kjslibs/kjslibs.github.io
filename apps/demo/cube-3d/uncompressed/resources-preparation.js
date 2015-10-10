@@ -145,6 +145,7 @@ function Resources(window, document, universe, undefined) {
 					},
 					onerror: errorhandler
 				});
+				allglobjs.a_position = program_util.createAttribUtil("a_position", 3, gl.FLOAT, 0, 0, 0);
 				function errorhandler(error) {
 					console.debug(String(error));
 					console.log(error);
