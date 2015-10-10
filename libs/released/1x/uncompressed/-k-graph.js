@@ -479,6 +479,7 @@
 				setconst("offset", offset);
 				setconst("active", active);
 				setconst("set", set);
+				setconst("attribLocation", attrib_location);
 				setconst(_key_basedObject, attrib_location);
 			}
 			var _attrib_util_ = AttribUtil.prototype = (function (proto) {
@@ -491,6 +492,8 @@
 				setconst("offset", null);
 				setconst("active", null);
 				setconst("set", null);
+				setconst("attribLocation", null);
+				setconst(_key_basedObject, null);
 				return proto;
 			})(_create_new(_variable_util_));
 			function UniformUtil(uniform_location, type, length) {
@@ -548,11 +551,15 @@
 				var setconst = _setConst_bind(this);
 				setconst("get", _$gl_getUniform(gl, program, uniform_location));
 				setconst("set", createsetter(gl, uniform_location));
+				setconst("uniformLocation", uniform_location);
+				setconst(_key_basedObject, uniform_location);
 			}
 			var _uniform_util_ = UniformUtil.prototype = (function (proto) {
 				var setconst = _setConst_bind(proto);
 				setconst("get", null);
 				setconst("set", null);
+				setconst("uniformLocation", null);
+				setconst(_key_basedObject, null);
 				_def_pro(proto, "value", {
 					get: function () {
 						return this.get();
