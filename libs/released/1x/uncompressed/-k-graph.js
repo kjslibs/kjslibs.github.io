@@ -479,7 +479,6 @@
 				setconst("offset", offset);
 				setconst("active", active);
 				setconst("set", set);
-				setconst("attribLocation", attrib_location);
 				setconst(_key_basedObject, attrib_location);
 			}
 			var _attrib_util_ = AttribUtil.prototype = (function (proto) {
@@ -492,7 +491,6 @@
 				setconst("offset", null);
 				setconst("active", null);
 				setconst("set", null);
-				setconst("attribLocation", null);
 				setconst(_key_basedObject, null);
 				return proto;
 			})(_create_new(_variable_util_));
@@ -1111,3 +1109,4 @@
 	freeze(Initor);
 	
 })(window, Object, Function, Symbol, Map, Set, Array, WebGLRenderingContext, WebGLProgram, WebGLShader);
+
