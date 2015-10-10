@@ -1,7 +1,7 @@
 
 main(window, Float32Array);
 
-function main(window, Float32Array) {
+function main(window, Float32Array, undefined) {
 	'use strict';
 	
 	window.allglobjs = new AllGLObjs(__main__, onerror);
@@ -95,13 +95,13 @@ function main(window, Float32Array) {
 				GREEN: createColor(0.0, 1.0, 0.0),
 				BLUE: createColor(0.0, 0.0, 1.0),
 				mix: mixColor,
-				mixBright: mixColor.bind(function (a, b) {
+				mixBright: createColorMixer(function (a, b) {
 					return a + b;
 				}),
-				mixAvg: mixColor.bind(function (a, b) {
+				mixAvg: createColorMixer(function (a, b) {
 					return .5 * (a + b);
 				}),
-				mixDark: mixColor.bind(function (a, b) {
+				mixDark: createColorMixer(function (a, b) {
 					return 1.0 - a - b;
 				})
 			};
@@ -147,6 +147,9 @@ function main(window, Float32Array) {
 				function make(index) {
 					rgb[index] = calculate(rgb1[index], rgb2[index]);
 				}
+			}
+			function createColorMixer(method) {
+				return mixColor.bind(undefined, method);
 			}
 		})();
 		(function (RR, GG, BB, mixAvg) {
