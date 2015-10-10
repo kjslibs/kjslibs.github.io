@@ -62,6 +62,44 @@ function Universe(window, document, undefined) {
 			}
 		}
 		
+		universe.Matrix = Matrix;
+		function Matrix(rows, cols, base) {
+			
+		}
+		Matrix.prototype = new (function () {
+			var proto = this;
+			Object.setPrototypeOf(Matrix, proto);
+			proto.create = create;
+			proto.createSquare = createSquare;
+			proto.createIdentity = createIdentity;
+			proto.turnIdentity = turnIdentity;
+			return proto;
+			function create(rows, cols, base) {
+				return new Matrix(rows, cols, base || new Float64Array(rows * cols));
+			}
+			function createSquare(size, base) {
+				return create(size, size, base);
+			}
+			function createIdentity(size, base) {
+				var result = createSquare(size, base);
+				turnIdentity(result, size);
+				return result;
+			}
+			function turnIdentity(matrix, size) {
+				var base = matrix.base;
+				var i = 0, l = size * size;
+				while (i != l) {
+					base[i] = 1;
+					++i;
+					var j = size;
+					for ( ; j; --j) {
+						base[i] = 0;
+						++i;
+					}
+				}
+			}
+		})();
+		
 		universe.donothing = donothing;
 		function donothing () {}
 		
