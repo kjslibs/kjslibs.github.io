@@ -83,6 +83,10 @@ function Universe(window, document, undefined) {
 		Matrix.prototype = new (function () {
 			var proto = this;
 			Object.setPrototypeOf(Matrix, proto);
+			proto.symbols = {
+				arrayElement: _mat_key_arrayElement,
+				matrixElement: _mat_key_matrixElement
+			};
 			proto.create = create;
 			proto.createSquare = createSquare;
 			proto.createIdentity = createIdentity;
