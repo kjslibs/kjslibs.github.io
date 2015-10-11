@@ -184,5 +184,7 @@ function main(window, Float32Array, undefined) {
 		}
 	}
 	
+	console.log("Load done.");
+	
 }
 

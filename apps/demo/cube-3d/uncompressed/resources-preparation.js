@@ -161,7 +161,5 @@ function Resources(window, document, universe, undefined) {
 		
 	}
 	
-	console.log("Load done.");
-	
 }
 

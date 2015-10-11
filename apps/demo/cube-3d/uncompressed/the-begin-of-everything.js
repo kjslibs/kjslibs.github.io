@@ -44,6 +44,10 @@ function Universe(window, document, undefined) {
 	// Will be called from theBigBang
 	function initFuncs() {
 		
+		var _call = Function.call; // it's 'Function.prototype.call' because 'Function' is a function
+		var _array_ = Array.prototype;
+		var _array_map_call = call.bind(_array_.map);
+		
 		universe.ONCE_EXECUTER = ONCE_EXECUTER;
 		function ONCE_EXECUTER(func) {
 			func = func.bind(undefined);
@@ -63,8 +67,18 @@ function Universe(window, document, undefined) {
 		}
 		
 		universe.Matrix = Matrix;
+		var _mat_key_arrayElement = Symbol("Matrix::symbols::arrayElement");
+		var _mat_key_matrixElement = Symbol("Matrix::symbols::matrixElement");
 		function Matrix(rows, cols, base) {
-			
+			var matrix = this;
+			matrix.clone = clone;
+			matrix.sub = sub;
+			function clone() {
+				return new Matrix(rows, cols, cloneArray(base));
+			}
+			function sub(firstrow, firstcol, rows, cols) {
+				// continue from here...
+			}
 		}
 		Matrix.prototype = new (function () {
 			var proto = this;
@@ -89,16 +103,44 @@ function Universe(window, document, undefined) {
 				var base = matrix.base;
 				var i = 0, l = size * size;
 				while (i != l) {
-					base[i] = 1;
+					base[_mat_key_arrayElement](i).set(1);
 					++i;
 					var j = size;
 					for ( ; j; --j) {
-						base[i] = 0;
+						base[_mat_key_arrayElement](i).set(0);
 						++i;
 					}
 				}
 			}
 		})();
+		_array_[_mat_key_arrayElement] = (function () {
+			var proto = ArrayElementAccessor.prototype = {
+				get: function () {
+					return this.array[this.index];
+				},
+				set: function (value) {
+					this.array[this.index] = value;
+				}
+			};
+			Object.defineProperty(proto, "value", proto);
+			return function (index) {
+				return new ArrayElementAccessor(this, index);
+			}
+			function ArrayElementAccessor(array, index) {
+				this.array = array;
+				this.index = index;
+			}
+		})();
+		
+		universe.cloneArray = cloneArray;
+		function cloneArray(array) {
+			return _array_map_call(array, returnFirstArg);
+		}
+		
+		universe.returnFirstArg = returnFirstArg;
+		function returnFirstArg(arg) {
+			return arg;
+		}
 		
 		universe.donothing = donothing;
 		function donothing () {}
