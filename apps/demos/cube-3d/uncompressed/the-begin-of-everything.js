@@ -46,7 +46,7 @@ function Universe(window, document, undefined) {
 		
 		var _call = Function.call; // it's 'Function.prototype.call' because 'Function' is a function
 		var _array_ = Array.prototype;
-		var _array_map_call = call.bind(_array_.map);
+		var _array_map_call = _call.bind(_array_.map);
 		
 		universe.ONCE_EXECUTER = ONCE_EXECUTER;
 		function ONCE_EXECUTER(func) {
