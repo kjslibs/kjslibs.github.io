@@ -180,6 +180,7 @@ function Universe(window, document, undefined) {
 			function ArrayElementAccessor(array, index) {
 				this.array = array;
 				this.index = index;
+				Object.freeze(this);
 			}
 		})();
 		
