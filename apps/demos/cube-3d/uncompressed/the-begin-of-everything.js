@@ -72,7 +72,7 @@ function Universe(window, document, undefined) {
 		}
 		
 		universe.Matrix = Matrix;
-		var _mat_key_arrayElement = Symbol("Matrix::symbols::arrayElement");
+		var _mat_key_objectProperty = Symbol("Matrix::symbols::objectProperty");
 		var _mat_key_matrixElement = Symbol("Matrix::symbols::matrixElement");
 		function Matrix(rows, cols, base) {
 			var matrix = this;
@@ -113,7 +113,7 @@ function Universe(window, document, undefined) {
 				}
 			}
 			function createElementAccessor(i, j) {
-				var baseaccessor = base[_mat_key_arrayElement](i * rows + j);
+				var baseaccessor = base[_mat_key_objectProperty](i * rows + j);
 				var accessor = {
 					matrix: matrix,
 					rowId: i,
@@ -130,7 +130,7 @@ function Universe(window, document, undefined) {
 			var proto = this;
 			Object.setPrototypeOf(Matrix, proto);
 			proto.symbols = Object.freeze({
-				arrayElement: _mat_key_arrayElement,
+				objectProperty: _mat_key_objectProperty,
 				matrixElement: _mat_key_matrixElement
 			});
 			proto.create = create;
@@ -154,17 +154,17 @@ function Universe(window, document, undefined) {
 				var base = matrix.base;
 				var i = 0, l = size * size;
 				while (i != l) {
-					base[_mat_key_arrayElement](i).set(1);
+					base[_mat_key_objectProperty](i).set(1);
 					++i;
 					var j = size;
 					for ( ; j; --j) {
-						base[_mat_key_arrayElement](i).set(0);
+						base[_mat_key_objectProperty](i).set(0);
 						++i;
 					}
 				}
 			}
 		})();
-		universe[_mat_key_arrayElement] = (function () {
+		universe[_mat_key_objectProperty] = (function () {
 			var proto = PropertyAccessor.prototype = {
 				get: function () {
 					return this.object[this.name];
