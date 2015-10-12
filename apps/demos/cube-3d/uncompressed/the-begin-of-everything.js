@@ -165,21 +165,21 @@ function Universe(window, document, undefined) {
 			}
 		})();
 		universe[_mat_key_arrayElement] = (function () {
-			var proto = ArrayElementAccessor.prototype = {
+			var proto = PropertyAccessor.prototype = {
 				get: function () {
-					return this.array[this.index];
+					return this.object[this.name];
 				},
 				set: function (value) {
-					this.array[this.index] = value;
+					this.object[this.name] = value;
 				}
 			};
 			Object.defineProperty(proto, "value", proto);
 			return function (index) {
-				return new ArrayElementAccessor(this, index);
+				return new PropertyAccessor(this, index);
 			}
-			function ArrayElementAccessor(array, index) {
-				this.array = array;
-				this.index = index;
+			function PropertyAccessor(object, name) {
+				this.object = object;
+				this.name = name;
 				Object.freeze(this);
 			}
 		})();
