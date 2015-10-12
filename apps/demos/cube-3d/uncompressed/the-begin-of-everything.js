@@ -164,7 +164,7 @@ function Universe(window, document, undefined) {
 				}
 			}
 		})();
-		_array_[_mat_key_arrayElement] = (function () {
+		universe[_mat_key_arrayElement] = (function () {
 			var proto = ArrayElementAccessor.prototype = {
 				get: function () {
 					return this.array[this.index];
