@@ -47,6 +47,11 @@ function Universe(window, document, undefined) {
 		var _call = Function.call; // it's 'Function.prototype.call' because 'Function' is a function
 		var _array_ = Array.prototype;
 		var _array_map_call = _call.bind(_array_.map);
+		var _arr_key_clone = Symbol("Array::clone");
+		
+		universe[_arr_key_clone] = function () {
+			return _array_map_call(this, returnFirstArg);
+		};
 		
 		universe.ONCE_EXECUTER = ONCE_EXECUTER;
 		function ONCE_EXECUTER(func) {
@@ -71,26 +76,68 @@ function Universe(window, document, undefined) {
 		var _mat_key_matrixElement = Symbol("Matrix::symbols::matrixElement");
 		function Matrix(rows, cols, base) {
 			var matrix = this;
+			matrix.rows = rows;
+			matrix.cols = cols;
+			matrix.base = base;
 			matrix.clone = clone;
 			matrix.sub = sub;
+			matrix[_mat_key_matrixElement] = createElementAccessor;
 			function clone() {
-				return new Matrix(rows, cols, cloneArray(base));
+				return new Matrix(rows, cols, base[_arr_key_clone]());
 			}
 			function sub(firstrow, firstcol, rows, cols) {
-				// continue from here...
+				var parent = this;
+				var first = parent[_mat_key_matrixElement](firstrow, firstcol);
+				var proto = SubMatrix.prototype = {
+					parent: parent,
+					first: first,
+					__proto__: parent
+				};
+				proto._kJs_setConst(_mat_key_matrixElement, createElementAccessor);
+				Object.freeze(proto);
+				return new SubMatrix();
+				function SubMatrix() {
+					Object.freeze(this);
+				}
+				function createElementAccessor(rowId, colId) {
+					var baseaccessor = parent[_mat_key_matrixElement](rowId + firstrow, colId + firstcol);
+					ElementAccessor.prototype = {
+						rowId: rowId,
+						colId: colId,
+						__proto__: baseaccessor
+					};
+					return new ElementAccessor();
+					function ElementAccessor() {
+						Object.freeze(this);
+					}
+				}
+			}
+			function createElementAccessor(i, j) {
+				var baseaccessor = base[_mat_key_arrayElement](i * rows + j);
+				var accessor = {
+					matrix: matrix,
+					rowId: i,
+					colId: j,
+					get: baseaccessor.get.bind(baseaccessor),
+					set: baseaccessor.set.bind(baseaccessor)
+				};
+				Object.defineProperty(accessor, "value", accessor);
+				Object.freeze(accessor);
+				return accessor;
 			}
 		}
 		Matrix.prototype = new (function () {
 			var proto = this;
 			Object.setPrototypeOf(Matrix, proto);
-			proto.symbols = {
+			proto.symbols = Object.freeze({
 				arrayElement: _mat_key_arrayElement,
 				matrixElement: _mat_key_matrixElement
-			};
+			});
 			proto.create = create;
 			proto.createSquare = createSquare;
 			proto.createIdentity = createIdentity;
 			proto.turnIdentity = turnIdentity;
+			proto = Object.create(proto);
 			return proto;
 			function create(rows, cols, base) {
 				return new Matrix(rows, cols, base || new Float64Array(rows * cols));
@@ -135,11 +182,6 @@ function Universe(window, document, undefined) {
 				this.index = index;
 			}
 		})();
-		
-		universe.cloneArray = cloneArray;
-		function cloneArray(array) {
-			return _array_map_call(array, returnFirstArg);
-		}
 		
 		universe.returnFirstArg = returnFirstArg;
 		function returnFirstArg(arg) {
