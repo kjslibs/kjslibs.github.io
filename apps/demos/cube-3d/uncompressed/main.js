@@ -176,14 +176,6 @@ function main(window, Float32Array, undefined) {
 		body.insertBefore(createErrMsgNode("ERROR 404: Resources Not Found."), null);
 	}
 	
-	function createMethodAdder(object) {
-		return function addMethod(name, method) {
-			object[name] = method;
-			Object.setPrototypeOf(method, object);
-			return addMethod;
-		}
-	}
-	
 	console.log("Load done.");
 	
 }

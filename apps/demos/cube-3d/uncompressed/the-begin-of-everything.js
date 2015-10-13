@@ -1,4 +1,4 @@
-
+﻿
 Universe.prototype = Object.create(null); // Why is this necessary? Let's see [0] to find the answer.
 window.universe = new Universe(window, document);
 
@@ -155,6 +155,15 @@ function Universe(window, document, undefined) {
 		universe.returnFirstArg = returnFirstArg;
 		function returnFirstArg(arg) {
 			return arg;
+		}
+		
+		universe.createMethodAdder = createMethodAdder;
+		function createMethodAdder(object) {
+			return function addMethod(name, method) {
+				object[name] = method;
+				Object.setPrototypeOf(method, object);
+				return addMethod;
+			}
 		}
 		
 		universe.donothing = donothing;
