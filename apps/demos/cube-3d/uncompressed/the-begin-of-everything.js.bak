@@ -91,7 +91,7 @@ function Universe(window, document, undefined) {
 				createCalculatingContext: createCalculatingContext,
 				__proto__: {
 					add: add,
-					createIdentity: createIdentity,
+					makeIdentity: makeIdentity,
 					scalarMultiply: scalarMultiply,
 					matrixMultiply: matrixMultiply,
 					getArrayIndex: getArrayIndex
@@ -107,6 +107,15 @@ function Universe(window, document, undefined) {
 					var context = this;
 					makeIdentity(context.matR, context.startR, size);
 					return context;
+				},
+				scalarMultiply: function (matA, startA, matB, startB, elements, factor) {
+					var context = this;
+					scalarMultiply(context.matR, context.startR, matA, startA, matB, startB, elements, factor);
+					return context;
+				},
+				matrixMultiply: function (matA, startA, matB, startB, rowsAR, colsArowsB, colsBR) {
+					var context = this;
+					
 				},
 				__proto__: proto
 			};
@@ -125,7 +134,7 @@ function Universe(window, document, undefined) {
 				}
 				return add;
 			}
-			function createIdentity(matR, startR, size) {
+			function makeIdentity(matR, startR, size) {
 				for (var i = size; ; --i) {
 					matR[startR] = 1;
 					++startR;
@@ -137,7 +146,7 @@ function Universe(window, document, undefined) {
 						++startR;
 					}
 				}
-				return createIdentity;
+				return makeIdentity;
 			}
 			function scalarMultiply(matR, startR, matA, startA, elements, factor) {
 				var limR = startR + elements;

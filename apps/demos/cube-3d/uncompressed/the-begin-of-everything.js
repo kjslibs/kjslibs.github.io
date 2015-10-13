@@ -108,7 +108,16 @@ function Universe(window, document, undefined) {
 					makeIdentity(context.matR, context.startR, size);
 					return context;
 				},
-				
+				scalarMultiply: function (matA, startA, matB, startB, elements, factor) {
+					var context = this;
+					scalarMultiply(context.matR, context.startR, matA, startA, matB, startB, elements, factor);
+					return context;
+				},
+				matrixMultiply: function (matA, startA, matB, startB, rowsAR, colsArowsB, colsBR) {
+					var context = this;
+					matrixMultiply(context.matR, context.startR, matA, startA, matB, startB, rowsAR, colsArowsB, colsBR);
+					return context;
+				},
 				__proto__: proto
 			};
 			return Object.create(proto);
