@@ -44,15 +44,6 @@ function Universe(window, document, undefined) {
 	// Will be called from theBigBang
 	function initFuncs() {
 		
-		var _call = Function.call; // it's 'Function.prototype.call' because 'Function' is a function
-		var _array_ = Array.prototype;
-		var _array_map_call = _call.bind(_array_.map);
-		var _arr_key_clone = Symbol("Array::clone");
-		
-		universe[_arr_key_clone] = function () {
-			return _array_map_call(this, returnFirstArg);
-		};
-		
 		universe.ONCE_EXECUTER = ONCE_EXECUTER;
 		function ONCE_EXECUTER(func) {
 			func = func.bind(undefined);
@@ -175,11 +166,6 @@ function Universe(window, document, undefined) {
 				return first + rowId + rows * colId;
 			}
 		})();
-		
-		universe.returnFirstArg = returnFirstArg;
-		function returnFirstArg(arg) {
-			return arg;
-		}
 		
 		universe.createMethodAdder = createMethodAdder;
 		function createMethodAdder(object) {

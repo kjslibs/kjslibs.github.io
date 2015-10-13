@@ -115,7 +115,8 @@ function Universe(window, document, undefined) {
 				},
 				matrixMultiply: function (matA, startA, matB, startB, rowsAR, colsArowsB, colsBR) {
 					var context = this;
-					
+					matrixMultiply(context.matR, context.startR, matA, startA, matB, startB, rowsAR, colsArowsB, colsBR);
+					return context;
 				},
 				__proto__: proto
 			};
