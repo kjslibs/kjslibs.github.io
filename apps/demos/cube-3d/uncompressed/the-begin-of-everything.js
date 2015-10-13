@@ -60,7 +60,7 @@ function Universe(window, document, undefined) {
 				var result = func(param);
 				func = donothing;
 				return result;
-			}
+			};
 		}
 		
 		universe.clearChildren = clearChildren;
@@ -76,6 +76,10 @@ function Universe(window, document, undefined) {
 				
 				Matrix is an array (iterable objecy) which store matrix column next to column
 				
+				The very first element is indexed (0, 0), placed at array[first + 0]
+				
+				The element at (i, j) of Mat[m, n] is placed at array[getArrayIndex(first, i, j, m, n)]
+				
 				    | a d g |
 				Mat | b e h | => Array [a, b, c, d, e, f, g, h, i]
 				    | c f i |
@@ -89,7 +93,8 @@ function Universe(window, document, undefined) {
 					add: add,
 					createIdentity: createIdentity,
 					scalarMultiply: scalarMultiply,
-					matrixMultiply: matrixMultiply
+					matrixMultiply: matrixMultiply,
+					getArrayIndex: getArrayIndex
 				}
 			};
 			return Object.create(proto);
@@ -127,13 +132,23 @@ function Universe(window, document, undefined) {
 				}
 				return scalarMultiply;
 			}
-			function matrixMultiply(matR, startR, matA, startA, matB, startB, rowsAR, colsARrowsBR, colsBR) {
-				for (var i = rowsAR; i; --i) {
-					for (var j = colsBR; j; --j) {
-						// continue from here...
+			function matrixMultiply(matR, startR, matA, startA, matB, startB, rowsAR, colsArowsB, colsBR) {
+				for (var i = 0; i != rowsAR; ++i) {
+					for (var j = 0; j != colsBR; ++j) {
+						var total = 0;
+						for (var k = 0; k != colsArowsB; ++k) {
+							total
+								+= matA[getArrayIndex(startA, i, k, rowsAR, colsArowsB)]
+								 * matB[getArrayIndex(startB, k, j, colsArowsB, colsBR)]
+							;
+						}
+						matR[getArrayIndex(startR, i, j, rowsAR, colsBR)] = total;
 					}
 				}
 				return matrixMultiply;
+			}
+			function getArrayIndex(first, rowId, colId, rows, cols) {
+				return first + rowId + rows * colId;
 			}
 		})();
 		
