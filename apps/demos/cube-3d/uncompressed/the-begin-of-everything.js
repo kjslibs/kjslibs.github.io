@@ -99,9 +99,9 @@ function Universe(window, document, undefined) {
 					makeIdentity(context.matR, context.startR, size);
 					return context;
 				},
-				scalarMultiply: function (matA, startA, matB, startB, elements, factor) {
+				scalarMultiply: function (matA, startA, elements, factor) {
 					var context = this;
-					scalarMultiply(context.matR, context.startR, matA, startA, matB, startB, elements, factor);
+					scalarMultiply(context.matR, context.startR, matA, startA, elements, factor);
 					return context;
 				},
 				matrixMultiply: function (matA, startA, matB, startB, rowsAR, colsArowsB, colsBR) {
