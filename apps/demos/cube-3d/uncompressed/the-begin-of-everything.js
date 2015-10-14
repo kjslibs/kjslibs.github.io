@@ -85,6 +85,7 @@ function Universe(window, document, undefined) {
 					makeIdentity: makeIdentity,
 					scalarMultiply: scalarMultiply,
 					matrixMultiply: matrixMultiply,
+					subMatrix: subMatrix,
 					getArrayIndex: getArrayIndex
 				}
 			};
@@ -107,6 +108,11 @@ function Universe(window, document, undefined) {
 				matrixMultiply: function (matA, startA, matB, startB, rowsAR, colsArowsB, colsBR) {
 					var context = this;
 					matrixMultiply(context.matR, context.startR, matA, startA, matB, startB, rowsAR, colsArowsB, colsBR);
+					return context;
+				},
+				subMatrix: function (rowsR, colsR, matA, startA, rowsA, colsA, firstRowIdA, firstColIdA) {
+					var context = this;
+					subMatrix(context.matR, context.startR, rowsR, colsR, matA, startA, colsA, rowsA, firstRowIdA, firstColIdA);
 					return context;
 				},
 				__proto__: proto
@@ -161,6 +167,14 @@ function Universe(window, document, undefined) {
 					}
 				}
 				return matrixMultiply;
+			}
+			function subMatrix(matR, startR, rowsR, colsR, matA, startA, rowsA, colsA, firstRowIdA, firstColIdA) {
+				for (var i = 0; i != rowsR; ++i) {
+					for (var j = 0; j != colsR; ++j) {
+						matR[getArrayIndex(startR, i, j, rowsR, colsR)]
+						 = matA[getArrayIndex(startA, firstColIdA + i, firstColIdA + j, rowsA, colsA)];
+					}
+				}
 			}
 			function getArrayIndex(first, rowId, colId, rows, cols) {
 				return first + rowId + rows * colId;

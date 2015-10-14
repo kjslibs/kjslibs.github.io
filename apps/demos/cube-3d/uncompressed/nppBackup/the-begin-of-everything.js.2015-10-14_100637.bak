@@ -163,8 +163,12 @@ function Universe(window, document, undefined) {
 				}
 				return matrixMultiply;
 			}
-			function subMatrix(matR, startR, rowsR, colsR, matA, startA, rowsA, colsA) {
-				
+			function subMatrix(matR, startR, rowsR, colsR, matA, startA, rowsA, colsA, firstRowIdA, firstColIdA) {
+				for (var i = 0; i != rowsR; ++i) {
+					for (var j = 0; j != colsR; ++j) {
+						matR[getArrayIndex(startR, i, j, rowsR, colsR)]
+					}
+				}
 			}
 			function getArrayIndex(first, rowId, colId, rows, cols) {
 				return first + rowId + rows * colId;

@@ -163,7 +163,7 @@ function Universe(window, document, undefined) {
 				}
 				return matrixMultiply;
 			}
-			function subMatrix(matR, startR, rowsR, colsR, matA, startA, rowsA, colsA) {
+			function subMatrix(matR, startR, rowsR, colsR, matA, startA, rowsA, colsA, firstRowIdA, firstColIdA) {
 				
 			}
 			function getArrayIndex(first, rowId, colId, rows, cols) {
