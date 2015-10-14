@@ -191,12 +191,12 @@ function Universe(window, document, undefined) {
 			}
 			function assembleRows(matR, startR, matA, startA, rowsA, matB, startB, rowsB, colsABR) {
 				subMatrix(matR, startR, rowsA, colsABR, matA, startA, rowsA, colsABR, 0, 0);
-				subMatrix(matR, getArrayIndex(startR, rowsA, colsABR, rowsB), rowsB, colsABR, matB, startB, rowsB, colsABR, 0, 0);
+				subMatrix(matR, getArrayIndex(startR, rowsA - 1, colsABR, rowsB - 1), rowsB, colsABR, matB, startB, rowsB, colsABR, 0, 0);
 				return assembleRows;
 			}
 			function assembleCols(matR, startR, matA, startA, colsA, matB, startB, colsB, rowsABR) {
 				subMatrix(matR, startR, rowsABR, colsA, matA, startA, rowsABR, colsA, 0, 0);
-				subMatrix(matR, getArrayIndex(startR, rowsABR, colsA, rowsABR), rowsABR, colsB, matB, startB, rowsABR, colsB, 0, 0);
+				subMatrix(matR, getArrayIndex(startR, rowsABR - 1, colsA, rowsABR - 1), rowsABR, colsB, matB, startB, rowsABR, colsB, 0, 0);
 				return assembleCols;
 			}
 			function getArrayIndex(first, rowId, colId, rows) {
