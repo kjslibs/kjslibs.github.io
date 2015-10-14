@@ -184,7 +184,7 @@ function Universe(window, document, undefined) {
 				for (var i = 0; i != rowsR; ++i) {
 					for (var j = 0; j != colsR; ++j) {
 						matR[getArrayIndex(startR, i, j, rowsR, colsR)]
-						 = matA[getArrayIndex(startA, firstColIdA + i, firstColIdA + j, rowsA, colsA)];
+						 = matA[getArrayIndex(startA, firstRowIdA + i, firstColIdA + j, rowsA, colsA)];
 					}
 				}
 				return subMatrix;
