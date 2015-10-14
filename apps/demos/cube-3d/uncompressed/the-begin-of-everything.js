@@ -86,6 +86,8 @@ function Universe(window, document, undefined) {
 					scalarMultiply: scalarMultiply,
 					matrixMultiply: matrixMultiply,
 					subMatrix: subMatrix,
+					assembleRows: assembleRows,
+					assembleCols: assembleCols,
 					getArrayIndex: getArrayIndex
 				}
 			};
@@ -113,6 +115,16 @@ function Universe(window, document, undefined) {
 				subMatrix: function (rowsR, colsR, matA, startA, rowsA, colsA, firstRowIdA, firstColIdA) {
 					var context = this;
 					subMatrix(context.matR, context.startR, rowsR, colsR, matA, startA, colsA, rowsA, firstRowIdA, firstColIdA);
+					return context;
+				},
+				assembleRows: function (matA, startA, rowsA, matB, startB, rowsB, colsABR) {
+					var context = this;
+					assembleRows(context.matR, context.startR, matA, startA, rowsA, matB, startB, rowsB, colsABR);
+					return context;
+				},
+				assembleCols: function (matA, startA, colsA, matB, startB, colsB, rowsABR) {
+					var context = this;
+					assembleCols(context.matR, context.startR, matA, startA, colsA, matB, startB, colsB, rowsABR);
 					return context;
 				},
 				__proto__: proto
@@ -175,6 +187,17 @@ function Universe(window, document, undefined) {
 						 = matA[getArrayIndex(startA, firstColIdA + i, firstColIdA + j, rowsA, colsA)];
 					}
 				}
+				return subMatrix;
+			}
+			function assembleRows(matR, startR, matA, startA, rowsA, matB, startB, rowsB, colsABR) {
+				subMatrix(matR, startR, rowsA, colsABR, matA, startA, rowsA, colsABR, 0, 0);
+				subMatrix(matR, getArrayIndex(startR, rowsA, colsABR), rowsB, colsABR, matB, startB, rowsB, colsABR, 0, 0);
+				return assembleRows;
+			}
+			function assembleCols(matR, startR, matA, startA, colsA, matB, startB, colsB, rowsABR) {
+				subMatrix(matR, startR, rowsABR, colsA, matA, startA, rowsABR, colsA, 0, 0);
+				subMatrix(matR, getArrayIndex(startR, rowsABR, colsA), rowsABR, colsB, matB, startB, rowsABR, colsB, 0, 0);
+				return assembleCols;
 			}
 			function getArrayIndex(first, rowId, colId, rows, cols) {
 				return first + rowId + rows * colId;
