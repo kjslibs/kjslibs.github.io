@@ -82,11 +82,15 @@ function Universe(window, document, undefined) {
 				createCalculatingContext: createCalculatingContext,
 				__proto__: (function () {
 					var proto = {
-						getArrayIndex: getArrayIndex
+						getArrayIndex: getArrayIndex,
+						toString: function () {
+							return "Matrix {}"
+						}
 					};
 					createMethodAdder(proto)
 						("add", add)
 						("makeIdentity", makeIdentity)
+						("makeRotationMatrix", makeRotationMatrix)
 						("scalarMultiply", scalarMultiply)
 						("matrixMultiply", matrixMultiply)
 						("subMatrix", subMatrix)
@@ -106,6 +110,11 @@ function Universe(window, document, undefined) {
 				makeIdentity: function (size) {
 					var context = this;
 					makeIdentity(context.matR, context.startR, size);
+					return context;
+				},
+				makeRotationMatrix: function (rowsR, theta, rotAxeP, rotAxeN) {
+					var context = this;
+					makeRotationMatrix(context.matR, context.startR, rowsR, theta, rotAxeP, rotAxeN);
 					return context;
 				},
 				scalarMultiply: function (matA, startA, elements, factor) {
@@ -168,6 +177,15 @@ function Universe(window, document, undefined) {
 					}
 				}
 				return makeIdentity;
+			}
+			function makeRotationMatrix(matR, startR, rowsR, theta, rotAxeP, rotAxeN) {
+				var cosTheta = Math.cos(theta);
+				var sinTheta = Math.sin(theta);
+				matR[getArrayIndex(startR, rotAxeP, rotAxeP, rowsR)] = +cosTheta;
+				matR[getArrayIndex(startR, rotAxeN, rotAxeN, rowsR)] = +cosTheta;
+				matR[getArrayIndex(startR, rotAxeP, rotAxeN, rowsR)] = -sinTheta;
+				matR[getArrayIndex(startR, rotAxeN, rotAxeP, rowsR)] = +sinTheta;
+				return makeRotationMatrix;
 			}
 			function scalarMultiply(matR, startR, matA, startA, elements, factor) {
 				var limR = startR + elements;
