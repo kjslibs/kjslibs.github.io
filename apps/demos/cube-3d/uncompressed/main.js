@@ -152,10 +152,10 @@ function main(window, Float32Array, undefined) {
 				return mixColor.bind(undefined, method);
 			}
 		})();
-		(function (RR, GG, BB, mixAvg) {
-			var GB = mixAvg(GG, BB);
-			var RB = mixAvg(RR, BB);
-			var RG = mixAvg(RR, GG);
+		(function (RR, GG, BB, mix2x3fv) {
+			var GB = mix2x3fv(GG, BB);
+			var RB = mix2x3fv(RR, BB);
+			var RG = mix2x3fv(RR, GG);
 			define_color
 				.pointer(0)
 				.addColor3fv
@@ -167,6 +167,25 @@ function main(window, Float32Array, undefined) {
 					(RG)(RG)(RG)(RG)(RG)(RG) // FRONT FACE
 			; // end commands sequence
 		})(define_color.RED, define_color.GREEN, define_color.BLUE, define_color.mixAvg);
+		
+		// Pass data to shader
+		gl_util.createBufferUtil({
+			bind: true,
+			target: gl.ARRAY_BUFFER,
+			usage: gl.STATIC_DRAW,
+			data: vertices
+		});
+		allglobjs.a_position.active();
+		allglobjs.a_position.set();
+		gl_util.createBufferUtil({
+			bind: true,
+			target: gl.ARRAY_BUFFER,
+			usage: gl.STATIC_DRAW,
+			data: color
+		});
+		allglobjs.a_color.active();
+		allglobjs.a_color.set();
+		allglobjs.u_rotation.set([1, 0, 0, 1]);
 		
 	}
 	
