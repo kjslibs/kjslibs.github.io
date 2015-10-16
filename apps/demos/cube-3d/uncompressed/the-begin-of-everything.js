@@ -80,16 +80,22 @@ function Universe(window, document, undefined) {
 			*/
 			var proto = {
 				createCalculatingContext: createCalculatingContext,
-				__proto__: {
-					add: add,
-					makeIdentity: makeIdentity,
-					scalarMultiply: scalarMultiply,
-					matrixMultiply: matrixMultiply,
-					subMatrix: subMatrix,
-					assembleRows: assembleRows,
-					assembleCols: assembleCols,
-					getArrayIndex: getArrayIndex
-				}
+				__proto__: (function () {
+					var proto = {
+						getArrayIndex: getArrayIndex
+					};
+					createMethodAdder(proto)
+						("add", add)
+						("makeIdentity", makeIdentity)
+						("scalarMultiply", scalarMultiply)
+						("matrixMultiply", matrixMultiply)
+						("subMatrix", subMatrix)
+						("assembleRows", assembleRows)
+						("assembleCols", assembleCols)
+						("copyMatrix", copyMatrix)
+					;
+					return proto;
+				})()
 			};
 			MatrixCalculatingContext.prototype = {
 				add: function (matA, startA, matB, startB, elements) {
@@ -127,6 +133,11 @@ function Universe(window, document, undefined) {
 					assembleCols(context.matR, context.startR, matA, startA, colsA, matB, startB, colsB, rowsABR);
 					return context;
 				},
+				copyMatrix: function (rowsR, colsR, subTargetFirstRow, subTargetFirstCol, matA, startA, rowsA, colsA, subSourceFirstRow, subSourceFirstCol, subRows, subCols) {
+					var context = this;
+					copyMatrix(context.matR, context.startR, rowsR, colsR, subTargetFirstRow, subTargetFirstCol, matA, startA, rowsA, colsA, subSourceFirstRow, subSourceFirstCol, subRows, subCols);
+					return context;
+				}
 				__proto__: proto
 			};
 			return Object.create(proto);
@@ -183,20 +194,39 @@ function Universe(window, document, undefined) {
 			function subMatrix(matR, startR, rowsR, colsR, matA, startA, rowsA, colsA, firstRowIdA, firstColIdA) {
 				for (var i = 0; i != rowsR; ++i) {
 					for (var j = 0; j != colsR; ++j) {
-						matR[getArrayIndex(startR, i, j, rowsR, colsR)]
+						matR[getArrayIndex(startR, i, j, rowsR)]
 						 = matA[getArrayIndex(startA, firstRowIdA + i, firstColIdA + j, rowsA, colsA)];
 					}
 				}
 				return subMatrix;
 			}
 			function assembleRows(matR, startR, matA, startA, rowsA, matB, startB, rowsB, colsABR) {
-				
+				var rowsR = rowsA + rowsB;
+				subMatrix
+					(matR, startR, rowsR, colsABR, matA, startA, rowsA, colsABR, 0, 0)
+					(matR, rowsA, rowsR, colsABR, matB, startB, rowsABR, colsB, 0, 0)
+				;
 				return assembleRows;
 			}
 			function assembleCols(matR, startR, matA, startA, colsA, matB, startB, colsB, rowsABR) {
-				subMatrix(matR, startR, rowsABR, colsA, matA, startA, rowsABR, colsA, 0, 0);
-				subMatrix(matR, getArrayIndex(startR, rowsABR - 1, colsA - 1, rowsABR) + 1, rowsABR, colsB, matB, startB, rowsABR, colsB, 0, 0);
+				subMatrix
+					(matR, startR, rowsABR, colsA, matA, startA, rowsABR, colsA, 0, 0)
+					(matR, getArrayIndex(startR, rowsABR - 1, colsA - 1, rowsABR) + 1, rowsABR, colsB, matB, startB, rowsABR, colsB, 0, 0)
+				;
 				return assembleCols;
+			}
+			function copyMatrix(matR, startR, rowsR, colsR, subTargetFirstRow, subTargetFirstCol, matA, startA, rowsA, colsA, subSourceFirstRow, subSourceFirstCol, subRows, subCols) {
+				var subTargetLastRow = subTargetFirstRow + subRows;
+				var subTargetLastCol = subTargetFirstCol + subCols;
+				var subSourceLastRow = subSourceFirstRow + subRows;
+				var subSourceLastCol = subSourceFirstCol + subCols;
+				for (var i = subTargetFirstRow, ii = subSourceFirstRow; i != subTargetLastRow; ++i, ++ii) {
+					for (var j = subTargetFirstCol, jj = subSourceFirstCol; j != subTargetLastCol; ++j, ++jj) {
+						matR[getArrayIndex(startR, i, j, rowsR)]
+						 = matA[getArrayIndex(startA, ii, jj, rowsA, colsA)];
+					}
+				}
+				return copyMatrix;
 			}
 			function getArrayIndex(first, rowId, colId, rows) {
 				return first + rowId + rows * colId;
