@@ -405,8 +405,6 @@
 		var _compileShader = _$gl_compileShader(gl);
 		var _attachShader = _$gl_attachShader(gl);
 		var _detachShader = _$gl_detachShader(gl);
-		/* var _getAttribLocation = _$gl_getAttribLocation(gl); // considering necessarility
-		var _getUniformLocation = _$gl_getUniformLocation(gl); // considering necessarility */
 		var _bindBuffer = _$gl_bindBuffer(gl);
 		var _bufferData = _$gl_bufferData(gl);
 		var _getParameter = _$gl_getParameter(gl);
@@ -468,8 +466,8 @@
 			var _variable_util_ = new VariableUtil(program_util, program);
 			function AttribUtil(attrib_location, size, type, normalized, stride, offset) {
 				var attrib_util = this;
-				var active = _$gl_enableVertexAttribArray(attrib_location);
-				var set = _$gl_vertexAttribPointer(attrib_location, size, type, normalized, stride, offset);
+				var active = _$gl_enableVertexAttribArray(gl, attrib_location);
+				var set = _$gl_vertexAttribPointer(gl, attrib_location, size, type, normalized, stride, offset);
 				var setconst = _setConst_bind(attrib_util);
 				setconst("attribLocation", attrib_location);
 				setconst("size", size);
