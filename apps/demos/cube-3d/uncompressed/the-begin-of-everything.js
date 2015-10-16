@@ -137,7 +137,7 @@ function Universe(window, document, undefined) {
 					var context = this;
 					copyMatrix(context.matR, context.startR, rowsR, colsR, subTargetFirstRow, subTargetFirstCol, matA, startA, rowsA, colsA, subSourceFirstRow, subSourceFirstCol, subRows, subCols);
 					return context;
-				}
+				},
 				__proto__: proto
 			};
 			return Object.create(proto);
