@@ -204,7 +204,7 @@ function Universe(window, document, undefined) {
 				var rowsR = rowsA + rowsB;
 				copyMatrix
 					(matR, startR, rowsR, colsABR, 0, 0, matA, startA, rowsA, colsABR, 0, 0, rowsA, colsABR)
-					(matR, startR, rowsR, colsABR, rowsR, 0, matB, startB, rowsB, colsABR, 0, 0, rowsB, colsABR)
+					(matR, startR, rowsR, colsABR, rowsA, 0, matB, startB, rowsB, colsABR, 0, 0, rowsB, colsABR)
 				;
 				return assembleRows;
 			}
