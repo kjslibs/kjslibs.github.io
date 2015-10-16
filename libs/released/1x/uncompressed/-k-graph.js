@@ -958,7 +958,7 @@
 			bind && _bindBuffer(target, buffer);
 			if (data) {
 				var usage = descriptor.usage;
-				_bufferData(gl, data, usage);
+				_bufferData(target, data, usage);
 			}
 			return target; // for createBufferUtil
 		}
