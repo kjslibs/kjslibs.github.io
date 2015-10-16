@@ -202,16 +202,17 @@ function Universe(window, document, undefined) {
 			}
 			function assembleRows(matR, startR, matA, startA, rowsA, matB, startB, rowsB, colsABR) {
 				var rowsR = rowsA + rowsB;
-				subMatrix
-					(matR, startR, rowsR, colsABR, matA, startA, rowsA, colsABR, 0, 0)
-					(matR, rowsA, rowsR, colsABR, matB, startB, rowsABR, colsB, 0, 0)
+				copyMatrix
+					(matR, startR, rowsR, colsABR, 0, 0, matA, startA, rowsA, colsABR, 0, 0, rowsA, colsABR)
+					(matR, startR, rowsR, colsABR, rowsR, 0, matB, startB, rowsB, colsABR, 0, 0, rowsB, colsABR)
 				;
 				return assembleRows;
 			}
 			function assembleCols(matR, startR, matA, startA, colsA, matB, startB, colsB, rowsABR) {
-				subMatrix
-					(matR, startR, rowsABR, colsA, matA, startA, rowsABR, colsA, 0, 0)
-					(matR, getArrayIndex(startR, rowsABR - 1, colsA - 1, rowsABR) + 1, rowsABR, colsB, matB, startB, rowsABR, colsB, 0, 0)
+				var colsR = colsA + colsB;
+				copyMatrix
+					(matR, startR, rowsABR, colsR, 0, 0, matA, startA, rowsABR, colsA, 0, 0, rowsABR, colsA)
+					(matR, startR, rowsABR, colsR, 0, colsR, matB, startB, rowsABR, colsB, 0, 0, rowsABR, colsB)
 				;
 				return assembleCols;
 			}
