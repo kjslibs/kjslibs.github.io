@@ -156,6 +156,7 @@
 	var _r = _create_new(_public_proto);
 	
 	//keys as enum
+	var _enum_FALSE = _gl_.FALSE;
 	var _enum_LINK_STATUS = _gl_.LINK_STATUS;
 	var _enum_COMPILE_STATUS = _gl_.COMPILE_STATUS;
 	var _enum_SHADER_TYPE = _gl_.SHADER_TYPE;
@@ -546,7 +547,7 @@
 				if (typeof createsetter !== "function") throw new RangeError("Parameter 'length' is invalid: length = " + length);
 				var setconst = _setConst_bind(this);
 				setconst("get", _$gl_getUniform(gl, program, uniform_location));
-				setconst("set", type == "fmat" ? createsetter(gl, gl.FALSE, uniform_location) : createsetter(gl, uniform_location));
+				setconst("set", type == "fmat" ? createsetter(gl, _enum_FALSE, uniform_location) : createsetter(gl, uniform_location));
 				setconst("uniformLocation", uniform_location);
 				setconst(_key_basedObject, uniform_location);
 			}
