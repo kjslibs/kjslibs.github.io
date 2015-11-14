@@ -1,0 +1,90 @@
+
+DOCUMENTARY
+
+CLASS: DocumentUtil
+
+	DESCRIPTION
+		Creating node
+	END DESCRIPTION
+	
+	public class DocumentUtil {
+		public constructor DocumentUtil(Document document);
+		public Document document;
+		public String? xmlns;
+		public Node create(NodeCreationDescriptor content);
+		public Element createElement(String tag_name, optional dictionary<String> attributes, optional sequence<NodeCreationDescriptor> children);
+		public Attribute createAttribute(String name, String value);
+		public TextNode createTextNode(String content);
+	}
+	
+	pattern NodeCreationDescriptor {
+		decltype(null),
+		Node,
+		sequence<NodeCreationDescriptor>,
+		struct {
+			NodeCreationEnum type;
+			optional String namespaceURI;
+			optional NodeCreationDescriptor parent;
+			optional NodeCreationDescriptor before;
+			optional dictionary<EventListenerAttachmentDescriptor> event;
+			if (type == ELEMENT) {
+				String tag,
+				dictionary<String> attributes,
+				sequence<NodeCreationDescriptor> children;
+			}
+			if (type == ATTRIBUTE) {
+				String name;
+				String value;
+			}
+			if (type == TEXT || type == COMMENT) {
+				String value;
+			}
+			if (type == DOCUMENT_FRAGMENT) {
+				sequence<NodeCreationDescriptor> children;
+			}
+		},
+		default -> String
+	}
+	
+	enum NodeCreationEnum {
+		ELEMENT,
+		ATTRIBUTE,
+		TEXT,
+		DOCUMENT_FRAGMENT,
+		COMMENT
+	}
+	
+	pattern EventListenerAttachmentDescriptor {
+		Function,
+		sequence<EventListenerAttachmentDescriptor>,
+		struct {
+			Function listener,
+			optional Boolean useCapture
+		},
+		default -> void
+	}
+
+END CLASS
+
+CLASS: ElementUtil
+
+	DESCRIPTION
+		Handling elements and their attributes
+	END DESCRIPTION
+	
+	public class ElementUtil {
+		public constructor ElementUtil(Element element);
+		public method append(Node node, optional Node place);
+		public method tree(function<void, Element, TreeParam> mapper);
+		public sequence<Element> path(Element child);
+		public method allParent(function<void, Element, Node> mapper);
+		public method parentLevel(Number level);
+	}
+	
+	private class TreeParam {
+		public Node node;
+		public uint index;
+		public uint level;
+	}
+
+END CLASS
