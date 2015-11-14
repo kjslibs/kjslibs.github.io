@@ -153,9 +153,10 @@ function Resources(window, document, universe, undefined) {
 					console.log(error);
 					throw error;
 				}
-			}, onerror);
 			
-			callback(allglobjs, allxhrs);
+				callback(allglobjs, allxhrs);
+				
+			}, onerror);
 			
 		}
 		

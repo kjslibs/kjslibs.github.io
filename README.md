@@ -1,5 +1,2 @@
-# kjslibs.github.io - The Offical page of kjslibs
-
-The official page of kjslibs: https://kjslibs.github.io
-
-Also contains kjslibs files.
+# 3D Cube Demo
+For: `-k-js-abstract.js`, `-k-xml.js`, `-k-animate.js`, `-k-event.js` and `-k-graph.js`
