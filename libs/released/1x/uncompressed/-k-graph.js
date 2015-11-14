@@ -546,7 +546,7 @@
 				if (typeof createsetter !== "function") throw new RangeError("Parameter 'length' is invalid: length = " + length);
 				var setconst = _setConst_bind(this);
 				setconst("get", _$gl_getUniform(gl, program, uniform_location));
-				setconst("set", createsetter(gl, uniform_location));
+				setconst("set", type == "fmat" ? createsetter(gl, gl.FALSE, uniform_location) : createsetter(gl, uniform_location));
 				setconst("uniformLocation", uniform_location);
 				setconst(_key_basedObject, uniform_location);
 			}
