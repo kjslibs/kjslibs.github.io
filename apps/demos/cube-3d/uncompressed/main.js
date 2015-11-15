@@ -169,7 +169,7 @@ function main(window, Float32Array, undefined) {
 		})(define_color.RED, define_color.GREEN, define_color.BLUE, define_color.mixAvg);
 		
 		// Pass data to shader
-		gl_util.createBufferUtil({
+		var buffer_util = allglobjs.buffer_util = gl_util.createBufferUtil({
 			bind: true,
 			target: gl.ARRAY_BUFFER,
 			usage: gl.STATIC_DRAW,
@@ -183,8 +183,8 @@ function main(window, Float32Array, undefined) {
 			usage: gl.STATIC_DRAW,
 			data: color
 		});
-		// allglobjs.a_color.active();
-		// allglobjs.a_color.set();
+		allglobjs.a_color.active();
+		allglobjs.a_color.set();
 		allglobjs.u_rotation.set([1, 0, 0, 1]);
 		
 		(function (kaniclasses) {
