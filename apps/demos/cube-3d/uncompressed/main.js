@@ -187,6 +187,8 @@ function main(window, Float32Array, undefined) {
 		allglobjs.a_color.set();
 		allglobjs.u_rotation.set([1, 0, 0, 1]);
 		
+		gl.drawArrays(gl.TRIANGLES, 0, vertices.length);
+		
 	}
 	
 	function onerror() {
