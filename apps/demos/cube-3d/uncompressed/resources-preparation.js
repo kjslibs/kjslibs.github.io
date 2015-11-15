@@ -77,7 +77,7 @@ function Resources(window, document, universe, undefined) {
 		function onresize() {
 			var width = canvas.width = window.innerWidth;
 			var height = canvas.height = window.innerHeight;
-			canvas.viewport(0, 0, width, height);
+			gl.viewport(0, 0, width, height);
 		}
 		window.addEventListener("resize", onresize);
 		onresize();
