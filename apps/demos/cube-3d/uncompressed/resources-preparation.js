@@ -67,6 +67,8 @@ function Resources(window, document, universe, undefined) {
 			parent: document.body,
 			before: null,
 			attributes: {
+				width: innerWidth,
+				height: innerHeight,
 				id: "main-canvas"
 			},
 			children: ["Opps, your browser didn't supported HTMLCanvasElement."]
@@ -90,8 +92,8 @@ function Resources(window, document, universe, undefined) {
 		window.addEventListener("resize", resizeCanvas, 0);
 		resources.resizeCanvas = resizeCanvas; // considering neccessarility
 		function resizeCanvas() {
-			var width = canvas.width = window.innerWidth;
-			var height = canvas.height = window.innerHeight;
+			var width = window.innerWidth;
+			var height = window.innerHeight;
 			var rendersize = width < height ? width : height;
 			var renderpaddingwidth = (width - rendersize) >> 1;
 			var renderpaddingheight = (height - rendersize) >> 1;
