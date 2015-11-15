@@ -67,8 +67,6 @@ function Resources(window, document, universe, undefined) {
 			parent: document.body,
 			before: null,
 			attributes: {
-				width: window.innerWidth,
-				height: window.innerHeight,
 				id: "main-canvas"
 			},
 			children: ["Opps, your browser didn't supported HTMLCanvasElement."]
@@ -89,12 +87,15 @@ function Resources(window, document, universe, undefined) {
 		}
 		
 		resizeCanvas();
-		window.addEventListener("resize", resizeCanvas);
-		resources.resizeCanvas = resizeCanvas;
+		window.addEventListener("resize", resizeCanvas, 0);
+		resources.resizeCanvas = resizeCanvas; // considering neccessarility
 		function resizeCanvas() {
 			var width = canvas.width = window.innerWidth;
 			var height = canvas.height = window.innerHeight;
-			gl.viewport(0, 0, width, height);
+			var rendersize = width < height ? width : height;
+			var renderpaddingwidth = (width - rendersize) >> 1;
+			var renderpaddingheight = (height - rendersize) >> 1;
+			gl.viewport(renderpaddingwidth, renderpaddingheight, rendersize, rendersize);
 		}
 		
 		// Set up a 'GLUtil' named 'gl_util' from 'gl'
