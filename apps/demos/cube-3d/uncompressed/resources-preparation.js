@@ -92,11 +92,10 @@ function Resources(window, document, universe, undefined) {
 		function resizeCanvas() {
 			var width = canvas.width = window.innerWidth;
 			var height = canvas.height = window.innerHeight;
-			gl.viewport(0, 0, width, height);
-			// var rendersize = width < height ? width : height;
-			// var renderpaddingwidth = (width - rendersize) >> 1;
-			// var renderpaddingheight = (height - rendersize) >> 1;
-			// gl.viewport(renderpaddingwidth, renderpaddingheight, rendersize, rendersize);
+			var rendersize = width < height ? width : height;
+			var renderpaddingwidth = (width - rendersize) >> 1;
+			var renderpaddingheight = (height - rendersize) >> 1;
+			gl.viewport(renderpaddingwidth, renderpaddingheight, rendersize, rendersize);
 		}
 		
 		// Set up a 'GLUtil' named 'gl_util' from 'gl'
