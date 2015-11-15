@@ -187,7 +187,17 @@ function main(window, Float32Array, undefined) {
 		allglobjs.a_color.set();
 		allglobjs.u_rotation.set([1, 0, 0, 1]);
 		
-		gl.drawArrays(gl.TRIANGLES, 0, 3 * 2 * 6);
+		(function (kaniclasses) {
+			
+			var elements = 2 * 3 * 6;
+			var drawani = new kaniclasses.Animate(function (aniparam) {
+				gl.drawArrays(gl.TRIANGLES, elements);
+			});
+			drawani.run();
+			
+		})(kaniclasses);
+		
+		// gl.drawArrays(gl.TRIANGLES, 0, 3 * 2 * 6);
 		
 	}
 	
