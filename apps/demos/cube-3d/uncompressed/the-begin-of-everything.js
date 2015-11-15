@@ -32,7 +32,8 @@ function Universe(window, document, undefined) {
 			(kxmllib, "kxmlclasses")
 			(kanilib, "kaniclasses")
 			(keventlib, "keventclasses")
-			(kgraphlib, "kgraphclasses");
+			(kgraphlib, "kgraphclasses")
+		;
 	}
 	
 	// Will be called from initLibs

@@ -185,7 +185,9 @@ function main(window, Float32Array, undefined) {
 		});
 		allglobjs.a_color.active();
 		allglobjs.a_color.set();
-		allglobjs.u_rotation.set([1, 0, 0, 1]);
+		var id4f = new Float32Array(4 * 4);
+		Matrix.makeIdentity(id4f, 0, 4);
+		allglobjs.u_rotation.set(id4f);
 		
 		(function (kaniclasses) {
 			
