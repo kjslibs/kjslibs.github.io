@@ -74,14 +74,6 @@ function Resources(window, document, universe, undefined) {
 			children: ["Opps, your browser didn't supported HTMLCanvasElement."]
 		});
 		
-		function onresize() {
-			var width = canvas.width = window.innerWidth;
-			var height = canvas.height = window.innerHeight;
-			gl.viewport(0, 0, width, height);
-		}
-		window.addEventListener("resize", onresize);
-		onresize();
-		
 		// Set up a 'WebGLRenderingContext' named 'gl'
 		var gl = resources.gl = canvas.getContext("webgl");
 		if (!gl) {
@@ -95,6 +87,14 @@ function Resources(window, document, universe, undefined) {
 			});
 			return 1;
 		}
+		
+		function onresize() {
+			var width = canvas.width = window.innerWidth;
+			var height = canvas.height = window.innerHeight;
+			gl.viewport(0, 0, width, height);
+		}
+		window.addEventListener("resize", onresize);
+		onresize();
 		
 		// Set up a 'GLUtil' named 'gl_util' from 'gl'
 		resources.gl_util = new kgraphclasses.GLUtil(gl);
