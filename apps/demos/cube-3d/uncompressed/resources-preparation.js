@@ -66,8 +66,20 @@ function Resources(window, document, universe, undefined) {
 			tag: "canvas",
 			parent: document.body,
 			before: null,
+			attributes: {
+				width: window.innerWidth,
+				height: window.innerHeight
+			},
 			children: ["Opps, your browser didn't supported HTMLCanvasElement."]
 		});
+		
+		function onresize() {
+			var width = canvas.width = window.innerWidth;
+			var height = canvas.height = window.innerHeight;
+			canvas.viewport(0, 0, width, height);
+		}
+		window.addEventListener("resize", onresize);
+		onresize();
 		
 		// Set up a 'WebGLRenderingContext' named 'gl'
 		var gl = resources.gl = canvas.getContext("webgl");
