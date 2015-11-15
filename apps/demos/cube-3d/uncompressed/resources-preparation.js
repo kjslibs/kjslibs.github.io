@@ -88,13 +88,14 @@ function Resources(window, document, universe, undefined) {
 			return 1;
 		}
 		
-		function onresize() {
+		resizeCanvas();
+		window.addEventListener("resize", resizeCanvas);
+		resources.resizeCanvas = resizeCanvas;
+		function resizeCanvas() {
 			var width = canvas.width = window.innerWidth;
 			var height = canvas.height = window.innerHeight;
 			gl.viewport(0, 0, width, height);
 		}
-		window.addEventListener("resize", onresize);
-		onresize();
 		
 		// Set up a 'GLUtil' named 'gl_util' from 'gl'
 		resources.gl_util = new kgraphclasses.GLUtil(gl);
