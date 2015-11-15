@@ -68,7 +68,8 @@ function Resources(window, document, universe, undefined) {
 			before: null,
 			attributes: {
 				width: window.innerWidth,
-				height: window.innerHeight
+				height: window.innerHeight,
+				id: "main-canvas"
 			},
 			children: ["Opps, your browser didn't supported HTMLCanvasElement."]
 		});
