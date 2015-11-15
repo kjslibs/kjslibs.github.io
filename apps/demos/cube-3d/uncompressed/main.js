@@ -183,8 +183,8 @@ function main(window, Float32Array, undefined) {
 			usage: gl.STATIC_DRAW,
 			data: color
 		});
-		allglobjs.a_color.active();
-		allglobjs.a_color.set();
+		// allglobjs.a_color.active();
+		// allglobjs.a_color.set();
 		allglobjs.u_rotation.set([1, 0, 0, 1]);
 		
 		(function (kaniclasses) {
