@@ -169,11 +169,13 @@ function main(window, Float32Array, undefined) {
 		})(define_color.RED, define_color.GREEN, define_color.BLUE, define_color.mixAvg);
 		
 		// Pass data to shader
+		var actual_vertices = new Float32Array(vertices.length);
+		Matrix.scalarMultiply(actual_vertices, 0, vertices, 0, vertices.length, 0.5);
 		var buffer_util = allglobjs.buffer_util = gl_util.createBufferUtil({
 			bind: true,
 			target: gl.ARRAY_BUFFER,
 			usage: gl.STATIC_DRAW,
-			data: vertices
+			data: actual_vertices
 		});
 		allglobjs.a_position.active();
 		allglobjs.a_position.set();
