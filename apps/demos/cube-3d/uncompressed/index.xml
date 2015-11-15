@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>3D Cube demo.</title>
-		<link rel="stylesheets" type="text/css" href="style.css" />
+		<link rel="stylesheet" type="text/css" href="style.css" />
 	</head>
 	<body>
 		<noscript>Javascript, please!</noscript>
