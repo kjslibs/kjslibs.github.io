@@ -189,7 +189,15 @@ function main(window, Float32Array, undefined) {
 		allglobjs.a_color.set();
 		var id4f = new Float32Array(4 * 4);
 		Matrix.makeIdentity(id4f, 0, 4);
-		allglobjs.u_rotation.set(id4f);
+		makeRotation(Math.PI / 4, Math.PI / 6, Math.PI / 3);
+		function makeRotation(yz, xz, xy) {
+			Matrix.makeRotationMatrix(id4f, 0, 4, yz, 1, 2);
+			Matrix.makeRotationMatrix(id4f, 0, 4, xz, 0, 2);
+			Matrix.makeRotationMatrix(id4f, 0, 4, xy, 0, 1);
+			allglobjs.u_rotation.value = id4f;
+		}
+		// Matrix.makeIdentity(id4f, 0, 4);
+		// allglobjs.u_rotation.set(id4f);
 		
 		(function (kaniclasses) {
 			

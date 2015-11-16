@@ -112,7 +112,6 @@ function Resources(window, document, universe, undefined) {
 				width: csspxform(rendersize),
 				height: csspxform(rendersize)
 			});
-			// gl.viewport(renderpaddingwidth, renderpaddingheight, rendersize, rendersize);
 		}
 		
 		// Set up a 'GLUtil' named 'gl_util' from 'gl'
