@@ -196,8 +196,6 @@ function main(window, Float32Array, undefined) {
 			Matrix.makeRotationMatrix(id4f, 0, 4, xy, 0, 1);
 			allglobjs.u_rotation.value = id4f;
 		}
-		// Matrix.makeIdentity(id4f, 0, 4);
-		// allglobjs.u_rotation.set(id4f);
 		
 		(function (kaniclasses) {
 			
