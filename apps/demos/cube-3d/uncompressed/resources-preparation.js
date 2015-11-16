@@ -107,10 +107,10 @@ function Resources(window, document, universe, undefined) {
 			var renderpaddingwidth = (width - rendersize) >> 1;
 			var renderpaddingheight = (height - rendersize) >> 1;
 			Object.assign(canvas_container.style, {
-				left: renderpaddingwidth,
-				top: renderpaddingheight,
-				width: rendersize,
-				height: rendersize
+				left: csspxform(renderpaddingwidth),
+				top: csspxform(renderpaddingheight),
+				width: csspxform(rendersize),
+				height: csspxform(rendersize)
 			});
 			// gl.viewport(renderpaddingwidth, renderpaddingheight, rendersize, rendersize);
 		}
