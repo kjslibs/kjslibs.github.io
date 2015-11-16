@@ -187,14 +187,23 @@ function main(window, Float32Array, undefined) {
 		});
 		allglobjs.a_color.active();
 		allglobjs.a_color.set();
-		var id4f = new Float32Array(4 * 4);
-		Matrix.makeIdentity(id4f, 0, 4);
-		makeRotation(Math.PI / 4, Math.PI / 6, Math.PI / 3);
-		function makeRotation(yz, xz, xy) {
-			Matrix.makeRotationMatrix(id4f, 0, 4, yz, 1, 2);
-			Matrix.makeRotationMatrix(id4f, 0, 4, xz, 0, 2);
-			Matrix.makeRotationMatrix(id4f, 0, 4, xy, 0, 1);
-			allglobjs.u_rotation.value = id4f;
+		function Rotator() {
+			var id4f = new Float32Array(4 * 4);
+			var param = new Float32Array([Math.PI / 6, Math.PI / 4, Math.PI / 3]);
+			this.matrix = id4f;
+			this.param = window.rotatorparam = param;
+			this.animate = window.rotatorani = new kaniclasses.Animate(animator);
+			this.makeRotation = makeRotation;
+			Matrix.makeIdentity(id4f, 0, 4);
+			function makeRotation(yz, xz, xy) {
+				Matrix.makeRotationMatrix(id4f, 0, 4, yz, 1, 2);
+				Matrix.makeRotationMatrix(id4f, 0, 4, xz, 0, 2);
+				Matrix.makeRotationMatrix(id4f, 0, 4, xy, 0, 1);
+				allglobjs.u_rotation.value = id4f;
+			}
+			function animator() {
+				makeRotation(param[0], param[1], param[2]);
+			}
 		}
 		
 		(function (kaniclasses) {
@@ -203,7 +212,9 @@ function main(window, Float32Array, undefined) {
 			var drawani = new kaniclasses.Animate(function (aniparam) {
 				gl.drawArrays(gl.TRIANGLES, 0, elements_count);
 			});
+			var rotator = new Rotator();
 			drawani.run();
+			rotator.animate.run();
 			
 		})(kaniclasses);
 		
