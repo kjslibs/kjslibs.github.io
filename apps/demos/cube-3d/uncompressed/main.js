@@ -189,7 +189,7 @@ function main(window, Float32Array, undefined) {
 		allglobjs.a_color.set();
 		function Rotator() {
 			var id4f = new Float32Array(4 * 4);
-			var param = new Float32Array([Math.PI / 6, Math.PI / 4, Math.PI / 3]);
+			var param = new Float32Array([Math.PI / 6, Math.PI / 6, Math.PI / 1]);
 			this.matrix = id4f;
 			this.param = window.rotatorparam = param;
 			this.animate = window.rotatorani = new kaniclasses.Animate(animator);
