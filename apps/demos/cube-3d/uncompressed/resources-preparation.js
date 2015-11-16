@@ -90,9 +90,11 @@ function Resources(window, document, universe, undefined) {
 		if (!gl) {
 			canvas.parentNode.removeChild(canvas);
 			document_util.create(
-				createErrMsgNode("Your browser doesn't support WebGL or WebGL are disabled."),
-				document.body,
-				null
+				createErrMsgNode(
+					"Your browser doesn't support WebGL or WebGL are disabled.",
+					document.body,
+					null
+				)
 			);
 			return 1;
 		}
