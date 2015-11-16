@@ -97,6 +97,10 @@ function Resources(window, document, universe, undefined) {
 			return 1;
 		}
 		
+		// Set up 'gl' modes
+		gl.enable(gl.CULL_FACE);
+		
+		// Drawing Context Scaling
 		resizeCanvas();
 		window.addEventListener("resize", resizeCanvas, 0);
 		resources.resizeCanvas = resizeCanvas; // considering neccessarility
