@@ -92,6 +92,9 @@ function Resources(window, document, universe, undefined) {
 				tag: "div",
 				parent: document.body,
 				before: null,
+				attributes: {
+					id: "error-message"
+				},
 				children: ["Your browser doesn't support WebGL or WebGL are disabled."]
 			});
 			return 1;
