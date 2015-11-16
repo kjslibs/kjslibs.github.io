@@ -61,10 +61,19 @@ function Resources(window, document, universe, undefined) {
 		document_util.namespaceURI = document.documentElement.namespaceURI;
 		
 		// Set up 'canvas'
+		var canvas_container = resources.canvas_container = document_util.create({
+			type: document_util.ELEMENT,
+			tag: "div"
+			parent: document.body,
+			before: null,
+			attributes: {
+				id: "canvas-container"
+			}
+		});
 		var canvas = resources.canvas = document_util.create({
 			type: document_util.ELEMENT,
 			tag: "canvas",
-			parent: document.body,
+			parent: canvas_container,
 			before: null,
 			attributes: {
 				width: 1024,
@@ -97,7 +106,13 @@ function Resources(window, document, universe, undefined) {
 			var rendersize = width < height ? width : height;
 			var renderpaddingwidth = (width - rendersize) >> 1;
 			var renderpaddingheight = (height - rendersize) >> 1;
-			gl.viewport(renderpaddingwidth, renderpaddingheight, rendersize, rendersize);
+			Object.assign(canvas_container.style, {
+				left: renderpaddingwidth,
+				top: renderpaddingheight,
+				width: rendersize,
+				height: rendersize
+			});
+			// gl.viewport(renderpaddingwidth, renderpaddingheight, rendersize, rendersize);
 		}
 		
 		// Set up a 'GLUtil' named 'gl_util' from 'gl'
