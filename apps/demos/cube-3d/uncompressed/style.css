@@ -1,5 +1,5 @@
 
-:not(#error-message) {
+* {
 	margin: 0px;
 	padding: 0px;
 	border: none;
@@ -17,6 +17,10 @@ html, body, canvas {
 
 #error-message {
 	position: fixed;
-	margin: auto;
+	width: 100%;
+	height: 50%;
+	top: 50%;
+	font-size: 1.5em;
+	text-align: center;
 }
 
