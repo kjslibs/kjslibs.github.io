@@ -86,7 +86,7 @@ function Resources(window, document, universe, undefined) {
 		// Set up a 'WebGLRenderingContext' named 'gl'
 		var gl = resources.gl = canvas.getContext("webgl");
 		if (!gl) {
-			document.body.removeChild(canvas);
+			canvas.parentNode.removeChild(canvas);
 			document_util.create({
 				type: document_util.ELEMENT,
 				tag: "div",
