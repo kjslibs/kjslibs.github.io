@@ -38,10 +38,12 @@ function Resources(window, document, universe, undefined) {
 	function initFuncs() {
 		
 		resources.createErrMsgNode = createErrMsgNode;
-		function createErrMsgNode(message) {
+		function createErrMsgNode(message, parent, before) {
 			return document_util.create({
 				type: document_util.ELEMENT,
 				tag: "div",
+				parent: parent,
+				before: before,
 				attributes: {
 					id: "error-message"
 				},
@@ -87,16 +89,11 @@ function Resources(window, document, universe, undefined) {
 		var gl = resources.gl = canvas.getContext("webgl");
 		if (!gl) {
 			canvas.parentNode.removeChild(canvas);
-			document_util.create({
-				type: document_util.ELEMENT,
-				tag: "div",
-				parent: document.body,
-				before: null,
-				attributes: {
-					id: "error-message"
-				},
-				children: ["Your browser doesn't support WebGL or WebGL are disabled."]
-			});
+			document_util.create(
+				createErrMsgNode("Your browser doesn't support WebGL or WebGL are disabled."),
+				document.body,
+				null
+			);
 			return 1;
 		}
 		
