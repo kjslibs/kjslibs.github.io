@@ -161,8 +161,8 @@ function main(window, Float32Array, undefined) {
 				.addColor3fv
 					(RR)(RR)(RR)(RR)(RR)(RR) // LEFT FACE
 					(GG)(GG)(GG)(GG)(GG)(GG) // BOTTOM FACE
-					(BB)(BB)(BB)(BB)(BB)(BB) // BACK FACE // corrected
-					(GB)(GB)(GB)(GB)(GB)(GB) // RIGHT FACE // corrected
+					(BB)(BB)(BB)(BB)(BB)(BB) // BACK FACE
+					(GB)(GB)(GB)(GB)(GB)(GB) // RIGHT FACE
 					(RB)(RB)(RB)(RB)(RB)(RB) // TOP FACE
 					(RG)(RG)(RG)(RG)(RG)(RG) // FRONT FACE
 			; // end commands sequence
