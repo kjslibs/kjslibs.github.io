@@ -63,7 +63,7 @@ function Resources(window, document, universe, undefined) {
 		// Set up 'canvas'
 		var canvas_container = resources.canvas_container = document_util.create({
 			type: document_util.ELEMENT,
-			tag: "div"
+			tag: "div",
 			parent: document.body,
 			before: null,
 			attributes: {
