@@ -253,6 +253,11 @@ function Universe(window, document, undefined) {
 			}
 		})();
 		
+		universe.csspxform = csspxform;
+		function csspxform(pixels) {
+			return parseFloat(pixels) + "px";
+		}
+		
 		universe.createMethodAdder = createMethodAdder;
 		function createMethodAdder(object) {
 			return function addMethod(name, method) {
