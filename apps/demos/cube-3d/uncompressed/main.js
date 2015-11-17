@@ -188,18 +188,29 @@ function main(window, Float32Array, undefined) {
 		allglobjs.a_color.active();
 		allglobjs.a_color.set();
 		function Rotator() {
-			var id4f = new Float32Array(4 * 4);
+			var matrices = [
+				new Float32Array(4 * 4),
+				new Float32Array(4 * 4),
+				new Float32Array(4 * 4)
+			];
 			var param = new Float32Array([Math.PI / 6, Math.PI / 6, Math.PI / 1]);
-			this.matrix = id4f;
+			this.matrices = matrices;
 			this.param = window.rotatorparam = param;
 			this.animate = window.rotatorani = new kaniclasses.Animate(animator);
 			this.makeRotation = makeRotation;
-			Matrix.makeIdentity(id4f, 0, 4);
+			Matrix.makeIdentity
+				(matrices[0], 0, 4)
+				(matrices[1], 0, 4)
+				(matrices[2], 0, 4)
+			;
 			function makeRotation(yz, xz, xy) {
-				Matrix.makeRotationMatrix(id4f, 0, 4, yz, 1, 2);
-				Matrix.makeRotationMatrix(id4f, 0, 4, xz, 0, 2);
-				Matrix.makeRotationMatrix(id4f, 0, 4, xy, 0, 1);
-				allglobjs.u_rotation.value = id4f;
+				makeRotationElement(0, yz, 1, 2);
+				makeRotationElement(1, xz, 0, 2);
+				makeRotationElement(2, xy, 0, 1);
+			}
+			function makeRotationElement(id, theta, pid, nid) {
+				Matrix.makeRotationMatrix(matrices[id], 0, 4, theta, pid, nid);
+				allglobjs.u_rotation[id].value = matrices[id];
 			}
 			function animator() {
 				makeRotation(param[0], param[1], param[2]);
