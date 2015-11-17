@@ -19,7 +19,6 @@ html, body, canvas {
 }
 
 #canvas-container {
-	background: white; /* debug */
 	position: fixed;
 }
 
