@@ -214,7 +214,7 @@ function main(window, Float32Array, undefined) {
 			});
 			var rotator = new Rotator();
 			var autorotationani = window.autorotationani = (function (rotation_param) {
-				var rotating_velocity = window.rotating_velocity = new Float32Array([0.5, 0.2, 0.1]);
+				var rotating_velocity = window.rotating_velocity = new Float32Array([0.003, 0.002, 0.001]);
 				return new kaniclasses.VectorAnimator(function (lvec, rvec, animateparam) {
 					var dur = animateparam.duration;
 					lvec[0] += rvec[0] * dur;
