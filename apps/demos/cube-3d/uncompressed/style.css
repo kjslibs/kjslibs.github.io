@@ -3,6 +3,10 @@
 	margin: 0px;
 	padding: 0px;
 	border: none;
+	color: white;
+	font-family: 'Segoe UI';
+	font-family: 'verdana';
+	font-family: serif;
 }
 
 html, body, canvas {
