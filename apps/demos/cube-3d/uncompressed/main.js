@@ -213,8 +213,18 @@ function main(window, Float32Array, undefined) {
 				gl.drawArrays(gl.TRIANGLES, 0, elements_count);
 			});
 			var rotator = new Rotator();
+			var autorotationani = window.autorotationani = (function (rotation_param) {
+				var rotating_velocity = window.rotating_velocity = new Float32Array([0.5, 0.2, 0.1]);
+				return new kaniclasses.VectorAnimator(function (lvec, rvec, animateparam) {
+					var dur = animateparam.duration;
+					lvec[0] += rvec[0] * dur;
+					lvec[1] += rvec[1] * dur;
+					lvec[2] += rvec[2] * dur;
+				}).createAnimate(rotation_param, rotating_velocity);
+			})(rotator.param);
 			drawani.run();
 			rotator.animate.run();
+			autorotationani.run();
 			
 		})(kaniclasses);
 		
