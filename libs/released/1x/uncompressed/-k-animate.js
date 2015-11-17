@@ -195,9 +195,8 @@
 			console.log("activated", window.ddd = {
 				animate: animate,
 				firsthandler: firsthandler,
-				handler: handler,
-				id: id,
 				callback: callback,
+				id: id,
 				__proto__: _public_proto
 			});
 			return animate;
