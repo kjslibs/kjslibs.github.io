@@ -508,7 +508,7 @@
 		vecadder = vecadder.bind(this);
 		setconst1oVs1v(this, [_key_createAnimate, "createAnimate"], function createAnimate(l_vec, r_vec) {
 			return new Animate(function (param) {
-				vecadder(l_vec, r_vec, param, animate);
+				vecadder(l_vec, r_vec, param, this);
 			});
 		});
 	}
