@@ -9,6 +9,6 @@ varying vec3 v_color;
 
 void main() {
 	v_color = a_color;
-	gl_Position = vec4(a_position, 1.0) * u_rotation;
+	gl_Position = vec4(a_position, 1.0) * u_rotation[0] * u_rotation[1] * u_rotation[2];
 }
 
