@@ -192,6 +192,14 @@
 		function run() {
 			id = requestAnimationFrame(firsthandler);
 			paused = false;
+			console.log("activated", window.ddd = {
+				animate: animate,
+				firsthandler: firsthandler,
+				handler: handler,
+				id: id,
+				callback: callback,
+				__proto__: _public_proto
+			});
 			return animate;
 		}
 		function pause() {
