@@ -582,8 +582,8 @@
 				return new AttribUtil(getAttribLocation(name), size, type, normalized, stride, offset);
 			}
 			var getUniformLocation = _$gl_getUniformLocation(gl, program);
-			function createUniformUtil(name, type, count) {
-				return new UniformUtil(getUniformLocation(name), type, count);
+			function createUniformUtil(name, type, length) {
+				return new UniformUtil(getUniformLocation(name), type, length);
 			}
 			var getParameter = _$gl_getProgramParameter(gl, program);
 			var getInfoLog = _$gl_getProgramInfoLog(gl, program);
