@@ -4,9 +4,11 @@
 	padding: 0px;
 	border: none;
 	color: white;
+	cursor: default;
 	font-family: serif;
 	font-family: 'verdana';
 	font-family: 'Segoe UI';
+	-webkit-user-select: none;
 }
 
 html, body, canvas {
