@@ -193,7 +193,7 @@ function main(window, Float32Array, undefined) {
 				new Float32Array(4 * 4),
 				new Float32Array(4 * 4)
 			];
-			var param = new Float32Array([Math.PI / 6, Math.PI / 6, Math.PI / 1]);
+			var param = new Float32Array([-0.25 * Math.PI, -0.25 * Math.PI, -0.25 * Math.PI]);
 			this.matrices = matrices;
 			this.param = window.rotatorparam = param;
 			this.animate = window.rotatorani = new kaniclasses.Animate(animator);
