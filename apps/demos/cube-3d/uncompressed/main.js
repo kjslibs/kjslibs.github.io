@@ -223,7 +223,7 @@ function main(window, Float32Array, undefined) {
 			var drawani = new kaniclasses.Animate(function (aniparam) {
 				gl.drawArrays(gl.TRIANGLES, 0, elements_count);
 			});
-			var rotator = new Rotator();
+			var rotator = window.rotator = new Rotator();
 			var autorotationani = window.autorotationani = (function (rotation_param) {
 				var rotating_velocity = window.rotating_velocity = new Float32Array([0.003, 0.002, 0.001]);
 				return new kaniclasses.VectorAnimator(function (lvec, rvec, animateparam) {
