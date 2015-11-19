@@ -170,7 +170,7 @@ function main(window, Float32Array, undefined) {
 		
 		// Pass data to shader
 		var actual_vertices = new Float32Array(vertices.length);
-		Matrix.scalarMultiply(actual_vertices, 0, vertices, 0, vertices.length, 0.3); 
+		Matrix.scalarMultiply(actual_vertices, 0, vertices, 0, vertices.length, 0.3);
 		var buffer_util = allglobjs.buffer_util = gl_util.createBufferUtil({
 			bind: true,
 			target: gl.ARRAY_BUFFER,
