@@ -182,15 +182,17 @@ function Resources(window, document, universe, undefined) {
 					},
 					onerror: errorhandler
 				});
-				allglobjs.a_position = program_util.createAttribUtil("a_position", 3, gl.FLOAT, 0, 0, 0);
-				allglobjs.u_rotation = [
-					program_util.createUniformUtil("u_rotation[0]", "fmat", 4),
-					program_util.createUniformUtil("u_rotation[1]", "fmat", 4),
-					program_util.createUniformUtil("u_rotation[2]", "fmat", 4)
-				];
-				allglobjs.u_focal_length = program_util.createUniformUtil("u_focal_length", "float", 1);
-				allglobjs.u_screen_distance = program_util.createUniformUtil("u_screen_distance", "float", 1);
-				allglobjs.a_color = program_util.createAttribUtil("a_color", 3, gl.FLOAT, 0, 0, 0);
+				(function (createAttribUtil, createUniformUtil) {
+					allglobjs.a_position = createAttribUtil("a_position", 3, gl.FLOAT, 0, 0, 0);
+					allglobjs.u_rotation = [
+						createUniformUtil("u_rotation[0]", "fmat", 4),
+						createUniformUtil("u_rotation[1]", "fmat", 4),
+						createUniformUtil("u_rotation[2]", "fmat", 4)
+					];
+					allglobjs.u_focal_length = createUniformUtil("u_focal_length", "float", 1);
+					allglobjs.u_screen_distance = createUniformUtil("u_screen_distance", "float", 1);
+					allglobjs.a_color = createAttribUtil("a_color", 3, gl.FLOAT, 0, 0, 0);
+				})(program_util.createAttribUtil, program_util.createUniformUtil);
 				function errorhandler(error) {
 					console.debug(String(error));
 					console.log(error);
