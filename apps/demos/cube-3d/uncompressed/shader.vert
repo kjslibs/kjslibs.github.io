@@ -4,7 +4,7 @@
 attribute vec3 a_position;
 uniform mat4 u_rotation[3]; // 3x [yz, xz, xy]
 uniform float u_focal_length;
-uniform float u_screen_distance;
+uniform float u_screen_distance; // distance between optical center and point (0, 0, 0)
 
 // For calculating color per fragment shader's extrema
 
