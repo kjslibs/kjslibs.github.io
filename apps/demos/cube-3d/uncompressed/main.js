@@ -169,6 +169,7 @@ function main(window, Float32Array, undefined) {
 		})(define_color.RED, define_color.GREEN, define_color.BLUE, define_color.mixAvg);
 		
 		// Pass data to shader
+		resizeCanvas();
 		var actual_vertices = new Float32Array(vertices.length);
 		Matrix.scalarMultiply(actual_vertices, 0, vertices, 0, vertices.length, 0.3);
 		var buffer_util = allglobjs.buffer_util = gl_util.createBufferUtil({

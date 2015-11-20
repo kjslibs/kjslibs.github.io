@@ -103,20 +103,17 @@ function Resources(window, document, universe, undefined) {
 		gl.enable(gl.CULL_FACE);
 		
 		// Drawing Context Scaling
-		resizeCanvas();
 		window.addEventListener("resize", resizeCanvas, 0);
 		resources.resizeCanvas = resizeCanvas; // considering neccessarility
 		function resizeCanvas() {
 			var width = window.innerWidth;
 			var height = window.innerHeight;
 			var rendersize = width < height ? width : height;
-			var renderpaddingwidth = (width - rendersize) >> 1;
-			var renderpaddingheight = (height - rendersize) >> 1;
-			Object.assign(canvas_container.style, {
-				left: csspxform(renderpaddingwidth),
-				top: csspxform(renderpaddingheight),
-				width: csspxform(rendersize),
-				height: csspxform(rendersize)
+			requestAnimationFrame(function () {
+				allglobjs.u_rate.set(new Float32Array([
+					height / rendersize,
+					width / rendersize
+				]));
 			});
 		}
 		
@@ -189,6 +186,7 @@ function Resources(window, document, universe, undefined) {
 						createUniformUtil("u_rotation[1]", "fmat", 4),
 						createUniformUtil("u_rotation[2]", "fmat", 4)
 					];
+					allglobjs.u_rate = createUniformUtil("u_rate", "fvec", 2);
 					allglobjs.u_focal_length = createUniformUtil("u_focal_length", "float", 1);
 					allglobjs.u_screen_distance = createUniformUtil("u_screen_distance", "float", 1);
 					allglobjs.a_color = createAttribUtil("a_color", 3, gl.FLOAT, 0, 0, 0);
