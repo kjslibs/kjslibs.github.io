@@ -117,7 +117,7 @@ function main(window, Float32Array, undefined) {
 				function addColor3f(red, green, blue) {
 					addElement(red)(green)(blue);
 					return addColor3f;
-				};
+				}
 				function addColor3fv(rgb) {
 					addColor3f(rgb[0], rgb[1], rgb[2]);
 					return addColor3fv;
@@ -128,7 +128,7 @@ function main(window, Float32Array, undefined) {
 					}
 					position = pos;
 					return pointer;
-				};
+				}
 				function addElement(e) {
 					color[position] = e;
 					++position;
