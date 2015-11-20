@@ -25,7 +25,7 @@ void main() {
 	v_color = a_color;
 	vec4 rotated = getRotatedPosition(vec4(a_position, 1.0), u_rotation);
 	vec4 translated = rotated + vec4(u_translate, 0.0);
-	vec4 resized = getResizedPosition(rotated, u_rate, u_focal_length, u_screen_distance);
+	vec4 resized = getResizedPosition(translated, u_rate, u_focal_length, u_screen_distance);
 	gl_Position = resized;
 }
 
