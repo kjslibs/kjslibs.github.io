@@ -266,7 +266,7 @@
 			var before = content.before;
 			(function () {
 				if (parent === undefined) {
-					if (before === undefined) return; // If both of 'parent' and 'before' are 'undefined', skip this action.
+					if (before === undefined || before === null) return; // If both of 'parent' and 'before' are 'undefined', skip this action.
 					before = createNode(document, before);
 					parent = before.parentNode;
 				} else {
