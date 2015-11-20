@@ -1,16 +1,22 @@
 
 // For calculating position per vertex
+
 attribute vec3 a_position;
 uniform mat4 u_rotation[3]; // 3x [yz, xz, xy]
 uniform float u_camera_distance;
 
 // For calculating color per fragment shader's extrema
+
 attribute vec3 a_color;
 varying vec3 v_color;
+
+// Function prototypes
 
 void main();
 vec4 getRotatedPosition(vec4, mat4 [3]);
 vec4 getResizedPosition(vec4, float);
+
+// Function definitions
 
 void main() {
 	v_color = a_color;
