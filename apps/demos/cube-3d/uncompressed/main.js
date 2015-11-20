@@ -9,8 +9,8 @@ function main(window, Float32Array, undefined) {
 	function __main__(allglobjs) {
 		
 		// front = clockwise, cull counter-clockwise
-		// float vertices[3 * 3 * 2 * 6];
-		var vertices = new Float32Array([
+		// float cube_pattern[3 * 3 * 2 * 6];
+		var cube_pattern = new Float32Array([
 			
 			// LEFT FACE
 			
@@ -86,9 +86,9 @@ function main(window, Float32Array, undefined) {
 			
 		]);
 		
-		// define color per vertex (see vertices[] above)
-		// float color[vertices.length];
-		var color = window.color = new Float32Array(vertices.length);
+		// define color per vertex (see cube_pattern[] above)
+		// float color[cube_pattern.length];
+		var color = window.color = new Float32Array(cube_pattern.length);
 		var define_color = window.define_color = (function () {
 			DefineColor.prototype = {
 				RED: createColor(1.0, 0.0, 0.0),
@@ -170,8 +170,8 @@ function main(window, Float32Array, undefined) {
 		
 		// Pass data to shader
 		resizeCanvas();
-		var actual_vertices = new Float32Array(vertices.length);
-		Matrix.scalarMultiply(actual_vertices, 0, vertices, 0, vertices.length, 0.3);
+		var actual_vertices = new Float32Array(cube_pattern.length);
+		Matrix.scalarMultiply(actual_vertices, 0, cube_pattern, 0, cube_pattern.length, 0.3);
 		var buffer_util = allglobjs.buffer_util = gl_util.createBufferUtil({
 			bind: true,
 			target: gl.ARRAY_BUFFER,
