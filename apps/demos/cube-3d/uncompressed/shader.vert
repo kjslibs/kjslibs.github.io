@@ -21,7 +21,9 @@ vec4 getResizedPosition(vec4, float, float);
 
 void main() {
 	v_color = a_color;
-	gl_Position = getRotatedPosition(vec4(a_position, 1.0), u_rotation);
+	vec4 rotated = getRotatedPosition(vec4(a_position, 1.0), u_rotation);
+	vec4 resized = getResizedPosition(rotated, u_focal_length, u_screen_distance);
+	gl_Position = resized;
 }
 
 vec4 getRotatedPosition(vec4 position, mat4 rotation[3]) {
@@ -29,6 +31,8 @@ vec4 getRotatedPosition(vec4 position, mat4 rotation[3]) {
 }
 
 vec4 getResizedPosition(vec4 position, float focal_length, float screen_distance) {
-	return vec4(0.0, 0.0, 0.0, 0.0);
+	float distance_screen_point = screen_distance + position.z;
+	vec2 resized = (focal_length / distance_screen_point) * position.xy;
+	return vec4(resized, position.zw);
 }
 

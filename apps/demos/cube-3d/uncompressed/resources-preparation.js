@@ -188,6 +188,8 @@ function Resources(window, document, universe, undefined) {
 					program_util.createUniformUtil("u_rotation[1]", "fmat", 4),
 					program_util.createUniformUtil("u_rotation[2]", "fmat", 4)
 				];
+				allglobjs.u_focal_length = program_util.createUniformUtil("u_focal_length", "float", 1);
+				allglobjs.u_screen_distance = program_util.createUniformUtil("u_screen_distance", "float", 1);
 				allglobjs.a_color = program_util.createAttribUtil("a_color", 3, gl.FLOAT, 0, 0, 0);
 				function errorhandler(error) {
 					console.debug(String(error));
