@@ -9,9 +9,19 @@ attribute vec3 a_color;
 varying vec3 v_color;
 
 void main();
+vec4 getRotatedPosition(vec4, mat4 [3]);
+vec4 getResizedPosition(vec4, float);
 
 void main() {
 	v_color = a_color;
-	gl_Position = vec4(a_position, 1.0) * u_rotation[0] * u_rotation[1] * u_rotation[2];
+	gl_Position = getRotatedPosition(vec4(a_position, 1.0), u_rotation);
+}
+
+vec4 getRotatedPosition(vec4 position, mat4 rotation[3]) {
+	return position * rotation[0] * rotation[1] * rotation[2];
+}
+
+vec4 getResizedPosition(vec4 position, float camera_distance) {
+	return vec4(0.0, 0.0, 0.0, 0.0);
 }
 
