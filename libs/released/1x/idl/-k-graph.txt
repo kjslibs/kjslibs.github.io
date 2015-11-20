@@ -104,7 +104,7 @@ CLASS: GLUtil
 		public readonly GLbool normalized;
 		public readonly GLsizei stride;
 		public readonly GLintptr offset;
-		public any set(any value);
+		public any set();
 		public void active();
 	}
 	
