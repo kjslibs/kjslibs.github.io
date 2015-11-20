@@ -1,7 +1,7 @@
 
 // For calculating position per vertex
 attribute vec3 a_position;
-uniform mat4 u_rotation[3]; // [yz, xz, xy]
+uniform mat4 u_rotation[3]; // 3x [yz, xz, xy]
 
 // For calculating color per fragment shader's extrema
 attribute vec3 a_color;
