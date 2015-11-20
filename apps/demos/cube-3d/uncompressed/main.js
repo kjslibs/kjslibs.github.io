@@ -240,8 +240,8 @@ function main(window, Float32Array, undefined) {
 			
 		})(kaniclasses);
 		
-		allglobjs.u_focal_length.value = 2.0;
-		allglobjs.u_screen_distance.value = 2.0;
+		allglobjs.u_focal_length.value = 1.0;
+		allglobjs.u_screen_distance.value = 1.0;
 		
 	}
 	
