@@ -187,6 +187,7 @@ function Resources(window, document, universe, undefined) {
 						createUniformUtil("u_rotation[2]", "fmat", 4)
 					];
 					allglobjs.u_rate = createUniformUtil("u_rate", "fvec", 2);
+					allglobjs.u_translate = createUniformUtil("u_translate", "fvec", 3);
 					allglobjs.u_focal_length = createUniformUtil("u_focal_length", "float", 1);
 					allglobjs.u_screen_distance = createUniformUtil("u_screen_distance", "float", 1);
 					allglobjs.a_color = createAttribUtil("a_color", 3, gl.FLOAT, 0, 0, 0);

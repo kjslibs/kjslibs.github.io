@@ -4,6 +4,7 @@
 attribute vec3 a_position;
 uniform mat4 u_rotation[3]; // 3x [yz, xz, xy]
 uniform vec2 u_rate;
+uniform vec3 u_translate;
 uniform float u_focal_length;
 uniform float u_screen_distance; // distance between optical center and point (0, 0, 0)
 
@@ -23,6 +24,7 @@ vec4 getResizedPosition(vec4, vec2, float, float);
 void main() {
 	v_color = a_color;
 	vec4 rotated = getRotatedPosition(vec4(a_position, 1.0), u_rotation);
+	vec4 translated = rotated + vec4(u_translate, 0.0);
 	vec4 resized = getResizedPosition(rotated, u_rate, u_focal_length, u_screen_distance);
 	gl_Position = resized;
 }
