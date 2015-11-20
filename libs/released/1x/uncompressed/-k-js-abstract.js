@@ -448,15 +448,15 @@
 			if (!args) args = this;
 			if (own_prop_sym(this).some(mapper) || own_prop_str(this).some(mapper))
 				return this;
-			function mapper(property) {
-				info[_key_key] = property;
-				handler_list.some(handler_list_mapper, args);
-				return info[_key_jump] > 0 && (--info[-key_jump], true);
-			}
-			function handler_list_mapper(handler, index) {
-				handler.call(this, info);
-				return info[_key_jump] > 0 && (--info[_key_jump], true);
-			}
+		}
+		function mapper(property) {
+			info[_key_key] = property;
+			handler_list.some(handler_list_mapper, args);
+			return info[_key_jump] > 0 && (--info[-key_jump], true);
+		}
+		function handler_list_mapper(handler, index) {
+			handler.call(this, info);
+			return info[_key_jump] > 0 && (--info[_key_jump], true);
 		}
 		return this;
 	}

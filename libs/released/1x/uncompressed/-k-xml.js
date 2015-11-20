@@ -289,7 +289,7 @@
 			})(content.event);
 			return node;
 		}
-		return __document_createTextNode(document, content);
+		return __document_createTextNode(document, String(content));
 	}
 	function createElement(document, xmlns, tag_name, attributes, children) {
 		var element = __document_createElementNS(document, xmlns, tag_name);
@@ -319,7 +319,7 @@
 		return attr;
 	}
 	function createTextNode(document, content) {
-		return __document_createTextNode(document, content);
+		return __document_createTextNode(document, String(content));
 	}
 	function createDocumentFragment(document, children) {
 		var document_fragment = __document_createDocumentFragment(document);

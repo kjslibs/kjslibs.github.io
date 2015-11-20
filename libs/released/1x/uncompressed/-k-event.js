@@ -227,28 +227,30 @@
 					return event_civilian;
 				};
 			} else {
-				var unrequest_event_type = event_descriptor.unrequest_event_type;
-				var unrequest_use_capture = event_descriptor.unrequest_use_capture;
-				var civilian_unrequest = civilian[_key_unrequest];
-				function event_unrequester(event) {
-					if (check_prevent("unrequest", event)) return;
-					civilian_unrequest();
-					republic_execute();
-				}
-				enable = function () {
-					enabled = true;
-					republic_add(civilian);
-					addEventListener(request_event_type, event_requester, request_use_capture);
-					addEventListener(unrequest_event_type, event_unrequester, unrequest_use_capture);
-					return event_civilian;
-				};
-				disable = function () {
-					enabled = false;
-					republic_remove(civilian);
-					removeEventListener(request_event_type, event_requester, request_use_capture);
-					removeEventListener(unrequest_event_type, event_unrequester, unrequest_use_capture);
-					return event_civilian;
-				};
+				(function () {
+					var unrequest_event_type = event_descriptor.unrequest_event_type;
+					var unrequest_use_capture = event_descriptor.unrequest_use_capture;
+					var civilian_unrequest = civilian[_key_unrequest];
+					function event_unrequester(event) {
+						if (check_prevent("unrequest", event)) return;
+						civilian_unrequest();
+						republic_execute();
+					}
+					enable = function () {
+						enabled = true;
+						republic_add(civilian);
+						addEventListener(request_event_type, event_requester, request_use_capture);
+						addEventListener(unrequest_event_type, event_unrequester, unrequest_use_capture);
+						return event_civilian;
+					};
+					disable = function () {
+						enabled = false;
+						republic_remove(civilian);
+						removeEventListener(request_event_type, event_requester, request_use_capture);
+						removeEventListener(unrequest_event_type, event_unrequester, unrequest_use_capture);
+						return event_civilian;
+					};
+				})();
 			}
 			var enabled_descriptor = {
 				get: function () {
