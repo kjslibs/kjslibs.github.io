@@ -3,7 +3,7 @@
 
 attribute vec3 a_position;
 uniform mat4 u_rotation[3]; // 3x [yz, xz, xy]
-uniform float u_camera_distance;
+uniform float u_focal_length;
 
 // For calculating color per fragment shader's extrema
 
@@ -27,7 +27,7 @@ vec4 getRotatedPosition(vec4 position, mat4 rotation[3]) {
 	return position * rotation[0] * rotation[1] * rotation[2];
 }
 
-vec4 getResizedPosition(vec4 position, float camera_distance) {
+vec4 getResizedPosition(vec4 position, float focal_length) {
 	return vec4(0.0, 0.0, 0.0, 0.0);
 }
 
