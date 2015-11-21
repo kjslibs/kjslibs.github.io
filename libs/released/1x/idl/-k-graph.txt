@@ -106,7 +106,7 @@ CLASS: GLUtil
 		public readonly GLintptr offset;
 		public any set();
 		public void active();
-		public BufferUtil makeBuffer(BufferCreationDescriptor descriptor);
+		public BufferUtil makeBufferUtil(BufferCreationDescriptor descriptor);
 	}
 	
 	private class UniformUtil : public VariableUtil {
