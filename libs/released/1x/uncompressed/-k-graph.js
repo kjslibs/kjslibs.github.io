@@ -499,6 +499,8 @@
 				setconst("offset", null);
 				setconst("active", null);
 				setconst("set", null);
+				setconst("createBuffer", null);
+				setconst("createBufferUtil", null);
 				setconst(_key_basedObject, null);
 				return proto;
 			})(_create_new(_variable_util_));
