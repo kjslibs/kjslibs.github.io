@@ -28,8 +28,6 @@
 	var _function_call = _function_.call;
 	var _function_bind = _function_.bind;
 	var _function_callbind = _function_bind.bind(_function_call);
-	/* var _kJs_Republic = _kjsclasses.Republic; // considering necessarility...
-	var _kJs_Civilian = _kjsclasses.Civilian; */
 	var shared_toString = utils.shared_toString;
 	var is_extensible_object = utils.is_extensible_object;
 	var is_valid_handler = utils.is_valid_handler;

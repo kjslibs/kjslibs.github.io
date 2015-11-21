@@ -108,7 +108,6 @@
 		constructor.prototype = proto;
 	}
 	function prvConstructorCorrection(constructor, object) {
-		//prvEnsureConstructor(constructor, object, "Illegal invocation. 'new' operator is required.");
 		var set = _constructor_object_map.get(constructor);
 		if (set.has(object))
 			throw new TypeError("Can't re-construct object. 'new' operator is required.");

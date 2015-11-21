@@ -688,8 +688,6 @@
 			function detachProgramUtil(program_util) {
 				_detachShader(program_util[_key_basedObject], shader);
 			}
-			/* var getParameter = _getShaderParameter;
-			var getInfoLog = _getShaderInfoLog; */
 			setconst("shader", shader);
 			_def_pro(shader_util, "source", {
 				get: getSource,
@@ -833,8 +831,6 @@
 			setconst("source", null);
 		})(new GLErrorDetails("ShaderCompilingError"));
 		function _firstStep_createProgram(descriptor) {
-			/* if (descriptor instanceof WebGLProgram)
-				return descriptor; */
 			if (descriptor === undefined || descriptor === null)
 				return _createProgram();
 			if (typeof descriptor !== "object")
@@ -914,10 +910,6 @@
 			return new ProgramUtil(_firstStep_createProgram(descriptor) || (_get_proto(descriptor) === _program_ ? descriptor : _secondStep_createProgram(descriptor)));
 		}
 		function _firstStep_createShader(descriptor) {
-			// check error only
-			// return nothing
-			/* if (descriptor instanceof WebGLShader)
-				return descriptor; */ // handled this in createProgram --> _handle_array_element(...)
 			if (typeof descriptor !== "object" || !descriptor)
 				throw new TypeError("Parameter 'descriptor' must be an object");
 		}
