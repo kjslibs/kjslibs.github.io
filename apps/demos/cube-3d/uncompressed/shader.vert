@@ -16,24 +16,24 @@ varying vec3 v_color;
 // Function prototypes
 
 void main();
-vec4 getRotatedPosition(vec4, mat4 [3]);
-vec4 getResizedPosition(vec4, vec2, float, float);
+vec4 rotate(vec4, mat4 [3]);
+vec4 camera(vec4, vec2, float, float);
 
 // Function definitions
 
 void main() {
 	v_color = a_color;
-	vec4 rotated = getRotatedPosition(vec4(a_position, 1.0), u_rotation);
+	vec4 rotated = rotate(vec4(a_position, 1.0), u_rotation);
 	vec4 translated = rotated + vec4(u_translate, 0.0);
-	vec4 resized = getResizedPosition(translated, u_rate, u_focal_length, u_screen_distance);
+	vec4 resized = camera(translated, u_rate, u_focal_length, u_screen_distance);
 	gl_Position = resized;
 }
 
-vec4 getRotatedPosition(vec4 position, mat4 rotation[3]) {
+vec4 rotate(vec4 position, mat4 rotation[3]) {
 	return position * rotation[0] * rotation[1] * rotation[2];
 }
 
-vec4 getResizedPosition(vec4 position, vec2 rate, float focal_length, float screen_distance) {
+vec4 camera(vec4 position, vec2 rate, float focal_length, float screen_distance) {
 	float distance_screen_point = screen_distance + position.z;
 	vec2 resized = (focal_length / distance_screen_point) * position.xy;
 	resized.x *= rate.x;
