@@ -477,6 +477,16 @@
 				setconst("offset", offset);
 				setconst("active", active);
 				setconst("set", set);
+				setconst("createBuffer", function (descriptor) {
+					var buffer = createBuffer(descriptor);
+					set();
+					return buffer;
+				});
+				setconst("createBufferUtil", function (descriptor) {
+					var buffer_util = createBufferUtil(descriptor);
+					set();
+					return buffer_util;
+				});
 				setconst(_key_basedObject, attrib_location);
 			}
 			var _attrib_util_ = AttribUtil.prototype = (function (proto) {
