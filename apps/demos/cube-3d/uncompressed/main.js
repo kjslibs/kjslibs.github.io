@@ -94,22 +94,12 @@ function main(window, Float32Array, undefined) {
 		resizeCanvas();
 		var actual_vertices = new Float32Array(cube_pattern.length);
 		Matrix.scalarMultiply(actual_vertices, 0, cube_pattern, 0, cube_pattern.length, 0.3);
-		var buffer_util = allglobjs.buffer_util = gl_util.createBufferUtil({
-			bind: true,
-			target: gl.ARRAY_BUFFER,
-			usage: gl.STATIC_DRAW,
-			data: actual_vertices
-		});
-		allglobjs.a_position.active();
-		allglobjs.a_position.set();
-		gl_util.createBufferUtil({
-			bind: true,
-			target: gl.ARRAY_BUFFER,
-			usage: gl.STATIC_DRAW,
-			data: color
-		});
-		allglobjs.a_color.active();
-		allglobjs.a_color.set();
+		(function (a_position, a_color, ARRAY_BUFFER, STATIC_DRAW) {
+			a_position.createBufferUtil(ARRAY_BUFFER, STATIC_DRAW, actual_vertices);
+			a_position.active();
+			a_color.createBufferUtil(ARRAY_BUFFER, STATIC_DRAW, color);
+			a_color.active();
+		})(allglobjs.a_position, allglobjs.a_color, gl.ARRAY_BUFFER, gl.STATIC_DRAW);
 		function Rotator() {
 			var matrices = [
 				new Float32Array(4 * 4),
