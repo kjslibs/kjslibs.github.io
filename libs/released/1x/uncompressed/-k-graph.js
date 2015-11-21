@@ -477,13 +477,13 @@
 				setconst("offset", offset);
 				setconst("active", active);
 				setconst("set", set);
-				setconst("createBuffer", function (descriptor) {
-					var buffer = createBuffer(descriptor);
+				setconst("createBuffer", function (target, usage, data) {
+					var buffer = createBuffer(new AttribUtilBufferCreationDescriptor(target, usage, data));
 					set();
 					return buffer;
 				});
-				setconst("createBufferUtil", function (descriptor) {
-					var buffer_util = createBufferUtil(descriptor);
+				setconst("createBufferUtil", function (target, usage, data) {
+					var buffer_util = createBufferUtil(new AttribUtilBufferCreationDescriptor(target, usage, data));
 					set();
 					return buffer_util;
 				});
@@ -580,6 +580,18 @@
 				};
 				return proto;
 			})(_create_new(_variable_util_));
+			function AttribUtilBufferCreationDescriptor(target, usage, data) {
+				this.target = target;
+				this.usage = usage;
+				this.data = data;
+			}
+			AttribUtilBufferCreationDescriptor.prototype = _create_new({
+				bind: 1,
+				target: null,
+				usage: null,
+				data: null,
+				__proto__: null
+			});
 			function attachShaderUtil(shader_util) {
 				attachShader(shader_util[_key_basedObject]);
 			}

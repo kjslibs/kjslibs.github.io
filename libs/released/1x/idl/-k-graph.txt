@@ -106,8 +106,8 @@ CLASS: GLUtil
 		public readonly GLintptr offset;
 		public any set();
 		public void active();
-		public WebGLBuffer createBuffer(BufferCreationDescriptor descriptor);
-		public BufferUtil createBufferUtil(BufferCreationDescriptor descriptor);
+		public WebGLBuffer createBuffer(GLenum target, GLenum usage, Object data);
+		public BufferUtil createBufferUtil(GLenum target, GLenum usage, Object data);
 	}
 	
 	private class UniformUtil : public VariableUtil {
