@@ -17,6 +17,7 @@ varying vec3 v_color;
 
 void main();
 vec4 rotate(vec4, mat4 [3]);
+vec4 translate(vec4, vec3);
 vec4 camera(vec4, vec2, float, float);
 
 // Function definitions
@@ -24,13 +25,17 @@ vec4 camera(vec4, vec2, float, float);
 void main() {
 	v_color = a_color;
 	vec4 rotated = rotate(vec4(a_position, 1.0), u_rotation);
-	vec4 translated = rotated + vec4(u_translate, 0.0);
+	vec4 translated = translate(rotated, u_translate);
 	vec4 resized = camera(translated, u_rate, u_focal_length, u_screen_distance);
 	gl_Position = resized;
 }
 
 vec4 rotate(vec4 position, mat4 rotation[3]) {
 	return position * rotation[0] * rotation[1] * rotation[2];
+}
+
+vec4 translate(vec4 position, vec3 delta) {
+	return position + vec4(delta, 0.0);
 }
 
 vec4 camera(vec4 position, vec2 rate, float focal_length, float screen_distance) {
