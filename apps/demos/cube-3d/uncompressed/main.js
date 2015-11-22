@@ -93,7 +93,7 @@ function main(window, Float32Array, undefined) {
 		// Pass data to shader
 		resizeCanvas();
 		var actual_vertices = new Float32Array(cube_pattern.length);
-		Matrix.scalarMultiply(actual_vertices, 0, cube_pattern, 0, cube_pattern.length, .3);
+		Matrix.scalarMultiply(actual_vertices, 0, cube_pattern, 0, cube_pattern.length, 0.3);
 		(function (a_position, a_color, ARRAY_BUFFER, STATIC_DRAW) {
 			a_position.createBufferUtil(ARRAY_BUFFER, STATIC_DRAW, actual_vertices);
 			a_position.active();
