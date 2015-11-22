@@ -56,7 +56,7 @@ CLASS: DocumentUtil
 	
 	pattern EventListenerAttachmentDescriptor {
 		Function,
-		sequence<EventListenerAttachmentDescriptor>,
+		sequence<EventListenerAttachmentDescriptor>,  
 		struct {
 			Function listener,
 			optional Boolean useCapture
