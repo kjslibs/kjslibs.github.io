@@ -104,7 +104,7 @@ function Resources(window, document, universe, undefined) {
 		
 		// Drawing Context Scaling
 		window.addEventListener("resize", resizeCanvas, 0);
-		resources.resizeCanvas = resizeCanvas; // considering neccessarility
+		resources.resizeCanvas = resizeCanvas;
 		function resizeCanvas() {
 			var width = window.innerWidth;
 			var height = window.innerHeight;
