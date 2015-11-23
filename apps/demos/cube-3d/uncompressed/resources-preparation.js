@@ -22,7 +22,9 @@ function Resources(window, document, universe, undefined) {
 	function main() {
 		implementation();
 		initFuncs();
-		if (glContextCreation(kxmlclasses, kgraphclasses))
+		var document_util = resources.document_util = new kxmlclasses.DocumentUtil(document);
+		document_util.namespaceURI = document.documentElement.namespaceURI;
+		if (glContextCreation(kxmlclasses, kgraphclasses, document_util))
 			return 1;
 		glObjectsCreation(xhrCreatorCreation(kjsclasses, keventclasses), gl_util);
 		return 0;
@@ -55,14 +57,10 @@ function Resources(window, document, universe, undefined) {
 		
 	}
 	
-	// int glContextCreation(ClassCollection, ClassCollection);
-	function glContextCreation(kxmlclasses, kgraphclasses) {
+	// int glContextCreation(ClassCollection, ClassCollection, DocumentUtil);
+	function glContextCreation(kxmlclasses, kgraphclasses, document_util) {
 		
-		// Set up 'document_util'
-		var document_util = resources.document_util = new kxmlclasses.DocumentUtil(document);
-		document_util.namespaceURI = document.documentElement.namespaceURI;
-		
-		// Set up 'canvas'
+		// Create 'canvas_container'
 		var canvas_container = resources.canvas_container = document_util.create({
 			type: document_util.ELEMENT,
 			tag: "div",
@@ -72,6 +70,8 @@ function Resources(window, document, universe, undefined) {
 				id: "canvas-container"
 			}
 		});
+		
+		// Create 'canvas'
 		var canvas = resources.canvas = document_util.create({
 			type: document_util.ELEMENT,
 			tag: "canvas",
@@ -110,7 +110,7 @@ function Resources(window, document, universe, undefined) {
 			var height = window.innerHeight;
 			var rendersize = width < height ? width : height;
 			requestAnimationFrame(function () {
-				allglobjs.u_rate.set(new Float32Array([
+				allglobjs.u_ratio.set(new Float32Array([
 					height / rendersize,
 					width / rendersize
 				]));
@@ -186,7 +186,7 @@ function Resources(window, document, universe, undefined) {
 						createUniformUtil("u_rotation[1]", "fmat", 4),
 						createUniformUtil("u_rotation[2]", "fmat", 4)
 					];
-					allglobjs.u_rate = createUniformUtil("u_rate", "fvec", 2);
+					allglobjs.u_ratio = createUniformUtil("u_ratio", "fvec", 2);
 					allglobjs.u_translate = createUniformUtil("u_translate", "fvec", 3);
 					allglobjs.u_focal_length = createUniformUtil("u_focal_length", "float", 1);
 					allglobjs.u_screen_distance = createUniformUtil("u_screen_distance", "float", 1);
@@ -197,12 +197,391 @@ function Resources(window, document, universe, undefined) {
 					console.log(error);
 					throw error;
 				}
+				
+				guiElementsCreation(kxmlclasses, document_util, document.body || document.documentElement.children[1])
 			
 				callback(allglobjs, allxhrs);
 				
 			}, onerror);
 			
 		}
+		
+	}
+	
+	// int guiElementsCreation(ClassCollection, DocumentUtil, HTMLBodyElement);
+	function guiElementsCreation(kxmlclasses, document_util, body) {
+		
+		(function (create, ELEMENT) {
+			
+			(function (canvas) {
+				enableGrabStyle(canvas);
+				var lastevent;
+				canvas.addEventListener("mousedown", function (event) {
+					lastevent = event;
+					window.addEventListener("mousemove", onmousemove, 0);
+				}, 0);
+				window.addEventListener("mouseup", window.removeEventListener.bind(window, "mousemove", onmousemove, 0), 0);
+				function onmousemove(event) {
+					var ratio = allglobjs.u_ratio.get();
+					var factor = allglobjs.u_screen_distance.value / allglobjs.u_focal_length.value;
+					var shiftX = (event.clientX - lastevent.clientX) * factor / ratio[0] / parseFloat(canvas.width);
+					var shiftY = (event.clientY - lastevent.clientY) * factor / ratio[1] / parseFloat(canvas.height);
+					var u_translate = allglobjs.u_translate;
+					var translate = u_translate.get();
+					translate[0] += shiftX;
+					translate[1] -= shiftY;
+					u_translate.set(translate);
+					lastevent = event;
+				}
+			})(canvas);
+			
+			var camera_dialog = resources.camera_dialog = create({
+				type: ELEMENT,
+				tag: "div",
+				parent: body,
+				attributes: {
+					id: "dialog",
+					name: "camera"
+				},
+				children: [
+					{
+						type: ELEMENT,
+						tag: "iframe",
+						attributes: {
+							id: "image",
+							type: "image/svg+xml",
+							src: "camera-lens.svg"
+						}
+					},
+					{
+						type: ELEMENT,
+						tag: "input",
+						attributes: {
+							id: "focal-length",
+							type: "text",
+							placeholder: "focal_length",
+							value: "2.0"
+						},
+						event: {
+							change: floatUniformSetter(allglobjs.u_focal_length)
+						}
+					},
+					{
+						type: ELEMENT,
+						tag: "input",
+						attributes: {
+							id: "screen-distance",
+							type: "text",
+							placeholder: "screen_distance",
+							value: "2.0"
+						},
+						event: {
+							change: floatUniformSetter(allglobjs.u_screen_distance)
+						}
+					},
+					{
+						type: ELEMENT,
+						tag: "button",
+						attributes: {
+							id: "close",
+						},
+						event: {
+							click: function () {
+								hideElement(camera_dialog);
+							}
+						},
+						children: ["Close"]
+					}
+				]
+			});
+			
+			var rotating_velocity_checkpoints = [-1.0, -0.5, 0.0, +0.5, +1.0];
+			var rotating_velocity_dialog = resources.rotating_velocity_dialog = create({
+				type: ELEMENT,
+				tag: "div",
+				parent: body,
+				before: null,
+				attributes: {
+					id: "dialog",
+					name: "rotating-velocity"
+				},
+				children: [
+					{
+						type: ELEMENT,
+						tag: "div",
+						attributes: {
+							id: "slider-container"
+						},
+						children: [
+							textDivElement("Oy -> Oz:"),
+							sliderBar(
+								{
+									min: "-1.0",
+									max: "+1.0",
+									value: "+0.45"
+								},
+								rotating_velocity_tweaker(0),
+								rotating_velocity_checkpoints
+							),
+							textDivElement("Ox -> Oz:"),
+							sliderBar(
+								{
+									min: "-1.0",
+									max: "+1.0",
+									value: "+0.30"
+								},
+								rotating_velocity_tweaker(1),
+								rotating_velocity_checkpoints
+							),
+							textDivElement("Ox -> Oy:"),
+							sliderBar(
+								{
+									min: "-1.0",
+									max: "+1.0",
+									value: "+0.15"
+								},
+								rotating_velocity_tweaker(2),
+								rotating_velocity_checkpoints
+							)
+						]
+					},
+					{
+						type: ELEMENT,
+						tag: "button",
+						attributes: {
+							id: "close",
+						},
+						event: {
+							click: function () {
+								hideElement(rotating_velocity_dialog);
+							}
+						},
+						children: ["Close"]
+					}
+				]
+			});
+			
+			function rotating_velocity_tweaker(index) {
+				var RATIO = 0.01 * 2 / 3;
+				return function (detail) {
+					rotating_velocity[index] = detail.value * RATIO;
+				}
+			}
+			
+			function sliderBar(attributes, onchange, checkpoints) {
+				attributes.id = "slider-bar";
+				var bar = create({
+					type: ELEMENT,
+					tag: "div",
+					attributes: attributes
+				});
+				if (checkpoints) {
+					checkpoints.forEach(function (val) {
+						var style = create({
+							type: ELEMENT,
+							tag: "div",
+							parent: bar,
+							before: null,
+							attributes: {
+								id: "checkpoint"
+							},
+							children: [String(val)]
+						}).style;
+						bar.addEventListener("-k-appear", function () {
+							style.left = csspxform(getposfromval(val));
+						}, 0);
+					});
+				}
+				var slider = create({
+					type: ELEMENT,
+					tag: "div",
+					parent: bar,
+					before: null,
+					attributes: {
+						id: "slider"
+					}
+				});
+				enableGrabStyle(slider);
+				var mousex;
+				var barclasses = bar.classList;
+				var sliderstyle = slider.style;
+				var sliderclasses = slider.classList;
+				var barrect, sliderrect, limit;
+				var max, min, range;
+				slider.addEventListener("mousedown", function (event) {
+					mousex = event.offsetX;
+					barclasses.add("holding");
+					sliderclasses.add("holding");
+					window.addEventListener("mousemove", onmousemove, 0);
+				}, 0);
+				window.addEventListener("mouseup", function () {
+					barclasses.remove("holding");
+					sliderclasses.remove("holding");
+					window.removeEventListener("mousemove", onmousemove, 0);
+				}, 0);
+				bar.addEventListener("-k-appear", updatefromvalue, 0);
+				return bar;
+				function onmousemove(event) {
+					getrects();
+					var position = event.screenX - barrect.left - mousex;
+					if (position > limit) {
+						sliderstyle.left = csspxform(limit);
+						return;
+					}
+					if (position < 0) {
+						sliderstyle.left = "0px";
+						return;
+					}
+					sliderstyle.left = csspxform(position);
+					updatefromevent(position / limit, event);
+				}
+				function updatefromevent(ratio, event) {
+					getrange();
+					var val = ratio * range + min;
+					bar.setAttributeNS(null, "value", String(val));
+					onchange({
+						mousemove: event,
+						value: val
+					});
+				}
+				function updatefromvalue() {
+					var val = parseFloat(bar.getAttributeNS(null, "value"));
+					sliderstyle.left = csspxform(getposfromval(val));
+				}
+				function getposfromval(val) {
+					getrects();
+					getrange();
+					return limit * (val - min) / range;
+				}
+				function getrects() {
+					barrect = bar.getClientRects()[0];
+					sliderrect = slider.getClientRects()[0];
+					limit = barrect.width - sliderrect.width;
+				}
+				function getrange() {
+					min = parseFloat(bar.getAttributeNS(null, "min"));
+					max = parseFloat(bar.getAttributeNS(null, "max"));
+					range = max - min;
+				}
+			}
+			
+			var control_panel = resources.control_panel = create({
+				type: ELEMENT,
+				tag: "div",
+				parent: body,
+				before: null,
+				attributes: {
+					id: "control-panel"
+				},
+				children: [
+					displayerButton(camera_dialog, "Camera"),
+					displayerButton(rotating_velocity_dialog, "Spinning")
+				]
+			});
+			
+			(function (style) {
+				var dwidth = 414.22;
+				var dheight = 256;
+				style.width = csspxform(dwidth);
+				style.height = csspxform(dheight);
+				onresize();
+				window.addEventListener("resize", onresize, 0);
+				function onresize() {
+					var wwidth = window.innerWidth;
+					var wheight = window.innerHeight;
+					style.left = csspxform((wwidth - dwidth) * 0.5);
+					style.top = csspxform((wheight - dheight) * 0.5);
+				}
+			})(Array.prototype.find.call(document.styleSheets[0].cssRules, function (rule) {
+				return rule.selectorText == "#dialog"
+			}).style);
+			
+			hideAllDialogs();
+			
+			function enableGrabStyle(element) {
+				var elementclasses = element.classList;
+				var htmlclasses = window.document.documentElement.classList;
+				elementclasses.add("grab");
+				element.addEventListener("mousedown", function () {
+					elementclasses.remove("grab");
+					htmlclasses.add("grabbing");
+				}, 0);
+				window.addEventListener("mouseup", function () {
+					elementclasses.add("grab");
+					htmlclasses.remove("grabbing");
+				}, 0);
+			}
+			
+			var appearingElement;
+			
+			function elementAppearanceSwitcher(element) {
+				return function (event) {
+					if (appearingElement === element) {
+						hideElement(element);
+					} else {
+						hideAllDialogs();
+						showElement(element);
+					}
+				}
+			}
+			
+			function hideAllDialogs() {
+				hideElement(camera_dialog);
+				hideElement(rotating_velocity_dialog);
+			}
+			
+			function hideElement(element) {
+				appearingElement = undefined;
+				element.classList.add("hidden");
+				massDispatchEvent(element, "-k-disapear");
+			}
+			
+			function showElement(element) {
+				appearingElement = element;
+				element.classList.remove("hidden");
+				massDispatchEvent(element, "-k-appear");
+			}
+			
+			function displayerButton(element, content) {
+				return create({
+					type: ELEMENT,
+					tag: "button",
+					children: [content],
+					event: {
+						click: elementAppearanceSwitcher(element)
+					}
+				});
+			}
+			
+			function massDispatchEvent(element, type) {
+				var event = new Event(type);
+				var callmap = Function.call.bind(Array.prototype.map);
+				return (function callback(element) {
+					return {
+						element: element,
+						succeed: element.dispatchEvent(event),
+						children: callmap(element.children, callback)
+					}
+				})(element);
+			}
+			
+			function textDivElement(content) {
+				return create({
+					type: ELEMENT,
+					tag: "div",
+					id: "readonly-text",
+					children: [content]
+				});
+			}
+			
+			function floatUniformSetter(uniform) {
+				var set = uniform.set;
+				return function (event) {
+					set(parseFloat(event.target.value));
+				}
+			}
+			
+		})(document_util.create, document_util.ELEMENT);
 		
 	}
 	

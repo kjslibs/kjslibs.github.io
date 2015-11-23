@@ -3,7 +3,7 @@
 
 attribute vec3 a_position;
 uniform mat4 u_rotation[3]; // 3x [yz, xz, xy]
-uniform vec2 u_rate;
+uniform vec2 u_ratio;
 uniform vec3 u_translate;
 uniform float u_focal_length;
 uniform float u_screen_distance; // distance between optical center and point (0, 0, 0)
@@ -24,10 +24,10 @@ void cameratweak(inout vec4, vec2, float, float);
 
 void main() {
 	v_color = a_color;
-	gl_Position = vec4(a_position, 1.0);
+	gl_Position = vec4(a_position.xy, -a_position.z, 1.0);
 	rotate(gl_Position, u_rotation);
 	translate(gl_Position, u_translate);
-	cameratweak(gl_Position, u_rate, u_focal_length, u_screen_distance);
+	cameratweak(gl_Position, u_ratio, u_focal_length, u_screen_distance);
 }
 
 void rotate(inout vec4 position, mat4 rotation[3]) {
@@ -38,10 +38,10 @@ void translate(inout vec4 position, vec3 delta) {
 	position.xyz += delta;
 }
 
-void cameratweak(inout vec4 position, vec2 rate, float focal_length, float screen_distance) {
-	float distance_screen_point = screen_distance + position.z;
+void cameratweak(inout vec4 position, vec2 ratio, float focal_length, float screen_distance) {
+	float distance_screen_point = screen_distance - position.z;
 	position.xy *= focal_length / distance_screen_point;
-	position.x *= rate.x;
-	position.y *= rate.y;
+	position.x *= ratio.x;
+	position.y *= ratio.y;
 }
 
