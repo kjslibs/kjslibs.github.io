@@ -342,7 +342,18 @@ function Resources(window, document, universe, undefined) {
 								},
 								rotating_velocity_tweaker(2),
 								rotating_velocity_checkpoints
-							)
+							),
+							{
+								type: ELEMENT,
+								tag: "div",
+								attributes: {
+									id: "readonly-text",
+									style: "text-align: center; font-size: 0.8em;"
+								},
+								children: [
+									"Drag sliders to adjust spinning speed and directions of the cube"
+								]
+							}
 						]
 					},
 					{
@@ -569,7 +580,9 @@ function Resources(window, document, universe, undefined) {
 				return create({
 					type: ELEMENT,
 					tag: "div",
-					id: "readonly-text",
+					attributes: {
+						id: "readonly-text"
+					},
 					children: [content]
 				});
 			}

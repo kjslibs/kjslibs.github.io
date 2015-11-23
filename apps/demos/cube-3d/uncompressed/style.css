@@ -9,6 +9,8 @@
 	font-family: 'verdana';
 	font-family: 'Segoe UI';
 	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
 }
 
 .hidden {
@@ -104,10 +106,11 @@ input {
 
 [name="rotating-velocity"] #slider-container {
 	width: 100%;
-	height: 120px;
+	height: 180px;
 }
 
 [name="rotating-velocity"] #slider-container #readonly-text {
+	margin-top: 15px;
 	height: 20px;
 }
 
