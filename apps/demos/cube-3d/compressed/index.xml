@@ -1,0 +1,14 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>3D Cube demo</title>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="shortcut icon" type="image/png" href="../favicon.png" />
+	</head>
+	<body>
+		<noscript id="error-message">Javascript, please!</noscript>
+		<script type="text/javascript" src="one.min.js"></script>
+	</body>
+</html>
+
