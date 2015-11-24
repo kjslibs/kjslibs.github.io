@@ -8,6 +8,7 @@
 	</head>
 	<body>
 		<noscript id="error-message">Javascript, please!</noscript>
+		<script type="text/javascript" src="../../../../site-resources/es6emulator.js"></script>
 		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-js-abstract.js"></script>
 		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-xml.js"></script>
 		<script type="text/javascript" src="../../../../libs/released/1x/uncompressed/-k-animate.js"></script>
