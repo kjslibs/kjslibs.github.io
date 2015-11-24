@@ -526,7 +526,7 @@ function Resources(window, document, universe, undefined) {
 			var appearingElement;
 			
 			function elementAppearanceSwitcher(element) {
-				return function (event) {
+				return function () {
 					if (appearingElement === element) {
 						hideElement(element);
 					} else {
