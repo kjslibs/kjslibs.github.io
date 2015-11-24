@@ -476,6 +476,66 @@ function Resources(window, document, universe, undefined) {
 				}
 			}
 			
+			var about_dialog = create({
+				type: ELEMENT,
+				tag: "div",
+				parent: body,
+				before: null,
+				attributes: {
+					id: "dialog",
+					name: "about"
+				},
+				children: [
+					{
+						type: ELEMENT,
+						tag: "h3",
+						attributes: {
+							style: "text-align: center; font-weight: normal;"
+						},
+						children: ["3D Cube Demo"]
+					},
+					{
+						type: ELEMENT,
+						tag: "div",
+						children: [
+							textDivElement("This is a demo which show usages of kjslibs"),
+							textDivElement([
+								"Source code of this demo: ",
+								anchorElement(
+									"https://github.com/kjslibs/kjslibs.github.io/tree/master/apps/demos/cube-3d",
+									"kjslibs/apps/demos/cube-3d"
+								)
+							]),
+							textDivElement([
+								"Repository kjslibs.github.io: ",
+								anchorElement("https://github.com/kjslibs/kjslibs.github.io")
+							]),
+							textDivElement([
+								"Author/Contributor: ",
+								anchorElement("https://github.com/ksxgithub", "Hoàng Văn Khải")
+							]),
+							textDivElement([
+								textDivElement("This is free software; see the source for copying conditions."),
+								textDivElement("There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.")
+							])
+						]
+					},
+					{
+						type: ELEMENT,
+						tag: "button",
+						attributes: {
+							id: "close",
+						},
+						event: {
+							click: function () {
+								hideElement(about_dialog);
+							}
+						},
+						children: ["Close"]
+					}
+				]
+			});
+			
 			var control_panel = resources.control_panel = create({
 				type: ELEMENT,
 				tag: "div",
@@ -486,7 +546,8 @@ function Resources(window, document, universe, undefined) {
 				},
 				children: [
 					displayerButton(camera_dialog, "Camera"),
-					displayerButton(rotating_velocity_dialog, "Spinning")
+					displayerButton(rotating_velocity_dialog, "Spinning"),
+					displayerButton(about_dialog, "About")
 				]
 			});
 			
@@ -539,6 +600,7 @@ function Resources(window, document, universe, undefined) {
 			function hideAllDialogs() {
 				hideElement(camera_dialog);
 				hideElement(rotating_velocity_dialog);
+				hideElement(about_dialog);
 			}
 			
 			function hideElement(element) {
@@ -561,6 +623,18 @@ function Resources(window, document, universe, undefined) {
 					event: {
 						click: elementAppearanceSwitcher(element)
 					}
+				});
+			}
+			
+			function anchorElement(url, content) {
+				return create({
+					type: ELEMENT,
+					tag: "a",
+					attributes: {
+						target: "_blank",
+						href: url
+					},
+					children: [content || url]
 				});
 			}
 			

@@ -151,6 +151,30 @@ input {
 	position: absolute;
 }
 
+[name="about"] * {
+	font-size: 0.9em;
+}
+
+[name="about"] #readonly-text {
+	margin-top: 0.9em;
+}
+
+[name="about"] > div > #readonly-text > #readonly-text {
+	margin-top: 0.0em;
+}
+
+a {
+	color: red!important;
+}
+
+a:hover {
+	color: gold!important;
+}
+
+a:active {
+	color: white!important;
+}
+
 #dialog button#close {
 	height: 12.5%;
 	top: 87.5%;
