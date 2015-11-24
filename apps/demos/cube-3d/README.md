@@ -3,8 +3,8 @@
 For: `-k-js-abstract.js`, `-k-xml.js`, `-k-animate.js`, `-k-event.js` and `-k-graph.js`
 
 ## Locations
- - Uncompressed: http://kjslibs.github.io/apps/demos/uncompressed/
- - Compressed: http://kjslibs.github.io/apps/demos/compressed/
+ - Uncompressed: http://kjslibs.github.io/apps/demos/cube-3d/uncompressed/
+ - Compressed: http://kjslibs.github.io/apps/demos/cube-3d/compressed/
 
 ## Used APIs from `kjslibs`
  - From `-k-xml.js`
