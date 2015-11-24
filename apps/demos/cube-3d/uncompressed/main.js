@@ -4,6 +4,10 @@ main(window, Float32Array);
 function main(window, Float32Array, undefined) {
 	'use strict';
 	
+	if (window.__badsupport) {
+		alert("Your browser does not support some important features.\nIt's time to change your browser.");
+	}
+	
 	window.allglobjs = new AllGLObjs(__main__, onerror);
 	
 	function __main__(allglobjs) {
