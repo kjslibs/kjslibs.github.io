@@ -30,5 +30,5 @@ For: `-k-js-abstract.js`, `-k-xml.js`, `-k-animate.js`, `-k-event.js` and `-k-gr
  - Changing cube's position
 
 ## Controls
- - Drag the cube to change it position
+ - Drag the cube to change its position
  - Click 'Camera' button or 'Spinning' button for further options.
