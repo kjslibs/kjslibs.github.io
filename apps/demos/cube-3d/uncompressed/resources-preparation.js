@@ -313,7 +313,7 @@ function Resources(window, document, universe, undefined) {
 							id: "slider-container"
 						},
 						children: [
-							textDivElement("Oy -> Oz:"),
+							textDivElement("Oy \u2192 Oz:"),
 							sliderBar(
 								{
 									min: "-1.0",
@@ -323,7 +323,7 @@ function Resources(window, document, universe, undefined) {
 								rotating_velocity_tweaker(0),
 								rotating_velocity_checkpoints
 							),
-							textDivElement("Ox -> Oz:"),
+							textDivElement("Ox \u2192 Oz:"),
 							sliderBar(
 								{
 									min: "-1.0",
@@ -333,7 +333,7 @@ function Resources(window, document, universe, undefined) {
 								rotating_velocity_tweaker(1),
 								rotating_velocity_checkpoints
 							),
-							textDivElement("Ox -> Oy:"),
+							textDivElement("Ox \u2192 Oy:"),
 							sliderBar(
 								{
 									min: "-1.0",
